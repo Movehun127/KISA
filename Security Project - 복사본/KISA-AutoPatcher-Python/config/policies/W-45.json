@@ -1,15 +1,18 @@
 {
-    "Title": "백신 프로그램 설치",
-    "Category": "서비스 관리",
-    "Level": "중",
-    "TechType": "Type_Skip",
-    "Description": "안전한 상용 또는 윈도우 빌트인 백신 백그라운드 엔진 동작 수동 점검",
-    "captureOnly": true,
-    "ItemId": "W-45",
-    "appTarget": "windowsdefender:",
-    "treePath": [],
-    "targetItem": [
-        "Windows Defender Antivirus Service",
-        "Windefend"
-    ]
+  "Title": "백신 프로그램 설치",
+  "Category": "보안 관리",
+  "Level": "상",
+  "TechType": "Type_Skip",
+  "Description": "안전한 상용 또는 윈도우 빌트인 백신 백그라운드 엔진 동작 수동 점검",
+  "captureOnly": true,
+  "ItemId": "W-45",
+  "appTarget": "windowsdefender:",
+  "treePath": [],
+  "targetItem": [
+    "Windows Defender Antivirus Service",
+    "Windefend"
+  ],
+  "Impact": "안전한 상용 또는 윈도우 빌트인 백신 백그라운드 엔진 동작 수동 점검",
+  "RequiresConfirmation": false,
+  "AutoRemediationSupported": false
 }

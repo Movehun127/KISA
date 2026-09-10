@@ -52,13 +52,11 @@ def invoke_reporting(
     for init in initial_results:
         iid    = init["ItemId"]
         final  = final_map.get(iid, init)
-        is_ok  = "양호" in final["Status"] or "수동 조치" in final["Status"]
-        icon   = "✅" if is_ok else "❌"
+        is_ok  = final["Status"] == "양호"
+        icon   = "✅" if is_ok else ("⚠️" if "수동" in final["Status"] else "❌")
 
-        init_str  = init["Status"] if ("양호" in init["Status"] or "수동 조치" in init["Status"]) \
-                    else f"취약 ({init.get('CurrentValue', '')})"
-        final_str = final["Status"] if is_ok \
-                    else f"취약 ({final.get('CurrentValue', '')})"
+        init_str = f"{init['Status']} ({init.get('CurrentValue', '')})"
+        final_str = f"{final['Status']} ({final.get('CurrentValue', '')})"
 
         lines.append(f"| {iid} | {init['Title']} | {init['Level']} | {init_str} | {final_str} | {icon} {final['Status']} |")
 
@@ -98,8 +96,9 @@ def invoke_reporting(
                 row[5].value = unused_items[0]["Status"].replace("양호(", "").rstrip(")")
                 continue
 
-            # Type_Skip 항목 전부이면 건너뜀
             if all(m.get("TechType") == "Type_Skip" for m in matched):
+                row[4].value = "확인 필요"
+                row[5].value = "수동 검토 항목: 자동 적합 판정 없음"
                 continue
 
             has_vuln   = any("양호" not in m["Status"] and "수동 조치" not in m["Status"]
@@ -113,7 +112,7 @@ def invoke_reporting(
                 elif "양호" not in m["Status"]:
                     val_strs.append(f"{m['ItemId']}: 취약(현재값={m.get('CurrentValue', '')})")
 
-            row[4].value = "X" if has_vuln else "O"   # 조치 여부
+            row[4].value = "X" if has_vuln else ("확인 필요" if has_manual else "O")   # 조치 여부
             row[5].value = ", ".join(val_strs) if val_strs else ""  # 비고
 
         wb.save(excel_path)

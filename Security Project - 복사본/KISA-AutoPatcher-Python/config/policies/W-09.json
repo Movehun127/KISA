@@ -1,29 +1,43 @@
 {
-    "Title": "비밀번호 관리정책 설정",
-    "Category": "계정 관리",
-    "Level": "상",
-    "TechType": "Type_Powershell",
-    "CheckCommand": "SecEdit.exe /export /cfg $env:TEMP\\secpol.cfg > $null\n$cfg = Get-Content $env:TEMP\\secpol.cfg\n$c = 0; $len = 0; $maxAge = 999; $minAge = 0; $hist = 0\nforeach ($line in $cfg) {\n    if ($line -match '^PasswordComplexity\\s*=\\s*(-?\\d+)') { $c = [int]$matches[1] }\n    if ($line -match '^MinimumPasswordLength\\s*=\\s*(-?\\d+)') { $len = [int]$matches[1] }\n    if ($line -match '^MaximumPasswordAge\\s*=\\s*(-?\\d+)') { $maxAge = [int]$matches[1] }\n    if ($line -match '^MinimumPasswordAge\\s*=\\s*(-?\\d+)') { $minAge = [int]$matches[1] }\n    if ($line -match '^PasswordHistorySize\\s*=\\s*(-?\\d+)') { $hist = [int]$matches[1] }\n}\nif ($c -eq 1 -and $len -ge 8 -and $maxAge -le 90 -and $maxAge -gt 0 -and $minAge -ge 1 -and $hist -ge 4) { 'True' } else { 'False' }\n",
-    "RemediationCommand": "$tempFile = \"$env:TEMP\\secpol_temp.cfg\"\nSecEdit.exe /export /cfg $tempFile /quiet\n$cfg = Get-Content $tempFile -Raw\n$keys = @{\n    \"PasswordComplexity\" = \"1\"\n    \"MinimumPasswordLength\" = \"8\"\n    \"MaximumPasswordAge\" = \"90\"\n    \"MinimumPasswordAge\" = \"1\"\n    \"PasswordHistorySize\" = \"4\"\n}\nforeach ($k in $keys.Keys) {\n    $v = $keys[$k]\n    if ($cfg -notmatch $k) {\n        $cfg = $cfg -replace '\\[System Access\\]', \"[System Access]`r`n$k = $v\"\n    } else {\n        $cfg = $cfg -replace \"$k\\s*=.*\", \"$k = $v\"\n    }\n}\n$cfg | Set-Content $tempFile -Encoding Unicode\nSecEdit.exe /configure /db \"$env:TEMP\\secpol_temp.sdb\" /cfg $tempFile /areas SECURITYPOLICY /quiet\nRemove-Item $tempFile -ErrorAction SilentlyContinue\nRemove-Item \"$env:TEMP\\secpol_temp.sdb\" -ErrorAction SilentlyContinue\n",
-    "SecureValue": "True",
-    "ItemId": "W-09",
-    "appTarget": "secpol.msc",
-    "treePath": [
-        [
-            "보안 설정",
-            "Security Settings"
-        ],
-        [
-            "계정 정책",
-            "Account Policies"
-        ],
-        [
-            "암호 정책",
-            "Password Policy"
-        ]
+  "Title": "비밀번호 관리정책 설정",
+  "Category": "계정 관리",
+  "Level": "상",
+  "TechType": "Type_Secedit",
+  "SecureValue": "PasswordComplexity=1; MinimumPasswordLength=8; MaximumPasswordAge=90; MinimumPasswordAge=1; PasswordHistorySize=4",
+  "ItemId": "W-09",
+  "appTarget": "secpol.msc",
+  "treePath": [
+    [
+      "보안 설정",
+      "Security Settings"
     ],
-    "targetItem": [
-        "암호는 복잡성 요구 사항을 만족해야 함",
-        "Password must meet complexity requirements"
+    [
+      "계정 정책",
+      "Account Policies"
+    ],
+    [
+      "암호 정책",
+      "Password Policy"
     ]
+  ],
+  "targetItem": [
+    "암호는 복잡성 요구 사항을 만족해야 함",
+    "Password must meet complexity requirements"
+  ],
+  "SeceditValues": {
+    "PasswordComplexity": 1,
+    "MinimumPasswordLength": 8,
+    "MaximumPasswordAge": 90,
+    "MinimumPasswordAge": 1,
+    "PasswordHistorySize": 4
+  },
+  "Comparisons": {
+    "MinimumPasswordLength": "ge",
+    "MaximumPasswordAge": "positive_le",
+    "MinimumPasswordAge": "ge",
+    "PasswordHistorySize": "ge"
+  },
+  "Impact": "암호 만료 및 변경 정책이 서비스 계정에 영향",
+  "RequiresConfirmation": true,
+  "AutoRemediationSupported": true
 }

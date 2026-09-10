@@ -1,12 +1,15 @@
 {
-    "Title": "Dos공격 방어 레지스트리 설정",
-    "Category": "보안 관리",
-    "Level": "중",
-    "TechType": "Type_Powershell",
-    "CheckCommand": "(Get-ItemProperty -Path 'HKLM:\\System\\CurrentControlSet\\Services\\Tcpip\\Parameters' -Name SynAttackProtect -ErrorAction SilentlyContinue).SynAttackProtect.ToString()",
-    "RemediationCommand": "Set-ItemProperty -Path 'HKLM:\\System\\CurrentControlSet\\Services\\Tcpip\\Parameters' -Name SynAttackProtect -Value 2",
-    "SecureValue": "2",
-    "ItemId": "W-54",
-    "appTarget": "regedit",
-    "RegistryPath": "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters"
+  "Title": "Dos공격 방어 레지스트리 설정",
+  "Category": "보안 관리",
+  "Level": "중",
+  "TechType": "Type_Skip",
+  "SecureValue": "2",
+  "ItemId": "W-54",
+  "appTarget": "regedit",
+  "RegistryPath": "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters",
+  "Description": "구형 OS용 DoS 레지스트리 4개 및 OS 적용 가능성 검토. 최신 OS 일괄 적용 금지.",
+  "captureOnly": true,
+  "Impact": "구형 OS용 DoS 레지스트리 4개 및 OS 적용 가능성 검토. 최신 OS 일괄 적용 금지.",
+  "RequiresConfirmation": false,
+  "AutoRemediationSupported": false
 }

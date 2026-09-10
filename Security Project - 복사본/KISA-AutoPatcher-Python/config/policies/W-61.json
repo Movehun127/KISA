@@ -1,10 +1,13 @@
 {
-    "Title": "파일 및 디렉토리 보호",
-    "Category": "보안 관리",
-    "Level": "중",
-    "TechType": "Type_Skip",
-    "Description": "Everyone 공유 등 중요 디렉터리 파일 보안 접근 수동 검증",
-    "captureOnly": true,
-    "ItemId": "W-61",
-    "appTarget": "diskmgmt.msc"
+  "Title": "파일 및 디렉토리 보호",
+  "Category": "보안 관리",
+  "Level": "중",
+  "TechType": "Type_Skip",
+  "Description": "Everyone 공유 등 중요 디렉터리 파일 보안 접근 수동 검증",
+  "captureOnly": true,
+  "ItemId": "W-61",
+  "appTarget": "diskmgmt.msc",
+  "Impact": "Everyone 공유 등 중요 디렉터리 파일 보안 접근 수동 검증",
+  "RequiresConfirmation": false,
+  "AutoRemediationSupported": false
 }

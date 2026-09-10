@@ -1,14 +1,17 @@
 {
-    "Title": "이벤트 로그 파일 접근 통제 설정",
-    "Category": "서비스 관리",
-    "Level": "하",
-    "TechType": "Type_Skip",
-    "Description": "이벤트 로그 저장 경로 파일(System32\\winevt\\Logs) 권한 상속 제어 점검",
-    "captureOnly": true,
-    "ItemId": "W-43",
-    "appTarget": "explorer.exe",
-    "actionType": "FileProperties",
-    "targetItem": [
-        "C:\\Windows\\System32\\winevt\\Logs"
-    ]
+  "Title": "이벤트 로그 파일 접근 통제 설정",
+  "Category": "로그 관리",
+  "Level": "중",
+  "TechType": "Type_Skip",
+  "Description": "이벤트 로그 저장 경로 파일(System32\\winevt\\Logs) 권한 상속 제어 점검",
+  "captureOnly": true,
+  "ItemId": "W-43",
+  "appTarget": "explorer.exe",
+  "actionType": "FileProperties",
+  "targetItem": [
+    "C:\\Windows\\System32\\winevt\\Logs"
+  ],
+  "Impact": "이벤트 로그 저장 경로 파일(System32\\winevt\\Logs) 권한 상속 제어 점검",
+  "RequiresConfirmation": false,
+  "AutoRemediationSupported": false
 }

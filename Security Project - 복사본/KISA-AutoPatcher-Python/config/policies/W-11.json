@@ -1,29 +1,32 @@
 {
-    "Title": "로컬 로그온 허용",
-    "Category": "계정 관리",
-    "Level": "상",
-    "TechType": "Type_Skip",
-    "Description": "로컬 로그온을 허용하는 권한의 할당 리스트 수동 점검",
-    "captureOnly": true,
-    "ItemId": "W-11",
-    "appTarget": "secpol.msc",
-    "treePath": [
-        [
-            "보안 설정",
-            "Security Settings"
-        ],
-        [
-            "로컬 정책",
-            "Local Policies"
-        ],
-        [
-            "사용자 권한 할당",
-            "User Rights Assignment"
-        ]
+  "Title": "로컬 로그온 허용",
+  "Category": "계정 관리",
+  "Level": "중",
+  "TechType": "Type_Skip",
+  "Description": "로컬 로그온을 허용하는 권한의 할당 리스트 수동 점검",
+  "captureOnly": true,
+  "ItemId": "W-11",
+  "appTarget": "secpol.msc",
+  "treePath": [
+    [
+      "보안 설정",
+      "Security Settings"
     ],
-    "targetItem": [
-        "로컬 로그온 허용",
-        "Allow log on locally"
+    [
+      "로컬 정책",
+      "Local Policies"
     ],
-    "actionType": "Properties"
+    [
+      "사용자 권한 할당",
+      "User Rights Assignment"
+    ]
+  ],
+  "targetItem": [
+    "로컬 로그온 허용",
+    "Allow log on locally"
+  ],
+  "actionType": "Properties",
+  "Impact": "로컬 로그온을 허용하는 권한의 할당 리스트 수동 점검",
+  "RequiresConfirmation": false,
+  "AutoRemediationSupported": false
 }
