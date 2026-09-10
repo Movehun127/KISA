@@ -73,7 +73,7 @@ class KisaPatcherApp(ctk.CTk):
         self.configure(fg_color=BG_DARK)
         self.resizable(True, True)
         self.minsize(980, 720)
-        
+
         # ── 앱 첫 실행 시 모니터의 좌측 절반에 맞추어 기동 ──
         try:
             import pyautogui
@@ -90,7 +90,7 @@ class KisaPatcherApp(ctk.CTk):
         self.stop_requested  = False
         self.last_exec_mode = "manual_pause"
         self.last_services_config = {"iis": "proceed", "dns": "proceed", "snmp": "proceed", "telnet": "proceed"}
-        
+
         # 캡처 버튼 이벤트를 위한 동기화 객체 선언
         import threading
         self.next_clicked    = threading.Event()
@@ -131,10 +131,10 @@ class KisaPatcherApp(ctk.CTk):
         ctk.CTkLabel(hdr, text="🛡️",
                      font=("Segoe UI Emoji", 22), text_color=ACCENT
                      ).pack(side="left", padx=(18, 6), pady=10)
-        
+
         title_f = ctk.CTkFrame(hdr, fg_color=BG_CARD)
         title_f.pack(side="left", pady=10)
-        
+
         ctk.CTkLabel(title_f, text="KISA 보안 취약점 자동 조치 시스템",
                      font=("Segoe UI", 15, "bold"), text_color=TEXT_MAIN
                      ).pack(anchor="w")
@@ -161,12 +161,12 @@ class KisaPatcherApp(ctk.CTk):
         # ── 진행률 ───────────────────────────────────────────────────
         prog_frame = ctk.CTkFrame(self, fg_color=BG_DARK)
         prog_frame.pack(fill="x", padx=14, pady=(8, 0))
-        
+
         self.progress_bar = ctk.CTkProgressBar(prog_frame, progress_color=ACCENT,
                                             fg_color=BG_CARD, height=10, corner_radius=5)
         self.progress_bar.pack(fill="x")
         self.progress_bar.set(0.0)
-        
+
         self.lbl_progress = ctk.CTkLabel(prog_frame, text="대기 중...",
                                          font=("Segoe UI", 9), text_color=TEXT_DIM)
         self.lbl_progress.pack(anchor="e", padx=2)
@@ -230,7 +230,7 @@ class KisaPatcherApp(ctk.CTk):
         self.tree.bind("<Double-1>", lambda e: self._show_detail())
 
         self.tree.pack(fill="both", expand=True, padx=2, pady=2)
-        
+
         self.tree.tag_configure("good",   foreground=SUCCESS)
         self.tree.tag_configure("vuln",   foreground=ERROR_C)
         self.tree.tag_configure("manual", foreground=WARNING)
@@ -294,13 +294,13 @@ class KisaPatcherApp(ctk.CTk):
 
         self.btn_scan  = self._action_btn(btn_bar, "🔍 전체 스캔",     BG_INNER,  self._on_scan)
         self.btn_auto  = self._action_btn(btn_bar, "⚡ 선택 항목 조치+캡처", ACCENT,    self._on_run)
-        
+
         self.btn_stop  = self._action_btn(btn_bar, "⏹ 중지",          BG_CARD,  self._on_stop)
         self.btn_stop.configure(state="disabled")
-        
+
         self.btn_next  = self._action_btn(btn_bar, "⏭ 캡처 및 다음 진행", SUCCESS, self._on_next)
         self.btn_next.configure(state="disabled")
-        
+
         self.btn_report = self._action_btn(btn_bar, "📄 보고서 생성", SUCCESS, self._on_report,
                                            side="right")
 
@@ -324,7 +324,7 @@ class KisaPatcherApp(ctk.CTk):
             # 둥근 입력 텍스트 영역 컨테이너
             txt_container = ctk.CTkFrame(f, fg_color=BG_INNER, corner_radius=6)
             txt_container.pack(side="left", padx=2, fill="x", expand=True)
-            
+
             txt = tk.Text(txt_container, font=("Segoe UI", 10), bg=BG_INNER,
                           fg=text_color or TEXT_MAIN,
                           height=height, width=32, wrap="word", bd=0, highlightthickness=0)
@@ -417,7 +417,7 @@ class KisaPatcherApp(ctk.CTk):
             self.log_area.insert("end", f"[{ts}] {msg}\n", level)
             self.log_area.see("end")
             self.log_area.configure(state="disabled")
-            
+
             if hasattr(self, "current_item_id") and self.current_item_id:
                 try:
                     log_file = os.path.join(LOGS_DIR, f"{self.current_item_id}.log")
@@ -435,27 +435,29 @@ class KisaPatcherApp(ctk.CTk):
         self.after(0, _up)
 
     def _update_tree_status(self, idx: int, scan_status=None, fix_status=None):
-        iid = str(idx)
-        vals = list(self.tree.item(iid, "values"))
-        if scan_status is not None:
-            vals[3] = scan_status
-        if fix_status is not None:
-            vals[4] = fix_status
-            
-        # 디폴트 번갈아가는 배경색 지정
-        tag = "row_a" if idx % 2 == 0 else "row_b"
-        
-        # 진행 상태에 따른 하이라이트 분기
-        if "중..." in str(scan_status) or "중..." in str(fix_status):
-            tag = "active"
-        elif scan_status == "취약" or fix_status == "취약 (미해결)":
-            tag = "vuln"
-        elif "양호" in str(scan_status) or "완료" in str(fix_status):
-            tag = "good" if "양호" in str(scan_status) else "fixed"
-        elif "수동" in str(scan_status):
-            tag = "manual"
-            
-        self.after(0, lambda: self.tree.item(iid, values=vals, tags=(tag,)))
+        def update():
+            iid = str(idx)
+            vals = list(self.tree.item(iid, "values"))
+            if scan_status is not None:
+                vals[3] = scan_status
+            if fix_status is not None:
+                vals[4] = fix_status
+
+            # 디폴트 번갈아가는 배경색 지정
+            tag = "row_a" if idx % 2 == 0 else "row_b"
+
+            # 진행 상태에 따른 하이라이트 분기
+            if "중..." in str(scan_status) or "중..." in str(fix_status):
+                tag = "active"
+            elif scan_status == "취약" or fix_status == "취약 (미해결)":
+                tag = "vuln"
+            elif "양호" in str(scan_status) or "완료" in str(fix_status):
+                tag = "good" if "양호" in str(scan_status) else "fixed"
+            elif "수동" in str(scan_status):
+                tag = "manual"
+
+            self.tree.item(iid, values=vals, tags=(tag,))
+        self.after(0, update)
 
     def _update_summary(self):
         def _up():
@@ -607,7 +609,7 @@ class KisaPatcherApp(ctk.CTk):
         self.is_running = True
         self.stop_requested = False
         self._set_buttons_running()
-        
+
         # 스캔 시작 즉시 왼쪽 절반에 고정
         try:
             import ctypes
@@ -673,42 +675,59 @@ class KisaPatcherApp(ctk.CTk):
             messagebox.showinfo("알림", "먼저 전체 스캔을 실행해주세요.")
             return
         idxs = self._get_selected_indices()
-        
+
         # 현재 스캔된 결과로부터 각 서비스들의 실시간 사용 여부 감지
         srv_status = self._detect_service_status()
-        
+
         # 실행 옵션 모달 다이얼로그 팝업 호출 (감지된 서비스 상태 목록 전달)
         dialog = RunOptionDialog(self, srv_status)
         self.wait_window(dialog)
-        
+
         if not dialog.result:
             return # 취약점 조치/캡처 진행 취소
-            
+
         mode, services_config = dialog.result
+        approved = set()
+        for idx in idxs:
+            result = self.vuln_results[idx]
+            item = result.get("ConfigItem", {})
+            if result.get("Status") == "취약" and item.get("RequiresConfirmation"):
+                if messagebox.askyesno("운영 영향 확인", f"{result['ItemId']} {result['Title']}\n\n{item.get('Impact', '')}\n\n복구 경로와 업무 영향을 확인했으며 이 항목을 적용하시겠습니까?"):
+                    approved.add(result['ItemId'])
+        self.approved_items = approved
         self.last_exec_mode = mode
         self.last_services_config = services_config
         self.mode_var.set(mode) # UI 라디오버튼 동기화
-        
+
         self.is_running = True
         self.stop_requested = False
         self._set_buttons_running()
-        
+
         # ── 추가: Tkinter 메인 윈도우를 모니터 좌측 절반 크기로 리사이징 및 이동 ──
         try:
             import ctypes
             import pyautogui
             sw, sh = pyautogui.size()
             half_w = sw // 2
-            
+
             # Tkinter의 win32 hwnd 획득 후 API로 직접 배치 (오차 제거)
             hwnd = int(self.wm_frame(), 16) if hasattr(self, 'wm_frame') else int(self.winfo_id())
             ctypes.windll.user32.SetWindowPos(hwnd, 0, 0, 0, half_w, sh - 40, 0x0040)
         except Exception:
             pass
-            
+
         threading.Thread(target=self._do_run, args=(idxs, mode, services_config), daemon=True).start()
 
     def _do_run(self, indices: list[int], mode: str, services_config: dict):
+        try:
+            self._do_run_items(indices, mode, services_config)
+        except Exception as exc:
+            self._log(f"작업 중 오류: {exc}", "error")
+        finally:
+            self.is_running = False
+            self.after(0, self._set_buttons_idle)
+
+    def _do_run_items(self, indices: list[int], mode: str, services_config: dict):
         self._log("━" * 55, "warn")
         self._log(f"  ⚡ 보안 조치 + 증빙 캡처 시작 ({len(indices)}개 항목)", "warn")
         self._log("━" * 55, "warn")
@@ -724,10 +743,10 @@ class KisaPatcherApp(ctk.CTk):
             result  = self.vuln_results[idx]
             item_id = result["ItemId"]
             status  = result["Status"]
-            
+
             # 서비스 미사용 상태에 따른 항목 생략 여부 검증
             skip_by_service = False
-            if services_config.get("iis") == "skip" and item_id in ["W-19", "W-21", "W-22", "W-23", "W-24", "W-33"]:
+            if services_config.get("iis") == "skip" and item_id in ["W-19", "W-21", "W-22", "W-24", "W-33"]:
                 skip_by_service = True
             elif services_config.get("dns") == "skip" and item_id in ["W-25", "W-32"]:
                 skip_by_service = True
@@ -735,10 +754,11 @@ class KisaPatcherApp(ctk.CTk):
                 skip_by_service = True
             elif services_config.get("telnet") == "skip" and item_id in ["W-34"]:
                 skip_by_service = True
-                
+
             if skip_by_service:
                 self._log(f"\n🔷 [{item_id}]  {result['Title']}", "meta")
                 self._log(f"  → 서비스 미사용 설정(IIS/DNS/SNMP/Telnet)에 의해 보안 조치 및 증빙 수집 생략", "good")
+                result["FixStatus"] = "생략"
                 self._update_tree_status(idx, scan_status=status, fix_status="생략")
                 continue
 
@@ -752,7 +772,7 @@ class KisaPatcherApp(ctk.CTk):
 
             self._set_progress(step + 1, total)
             self._log(f"\n🔷 [{item_id}]  {result['Title']}", "meta")
-            
+
             # ── 트리뷰 자동 스크롤 및 현재 타겟 행 하이라이트 활성화 및 세부정보 표출 ──
             iid = str(idx)
             self.after(0, lambda i=iid: (self.tree.selection_set(i), self.tree.see(i)))
@@ -761,13 +781,12 @@ class KisaPatcherApp(ctk.CTk):
             if "취약" in status and "수동" not in status:
                 self._log(f"  🔧 보안 조치 적용 중...", "warn")
                 self._update_tree_status(idx, fix_status="조치 중...")
-                
+
                 invoke_remediation(
                     [result], BACKUPS_DIR, EVIDENCE_DIR,
-                    log_callback=self._log
+                    log_callback=self._log, approved_items=self.approved_items
                 )
-                result["FixStatus"] = "완료"
-                self._update_tree_status(idx, fix_status="완료")
+                self._update_tree_status(idx, fix_status=result["FixStatus"])
             else:
                 self._log(f"  → 조치 불필요 ({status})", "good")
                 result["FixStatus"] = status
@@ -779,34 +798,34 @@ class KisaPatcherApp(ctk.CTk):
             # ── 2. 증빙 캡처 및 수동 조치 팝업 ──────────────────────
             self._log(f"  📷 증빙 화면 캡처 대기 중...", "meta")
             self._update_tree_status(idx, fix_status="캡처 대기...")
-            
+
             try:
                 config_item = result["ConfigItem"].copy()
                 config_item["Status"] = status
-                
-                is_manual_item = "수동" in str(status)
-                
+
+                is_manual_item = "수동" in str(status) or "수동" in result.get("FixStatus", "")
+
                 # 대기 여부 판단:
                 # 1) sequential: 모든 항목에서 대기
                 # 2) manual_pause: 수동 조치 항목에서만 대기
                 # 3) auto: 전혀 대기하지 않음
                 should_wait = (mode == "sequential") or (mode == "manual_pause" and is_manual_item)
-                
+
                 wait_fn = None
                 if should_wait:
                     guide_data = self.model_guides.get(item_id, {})
                     good_crit = guide_data.get("good_criteria") or result.get("SecureValue", "–")
                     manual_text = guide_data.get("manual_guide") or config_item.get("Description", "–")
-                    
+
                     # 수동 조치 대상이면 화면 중앙에 가이드 팝업 띄우기
                     if is_manual_item:
                         self._log(f"  📢 [{item_id}] 수동 조치 가이드 팝업을 표시합니다.", "warn")
-                        
+
                     def wait_fn():
                         # 이벤트 락 초기화 및 메인 UI 하단 [캡처 및 다음 진행] 버튼 활성화
                         self.next_clicked.clear()
                         self.after(0, lambda: self.btn_next.configure(state="normal"))
-                        
+
                         guide_dlg = None
                         # 수동 조치 항목인 경우 눈에 띄는 전용 모달 팝업 표출
                         if is_manual_item:
@@ -821,7 +840,7 @@ class KisaPatcherApp(ctk.CTk):
                                     on_proceed=self._on_next
                                 )
                             self.after(0, _show_guide_dlg)
-                            
+
                         # 사용자 버튼 입력 대기 (메인 버튼 또는 모달 내 조치완료 버튼)
                         while not self.next_clicked.is_set():
                             if self.stop_requested:
@@ -831,14 +850,14 @@ class KisaPatcherApp(ctk.CTk):
                                 return False
                             import time
                             time.sleep(0.1)
-                        
+
                         # 대기 해제 후 다이얼로그 닫기 및 버튼 비활성화
                         self.after(0, lambda: self.btn_next.configure(state="disabled"))
                         if guide_dlg and guide_dlg.winfo_exists():
                             guide_dlg.after(0, guide_dlg.destroy)
                         self.next_clicked.clear()
                         return True
-                
+
                 capture_evidence(
                     config_item,
                     EVIDENCE_DIR,
@@ -879,7 +898,7 @@ class KisaPatcherApp(ctk.CTk):
             sw, sh = pyautogui.size()
             x = (sw - 1350) // 2
             y = (sh - 820) // 2
-            self.geometry(f"1350x820+{x}+{y}")
+            self.after(0, lambda: self.geometry(f"1350x820+{x}+{y}"))
         except Exception:
             pass
 
@@ -890,19 +909,29 @@ class KisaPatcherApp(ctk.CTk):
         self._on_run()
 
     def _capture_selected(self):
-        if not self.vuln_results:
+        if self.is_running or not self.vuln_results:
             return
         idxs = self._get_selected_indices()
         if not idxs:
             return
+        self.is_running = True
+        self.stop_requested = False
+        self._set_buttons_running()
         threading.Thread(target=self._do_capture_only, args=(idxs,), daemon=True).start()
 
     def _do_capture_only(self, indices):
+        try:
+            self._do_capture_items(indices)
+        finally:
+            self.is_running = False
+            self.after(0, self._set_buttons_idle)
+
+    def _do_capture_items(self, indices):
         for idx in indices:
             if self.stop_requested or idx >= len(self.vuln_results):
                 break
             r = self.vuln_results[idx]
-            
+
             self.current_item_id = r["ItemId"]
             try:
                 log_file = os.path.join(LOGS_DIR, f"{r['ItemId']}.log")
@@ -910,7 +939,7 @@ class KisaPatcherApp(ctk.CTk):
                     os.remove(log_file)
             except Exception:
                 pass
-                
+
             self._log(f"  📷 [{r['ItemId']}] 캡처 중...", "meta")
             try:
                 capture_evidence(r["ConfigItem"], EVIDENCE_DIR, log_callback=self._log)
@@ -921,18 +950,20 @@ class KisaPatcherApp(ctk.CTk):
         self.stop_requested = True
         self.next_clicked.set() # 대기 상태 락 강제 해제
         self._log("⏹ 중지 요청됨...", "warn")
-        
+
         # ── 추가: 윈도우 크기 원래대로 복구 및 중앙 배치 ──
         try:
             import pyautogui
             sw, sh = pyautogui.size()
             x = (sw - 1350) // 2
             y = (sh - 820) // 2
-            self.geometry(f"1350x820+{x}+{y}")
+            self.after(0, lambda: self.geometry(f"1350x820+{x}+{y}"))
         except Exception:
             pass
 
     def _on_report(self):
+        if self.is_running:
+            return
         if not self.vuln_results:
             messagebox.showinfo("알림", "먼저 스캔을 실행해주세요.")
             return
@@ -942,7 +973,7 @@ class KisaPatcherApp(ctk.CTk):
         self._log("📄 보고서 생성 중...", "meta")
         try:
             invoke_reporting(
-                self.vuln_results, self.vuln_results,
+                self.vuln_results, get_vulnerability_status(POLICY_DIR),
                 REPORTS_DIR, EVIDENCE_DIR,
                 log_callback=self._log
             )
@@ -977,9 +1008,9 @@ class ManualGuideDialog(ctk.CTkToplevel):
         self.minsize(560, 420)
         self.configure(fg_color=BG_DARK)
         self.attributes("-topmost", True)
-        
+
         self.on_proceed = on_proceed
-        
+
         # 화면 정중앙 또는 모니터 우측에 적절히 배치
         try:
             sw, sh = parent.winfo_screenwidth(), parent.winfo_screenheight()
@@ -1009,10 +1040,10 @@ class ManualGuideDialog(ctk.CTkToplevel):
         # 1. 양호 판단 기준 카드
         crit_lbl = ctk.CTkLabel(body, text="📋 KISA 양호 판단 기준 (Model.pdf)", font=("Segoe UI", 11, "bold"), text_color=SUCCESS)
         crit_lbl.pack(anchor="w", padx=14, pady=(10, 4))
-        
+
         crit_box = ctk.CTkFrame(body, fg_color=BG_CARD, corner_radius=8)
         crit_box.pack(fill="x", padx=14, pady=(0, 10))
-        
+
         txt_crit = tk.Text(crit_box, font=("Segoe UI", 10, "bold"), bg=BG_CARD, fg=SUCCESS,
                            height=3, wrap="word", bd=0, highlightthickness=0)
         txt_crit.insert("1.0", good_criteria)
@@ -1057,13 +1088,13 @@ class RunOptionDialog(ctk.CTkToplevel):
         self.geometry("440x510")
         self.resizable(False, False)
         self.configure(fg_color=BG_INNER)
-        
+
         # 모달창 동작 선언
         self.transient(parent)
         self.grab_set()
-        
+
         self.result = None
-        
+
         # 부모 창 중앙에 정렬 배치
         try:
             x = parent.winfo_x() + (parent.winfo_width() - 440) // 2
@@ -1071,90 +1102,90 @@ class RunOptionDialog(ctk.CTkToplevel):
             self.geometry(f"+{max(0, x)}+{max(0, y)}")
         except Exception:
             pass
-        
+
         # 타이틀
-        ctk.CTkLabel(self, text="⚡ 보안 조치 및 증빙 캡처 옵션", 
+        ctk.CTkLabel(self, text="⚡ 보안 조치 및 증빙 캡처 옵션",
                      font=("Segoe UI", 13, "bold"), text_color=ACCENT).pack(pady=(12, 6))
-                 
+
         # 옵션 영역 카드
         frame = ctk.CTkFrame(self, fg_color=BG_CARD, corner_radius=10)
         frame.pack(fill="both", expand=True, padx=15, pady=5)
-        
+
         # 1. 진행 모드 선택 (통합 3가지 모드)
         ctk.CTkLabel(frame, text="1. 진행 모드 선택", font=("Segoe UI", 11, "bold"), text_color=TEXT_MAIN).pack(anchor="w", padx=15, pady=(10, 4))
-        
+
         current_m = getattr(parent, "last_exec_mode", "manual_pause")
         self.exec_mode_var = tk.StringVar(value=current_m)
-        
-        r1 = ctk.CTkRadioButton(frame, text="전체 자동 조치 및 캡처 (대기 없이 원스톱 진행)", 
+
+        r1 = ctk.CTkRadioButton(frame, text="전체 자동 조치 및 캡처 (대기 없이 원스톱 진행)",
                                 variable=self.exec_mode_var, value="auto",
                                 text_color=TEXT_MAIN, font=("Segoe UI", 10))
         r1.pack(anchor="w", padx=25, pady=3)
-        
-        r2 = ctk.CTkRadioButton(frame, text="수동 조치 항목만 안내 팝업 후 대기 (권장)", 
+
+        r2 = ctk.CTkRadioButton(frame, text="수동 조치 항목만 안내 팝업 후 대기 (권장)",
                                 variable=self.exec_mode_var, value="manual_pause",
                                 text_color=TEXT_MAIN, font=("Segoe UI", 10, "bold"))
         r2.pack(anchor="w", padx=25, pady=3)
-        
-        r3 = ctk.CTkRadioButton(frame, text="모든 항목 순차 진행 (항목마다 확인 후 다음으로)", 
+
+        r3 = ctk.CTkRadioButton(frame, text="모든 항목 순차 진행 (항목마다 확인 후 다음으로)",
                                 variable=self.exec_mode_var, value="sequential",
                                 text_color=TEXT_MAIN, font=("Segoe UI", 10))
         r3.pack(anchor="w", padx=25, pady=3)
-                       
+
         # 구분선
         ctk.CTkFrame(frame, height=2, fg_color=BG_INNER).pack(fill="x", padx=15, pady=10)
-        
+
         # 2. 서비스 사용 여부 설정
         ctk.CTkLabel(frame, text="2. 서비스별 조치 설정 (스캔 결과 기준)", font=("Segoe UI", 11, "bold"), text_color=TEXT_MAIN).pack(anchor="w", padx=15, pady=(0, 4))
-        
+
         srv_frame = ctk.CTkFrame(frame, fg_color=BG_CARD)
         srv_frame.pack(fill="x", padx=15, pady=2)
-        
+
         self.srv_vars = {}
         services_list = [("IIS", "iis"), ("DNS", "dns"), ("SNMP", "snmp"), ("Telnet", "telnet")]
-        
+
         for label, key in services_list:
             status_text = service_status.get(key, "미사용")
-            
+
             row_f = ctk.CTkFrame(srv_frame, fg_color=BG_CARD)
             row_f.pack(fill="x", pady=2)
-            
+
             # 서비스명
             ctk.CTkLabel(row_f, text=f"• {label}", text_color=TEXT_MAIN, font=("Segoe UI", 9, "bold"), width=60, anchor="w").pack(side="left")
-            
+
             # 스캔된 사용 여부 표시
             status_fg = WARNING if status_text == "미사용" else ERROR_C
             ctk.CTkLabel(row_f, text=f"({status_text})", text_color=status_fg, font=("Segoe UI", 9), width=70, anchor="w").pack(side="left")
-            
+
             # 기본값 설정: 미사용 상태이면 skip(생략), 사용 중이면 proceed(진행)
             default_val = "skip" if status_text == "미사용" else "proceed"
             prev_val = parent.last_services_config.get(key, default_val)
-            
+
             var = tk.StringVar(value=prev_val)
             self.srv_vars[key] = var
-            
+
             r_skip = ctk.CTkRadioButton(row_f, text="생략(Skip)", variable=var, value="skip", text_color=TEXT_MAIN, font=("Segoe UI", 9))
             r_skip.pack(side="left", padx=5)
-            
+
             r_proc = ctk.CTkRadioButton(row_f, text="진행(Proceed)", variable=var, value="proceed", text_color=TEXT_MAIN, font=("Segoe UI", 9))
             r_proc.pack(side="left", padx=5)
-                       
+
         # 하단 버튼바
         btn_frame = ctk.CTkFrame(self, fg_color=BG_INNER)
         btn_frame.pack(fill="x", side="bottom", pady=12)
-        
+
         ok_btn = ctk.CTkButton(btn_frame, text="시작", width=110, fg_color=ACCENT, text_color="white", font=("Segoe UI", 11, "bold"),
                                corner_radius=8, command=self.on_ok)
         ok_btn.pack(side="left", padx=(100, 10))
-        
+
         cancel_btn = ctk.CTkButton(btn_frame, text="취소", width=110, fg_color=BG_CARD, text_color="white", font=("Segoe UI", 11, "bold"),
                                    corner_radius=8, command=self.on_cancel)
         cancel_btn.pack(side="left")
-        
+
     def on_ok(self):
         self.result = (self.exec_mode_var.get(), {k: v.get() for k, v in self.srv_vars.items()})
         self.destroy()
-        
+
     def on_cancel(self):
         self.destroy()
 

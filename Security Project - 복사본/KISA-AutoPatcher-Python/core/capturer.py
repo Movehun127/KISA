@@ -537,25 +537,7 @@ def _navigate_wins_properties(log_callback=None):
     # 6. IPv4 속성 대화상자 대기 (진입 로드 고려하여 10초로 대기시간 연장)
     ip_dlg = None
     for _ in range(50):
-        # ── [경고창 대응] 혹시 속성 변경 확인 경고 다이얼로그(예: '이더넷', 'Wi-Fi')가 떴다면 '예'를 눌러 해제 ──
-        try:
-            for popup_title in ["이더넷", "Wi-Fi", "네트워크 연결"]:
-                confirm_dlg = auto.WindowControl(searchDepth=1, ClassName="#32770", Name=popup_title)
-                if confirm_dlg.Exists(0.1):
-                    yes_btn = confirm_dlg.ButtonControl(Name="예(Y)")
-                    if not yes_btn.Exists(0.05):
-                        yes_btn = confirm_dlg.ButtonControl(Name="예")
-                    if not yes_btn.Exists(0.05):
-                        yes_btn = confirm_dlg.ButtonControl(Name="Yes")
-                    
-                    if yes_btn.Exists(0.1):
-                        yes_btn.Click()
-                        log("    => 속성 변경 경고창 감지. '예(Y)' 버튼 클릭 및 강제 진입 진행.", "info")
-                        time.sleep(0.5)
-                        break
-        except Exception:
-            pass
-
+        # Capture must never accept a network configuration change dialog.
         # 1순위: Desktop Root 레벨 검색
         wins = auto.GetRootControl().GetChildren()
         for w in wins:
@@ -718,31 +700,7 @@ def _navigate_wins_properties(log_callback=None):
         adv_dlg.SendKeys("^{TAB}")
         time.sleep(0.5)
 
-    # 10. NetBIOS 설정: 'NetBIOS over TCP/IP 사용 안 함(S)' 라디오 버튼 선택
-    try:
-        disable_radio = None
-        radio_names = [
-            "NetBIOS over TCP/IP 사용 안 함(S)",
-            "NetBIOS over TCP/IP 사용 안 함",
-            "Disable NetBIOS over TCP/IP",
-            "사용 안 함(S)"
-        ]
-        for r_name in radio_names:
-            disable_radio = adv_dlg.RadioButtonControl(searchDepth=3, Name=r_name)
-            if disable_radio.Exists(0.2):
-                break
-        
-        if disable_radio and disable_radio.Exists(0.5):
-            disable_radio.Select()
-            log("    => [설정] 'NetBIOS over TCP/IP 사용 안 함' 라디오 버튼 선택 성공.", "good")
-            time.sleep(0.3)
-        else:
-            # 폴백: 단축키 Alt+S 전송으로 라디오 선택
-            adv_dlg.SendKeys("%s")
-            log("    => [설정] 단축키(Alt+S)를 통한 'NetBIOS 사용 안 함' 선택 시도.", "info")
-            time.sleep(0.3)
-    except Exception as ex:
-        log(f"    [경고] NetBIOS 라디오 버튼 선택 실패: {ex}", "warn")
+    # Read-only evidence: leave the current NetBIOS radio selection unchanged.
 
 
 def _navigate_msc_tree(item: dict, log_callback=None):
@@ -1150,15 +1108,7 @@ def capture_evidence(
             if app_name == "regedit":
                 reg_path = item.get("RegistryPath", "")
                 
-                # 1. 기존 실행 중인 레지스트리 편집기 강제 종료 (LastKey 적용을 위해 클린 기동 필요)
-                try:
-                    subprocess.run(["taskkill", "/F", "/IM", "regedit.exe"],
-                                   capture_output=True, timeout=3,
-                                   creationflags=subprocess.CREATE_NO_WINDOW)
-                except Exception:
-                    pass
-                time.sleep(0.3)
-
+                # Existing administrator windows belong to the user; do not kill them.
                 # 2. LastKey 설정하여 기동 시 자동 경로 진입 보장
                 if reg_path:
                     _set_regedit_lastkey(reg_path)
@@ -1403,111 +1353,11 @@ def capture_evidence(
 
 
 def _cleanup_network_windows(log=None):
-    """네트워크 연결 설정 시 열렸던 창들을 자식 -> 부모 순서로 안전하게 닫음 (W-20 등 대응)"""
-    def _print(msg):
-        if log:
-            log(msg, "info")
-
-    import ctypes
-    from ctypes import wintypes
-    user32 = ctypes.windll.user32
-
-    # 1. 닫아야 할 W-20 관련 창 키워드 (가장 깊은 자식 다이얼로그부터 순차 대응)
-    target_titles = [
-        "고급 TCP/IP", "Advanced TCP/IP",
-        "인터넷 프로토콜 버전 4", "Internet Protocol Version 4", "TCP/IPv4",
-        "이더넷 속성", "Ethernet Properties", "로컬 영역 연결 속성", "Wi-Fi 속성",
-        "속성", "Properties"
-    ]
-
-    # 모달 다이얼로그(#32770)들을 찾아 IDCANCEL(취소 버튼, 2) 및 WM_CLOSE 전송
-    for attempt in range(5):
-        found_any = False
-        hwnds = []
-
-        def _enum_cb(hwnd, lparam):
-            if user32.IsWindowVisible(hwnd):
-                cbuf = ctypes.create_unicode_buffer(256)
-                user32.GetClassNameW(hwnd, cbuf, 256)
-                if cbuf.value == "#32770":
-                    tbuf = ctypes.create_unicode_buffer(512)
-                    user32.GetWindowTextW(hwnd, tbuf, 512)
-                    title = tbuf.value
-                    if any(k.lower() in title.lower() for k in target_titles):
-                        hwnds.append((hwnd, title))
-            return True
-
-        WNDENUMPROC = ctypes.WINFUNCTYPE(ctypes.c_bool, wintypes.HWND, wintypes.LPARAM)
-        user32.EnumWindows(WNDENUMPROC(_enum_cb), 0)
-
-        if not hwnds:
-            break
-
-        found_any = True
-        for hwnd, title in hwnds:
-            _print(f"    -> [저장 및 닫기] 네트워크 속성 팝업 창 확인(저장): '{title}' (HWND: {hwnd})")
-            # 변경된 NetBIOS 설정을 저장하기 위해 확인(IDOK=1) 우선 송신 후 닫기 처리
-            user32.PostMessageW(hwnd, 0x0111, 1, 0)  # WM_COMMAND, IDOK (확인/저장)
-            user32.PostMessageW(hwnd, 0x0010, 0, 0)  # WM_CLOSE
-        time.sleep(0.3)
-
-    # 2. '네트워크 연결' 제어판(CabinetWClass) 창 닫기
-    net_hwnds = []
-    def _enum_net_cb(hwnd, lparam):
-        if user32.IsWindowVisible(hwnd):
-            tbuf = ctypes.create_unicode_buffer(512)
-            user32.GetWindowTextW(hwnd, tbuf, 512)
-            title = tbuf.value
-            cbuf = ctypes.create_unicode_buffer(256)
-            user32.GetClassNameW(hwnd, cbuf, 256)
-            if ("네트워크 연결" in title or "Network Connections" in title) or (cbuf.value == "CabinetWClass" and "네트워크" in title):
-                net_hwnds.append((hwnd, title))
-        return True
-
-    WNDENUMPROC = ctypes.WINFUNCTYPE(ctypes.c_bool, wintypes.HWND, wintypes.LPARAM)
-    user32.EnumWindows(WNDENUMPROC(_enum_net_cb), 0)
-
-    for hwnd, title in net_hwnds:
-        _print(f"    -> [정리] 네트워크 연결 메인 창 닫기: '{title}' (HWND: {hwnd})")
-        user32.PostMessageW(hwnd, 0x0010, 0, 0)  # WM_CLOSE
-    time.sleep(0.3)
+    """Leave unowned desktop windows open; title matching cannot prove ownership."""
+    return
 
 
 def _cleanup_windows(item_id: str, log_callback=None):
-    """열린 증빙 캡처용 창 종료"""
-    # W-20 등 네트워크 관련 창 역순 정리 수행
-    norm_id = item_id.strip().upper() if item_id else ""
-    if norm_id in ["W-20", "W-22", "W-19", "W-21"]:
-        _cleanup_network_windows(log_callback)
-
-    # 1. 남아있는 #32770 창 및 해당 소유의 최하위 모달/아들 창을 역순 정리
-    if auto:
-        try:
-            wins = auto.GetRootControl().GetChildren()
-            for w in wins:
-                w_class = w.ClassName or ""
-                # 부모가 #32770이거나 이름에 제어/설정/속성 성격이 있으면 하위 팝업 추적
-                if w_class == "#32770" or "속성" in (w.Name or "") or "설정" in (w.Name or ""):
-                    hwnd = w.NativeWindowHandle
-                    if hwnd:
-                        for attempt in range(8):
-                            child_hwnd = ctypes.windll.user32.GetWindow(hwnd, 6) # GW_ENABLEDPOPUP (6)
-                            if child_hwnd and child_hwnd != hwnd:
-                                ctypes.windll.user32.SendMessageW(child_hwnd, 0x0010, 0, 0) # WM_CLOSE
-                                time.sleep(0.2)
-                            else:
-                                ctypes.windll.user32.SendMessageW(hwnd, 0x0010, 0, 0)
-                                break
-        except Exception:
-            pass
-
-    # 2. 제어판 및 잔여 프로세스 정리 (control, rundll32 추가)
-    procs_to_kill = ["mmc", "regedit", "SystemSettings", "SecHealthUI", "odbcad32", "control", "rundll32"]
-    for pname in procs_to_kill:
-        try:
-            # CMD 창 번쩍임 방지를 위해 CREATE_NO_WINDOW 플래그 적용
-            subprocess.run(["taskkill", "/F", "/IM", f"{pname}.exe"],
-                           capture_output=True, timeout=5,
-                           creationflags=subprocess.CREATE_NO_WINDOW)
-        except Exception:
-            pass
+    """Never close unrelated administrative tools or arbitrary dialogs."""
+    if log_callback:
+        log_callback("증빙 확인 후 열린 관리 창을 직접 닫아주세요.", "info")

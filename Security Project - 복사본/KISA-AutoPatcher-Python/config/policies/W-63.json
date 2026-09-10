@@ -1,16 +1,19 @@
 {
-    "Title": "도메인 컨트롤러-사용자의 시간 동기화",
-    "Category": "보안 관리",
-    "Level": "중",
-    "TechType": "Type_Powershell",
-    "CheckCommand": "(Get-Service -Name W32Time -ErrorAction SilentlyContinue).Status -eq 'Running'",
-    "RemediationCommand": "Start-Service -Name W32Time -ErrorAction SilentlyContinue; Set-Service -Name W32Time -StartupType Automatic -ErrorAction SilentlyContinue",
-    "SecureValue": "True",
-    "ItemId": "W-63",
-    "appTarget": "services.msc",
-    "treePath": [],
-    "targetItem": [
-        "Windows Time",
-        "W32Time"
-    ]
+  "Title": "도메인 컨트롤러-사용자의 시간 동기화",
+  "Category": "보안 관리",
+  "Level": "중",
+  "TechType": "Type_Skip",
+  "SecureValue": "True",
+  "ItemId": "W-63",
+  "appTarget": "services.msc",
+  "treePath": [],
+  "targetItem": [
+    "Windows Time",
+    "W32Time"
+  ],
+  "Description": "도메인 Kerberos 시계 허용 오차 5분 이하 확인. W32Time 실행 여부와 다른 항목.",
+  "captureOnly": true,
+  "Impact": "도메인 Kerberos 시계 허용 오차 5분 이하 확인. W32Time 실행 여부와 다른 항목.",
+  "RequiresConfirmation": false,
+  "AutoRemediationSupported": false
 }

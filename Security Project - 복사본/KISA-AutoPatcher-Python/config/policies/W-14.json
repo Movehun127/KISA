@@ -1,24 +1,27 @@
 {
-    "Title": "원격터미널 접속 가능한 사용자 그룹 제한",
-    "Category": "계정 관리",
-    "Level": "상",
-    "TechType": "Type_Skip",
-    "Description": "원격 데스크톱(Remote Desktop Users) 그룹 사용 권한 수동 점검",
-    "captureOnly": true,
-    "ItemId": "W-14",
-    "appTarget": "lusrmgr.msc",
-    "treePath": [
-        [
-            "로컬 사용자 및 그룹(로컬)",
-            "Local Users and Groups (Local)"
-        ],
-        [
-            "그룹",
-            "Groups"
-        ]
+  "Title": "원격터미널 접속 가능한 사용자 그룹 제한",
+  "Category": "계정 관리",
+  "Level": "중",
+  "TechType": "Type_Skip",
+  "Description": "원격 데스크톱(Remote Desktop Users) 그룹 사용 권한 수동 점검",
+  "captureOnly": true,
+  "ItemId": "W-14",
+  "appTarget": "lusrmgr.msc",
+  "treePath": [
+    [
+      "로컬 사용자 및 그룹(로컬)",
+      "Local Users and Groups (Local)"
     ],
-    "targetItem": [
-        "Remote Desktop Users"
-    ],
-    "actionType": "Properties"
+    [
+      "그룹",
+      "Groups"
+    ]
+  ],
+  "targetItem": [
+    "Remote Desktop Users"
+  ],
+  "actionType": "Properties",
+  "Impact": "원격 데스크톱(Remote Desktop Users) 그룹 사용 권한 수동 점검",
+  "RequiresConfirmation": false,
+  "AutoRemediationSupported": false
 }

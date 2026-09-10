@@ -1,29 +1,34 @@
 {
-    "Title": "해독 가능한 암호화를 사용하여 암호 저장 해제",
-    "Category": "계정 관리",
-    "Level": "상",
-    "TechType": "Type_Powershell",
-    "CheckCommand": "SecEdit.exe /export /cfg $env:TEMP\\secpol.cfg > $null; $cfg = Get-Content $env:TEMP\\secpol.cfg; $val = 0; foreach ($line in $cfg) { if ($line -match '^ClearTextPassword\\s*=\\s*(-?\\d+)') { $val = [int]$matches[1] } }; if ($val -eq 0) { 'True' } else { 'False' }",
-    "RemediationCommand": "$tempFile = \"$env:TEMP\\secpol_temp.cfg\"\nSecEdit.exe /export /cfg $tempFile /quiet\n$cfg = Get-Content $tempFile -Raw\nif ($cfg -notmatch 'ClearTextPassword') {\n    $cfg = $cfg -replace '\\[System Access\\]', \"[System Access]`r`nClearTextPassword = 0\"\n} else {\n    $cfg = $cfg -replace 'ClearTextPassword\\s*=.*', 'ClearTextPassword = 0'\n}\n$cfg | Set-Content $tempFile -Encoding Unicode\nSecEdit.exe /configure /db \"$env:TEMP\\secpol_temp.sdb\" /cfg $tempFile /areas SECURITYPOLICY /quiet\nRemove-Item $tempFile -ErrorAction SilentlyContinue\nRemove-Item \"$env:TEMP\\secpol_temp.sdb\" -ErrorAction SilentlyContinue\n",
-    "SecureValue": "True",
-    "ItemId": "W-05",
-    "appTarget": "secpol.msc",
-    "treePath": [
-        [
-            "보안 설정",
-            "Security Settings"
-        ],
-        [
-            "계정 정책",
-            "Account Policies"
-        ],
-        [
-            "암호 정책",
-            "Password Policy"
-        ]
+  "Title": "해독 가능한 암호화를 사용하여 암호 저장 해제",
+  "Category": "계정 관리",
+  "Level": "상",
+  "TechType": "Type_Secedit",
+  "SecureValue": "ClearTextPassword=0",
+  "ItemId": "W-05",
+  "appTarget": "secpol.msc",
+  "treePath": [
+    [
+      "보안 설정",
+      "Security Settings"
     ],
-    "targetItem": [
-        "해독 가능한 암호화를 사용하여 암호 저장",
-        "Store passwords using reversible encryption"
+    [
+      "계정 정책",
+      "Account Policies"
+    ],
+    [
+      "암호 정책",
+      "Password Policy"
     ]
+  ],
+  "targetItem": [
+    "해독 가능한 암호화를 사용하여 암호 저장",
+    "Store passwords using reversible encryption"
+  ],
+  "SeceditValues": {
+    "ClearTextPassword": 0
+  },
+  "Comparisons": {},
+  "Impact": "설정 적용 범위 및 업무 영향 확인",
+  "RequiresConfirmation": false,
+  "AutoRemediationSupported": true
 }

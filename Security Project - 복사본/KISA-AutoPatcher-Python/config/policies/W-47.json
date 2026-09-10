@@ -1,12 +1,15 @@
 {
-    "Title": "화면보호기 설정",
-    "Category": "보안 관리",
-    "Level": "상",
-    "TechType": "Type_Powershell",
-    "CheckCommand": "(Get-ItemProperty -Path 'HKCU:\\Control Panel\\Desktop' -Name ScreenSaveActive -ErrorAction SilentlyContinue).ScreenSaveActive.ToString() -eq '1'",
-    "RemediationCommand": "Set-ItemProperty -Path 'HKCU:\\Control Panel\\Desktop' -Name ScreenSaveActive -Value 1; Set-ItemProperty -Path 'HKCU:\\Control Panel\\Desktop' -Name ScreenSaverIsSecure -Value 1; Set-ItemProperty -Path 'HKCU:\\Control Panel\\Desktop' -Name ScreenSaveTimeOut -Value 600",
-    "SecureValue": "True",
-    "ItemId": "W-47",
-    "appTarget": "control desk.cpl,screensaver,@screensaver",
-    "Description": "화면 보호기 '다시 시작할 때 로그온 화면 표시' 활성화 및 대기 시간 10분(600초) 이하 설정 수동 확인"
+  "Title": "화면보호기 설정",
+  "Category": "보안 관리",
+  "Level": "상",
+  "TechType": "Type_Powershell",
+  "CheckCommand": "$p = Get-ItemProperty 'HKCU:\\Control Panel\\Desktop'; ($p.ScreenSaveActive -eq '1' -and $p.ScreenSaverIsSecure -eq '1' -and [int]$p.ScreenSaveTimeOut -gt 0 -and [int]$p.ScreenSaveTimeOut -le 600 -and -not [string]::IsNullOrWhiteSpace($p.'SCRNSAVE.EXE')).ToString()",
+  "RemediationCommand": "Set-ItemProperty -Path 'HKCU:\\Control Panel\\Desktop' -Name ScreenSaveActive -Value 1; Set-ItemProperty -Path 'HKCU:\\Control Panel\\Desktop' -Name ScreenSaverIsSecure -Value 1; Set-ItemProperty -Path 'HKCU:\\Control Panel\\Desktop' -Name ScreenSaveTimeOut -Value 600",
+  "SecureValue": "True",
+  "ItemId": "W-47",
+  "appTarget": "control desk.cpl,screensaver,@screensaver",
+  "Description": "현재 실행 사용자만 점검. 화면 보호기 실행 파일과 정책 우선순위 및 모든 사용자 적용은 수동 확인.",
+  "Impact": "현재 실행 사용자만 점검. 화면 보호기 실행 파일과 정책 우선순위 및 모든 사용자 적용은 수동 확인.",
+  "RequiresConfirmation": false,
+  "AutoRemediationSupported": false
 }

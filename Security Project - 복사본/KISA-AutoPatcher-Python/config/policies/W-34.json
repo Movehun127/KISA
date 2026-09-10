@@ -1,16 +1,19 @@
 {
-    "Title": "Telnet 서비스 비활성화",
-    "Category": "서비스 관리",
-    "Level": "상",
-    "TechType": "Type_Powershell",
-    "CheckCommand": "$s = Get-Service -Name TlntSvr -ErrorAction SilentlyContinue; if ($s -eq $null -or $s.Status -ne 'Running') { 'True' } else { 'False' }",
-    "RemediationCommand": "Stop-Service -Name TlntSvr -Force -ErrorAction SilentlyContinue; Set-Service -Name TlntSvr -StartupType Disabled -ErrorAction SilentlyContinue",
-    "SecureValue": "True",
-    "ItemId": "W-34",
-    "appTarget": "services.msc",
-    "treePath": [],
-    "targetItem": [
-        "Telnet",
-        "TlntSvr"
-    ]
+  "Title": "Telnet 서비스 비활성화",
+  "Category": "서비스 관리",
+  "Level": "중",
+  "TechType": "Type_Skip",
+  "SecureValue": "True",
+  "ItemId": "W-34",
+  "appTarget": "services.msc",
+  "treePath": [],
+  "targetItem": [
+    "Telnet",
+    "TlntSvr"
+  ],
+  "Description": "Telnet 미사용 또는 NTLM 인증 여부 확인. 업무 연계 확인 후 중지.",
+  "captureOnly": true,
+  "Impact": "Telnet 미사용 또는 NTLM 인증 여부 확인. 업무 연계 확인 후 중지.",
+  "RequiresConfirmation": false,
+  "AutoRemediationSupported": false
 }

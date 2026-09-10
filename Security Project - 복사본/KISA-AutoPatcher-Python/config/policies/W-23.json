@@ -1,29 +1,32 @@
 {
-    "Title": "공유 서비스에 대한 익명 접근 제한 설정",
-    "Category": "서비스 관리",
-    "Level": "상",
-    "TechType": "Type_Powershell",
-    "CheckCommand": "(Get-ItemProperty -Path 'HKLM:\\System\\CurrentControlSet\\Services\\LanmanServer\\Parameters' -Name NullSessionShares -ErrorAction SilentlyContinue).NullSessionShares -eq $null",
-    "RemediationCommand": "Remove-ItemProperty -Path 'HKLM:\\System\\CurrentControlSet\\Services\\LanmanServer\\Parameters' -Name NullSessionShares -ErrorAction SilentlyContinue",
-    "SecureValue": "True",
-    "ItemId": "W-23",
-    "appTarget": "secpol.msc",
-    "treePath": [
-        [
-            "보안 설정",
-            "Security Settings"
-        ],
-        [
-            "로컬 정책",
-            "Local Policies"
-        ],
-        [
-            "보안 옵션",
-            "Security Options"
-        ]
+  "Title": "공유 서비스에 대한 익명 접근 제한 설정",
+  "Category": "서비스 관리",
+  "Level": "상",
+  "TechType": "Type_Skip",
+  "SecureValue": "True",
+  "ItemId": "W-23",
+  "appTarget": "secpol.msc",
+  "treePath": [
+    [
+      "보안 설정",
+      "Security Settings"
     ],
-    "targetItem": [
-        "네트워크 액세스: 익명으로 액세스할 수 있는 공유",
-        "Network access: Shares that can be accessed anonymously"
+    [
+      "로컬 정책",
+      "Local Policies"
+    ],
+    [
+      "보안 옵션",
+      "Security Options"
     ]
+  ],
+  "targetItem": [
+    "네트워크 액세스: 익명으로 액세스할 수 있는 공유",
+    "Network access: Shares that can be accessed anonymously"
+  ],
+  "Description": "익명 공유와 애플리케이션 의존성을 함께 확인.",
+  "captureOnly": true,
+  "Impact": "익명 공유와 애플리케이션 의존성을 함께 확인.",
+  "RequiresConfirmation": false,
+  "AutoRemediationSupported": false
 }

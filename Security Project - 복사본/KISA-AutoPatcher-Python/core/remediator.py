@@ -1,223 +1,170 @@
-# -*- coding: utf-8 -*-
-"""
-remediator.py  –  보안 조치 엔진 (PowerShell Remediation.psm1 대체)
-레지스트리 쓰기, Secedit 적용, Powershell 명령 실행
-"""
-
-import os
+"""Backed-up, verified remediation. Unsupported mutations require manual work."""
+import base64
+import ctypes
 import json
+import os
+import re
+import threading
+import uuid
 import winreg
-import subprocess
-import tempfile
-import shutil
-from datetime import datetime
+from pathlib import Path
+from .detector import _parse_reg_path, get_vulnerability_status
+from .execution import run_ps, export_security_policy, apply_security_policy, matches
+
+_LOCK = threading.Lock()
+_TYPES = {'DWord': winreg.REG_DWORD, 'String': winreg.REG_SZ}
 
 
-# ── 레지스트리 경로 변환 ─────────────────────────────────────────────
-_REG_ROOTS = {
-    "HKLM":  winreg.HKEY_LOCAL_MACHINE,
-    "HKCU":  winreg.HKEY_CURRENT_USER,
-    "HKCR":  winreg.HKEY_CLASSES_ROOT,
-    "HKU":   winreg.HKEY_USERS,
-    "HKCC":  winreg.HKEY_CURRENT_CONFIG,
-    "HKEY_LOCAL_MACHINE":  winreg.HKEY_LOCAL_MACHINE,
-    "HKEY_CURRENT_USER":   winreg.HKEY_CURRENT_USER,
-    "HKEY_CLASSES_ROOT":   winreg.HKEY_CLASSES_ROOT,
-    "HKEY_USERS":          winreg.HKEY_USERS,
-    "HKEY_CURRENT_CONFIG": winreg.HKEY_CURRENT_CONFIG,
-}
-_REG_TYPES = {
-    "DWord":      winreg.REG_DWORD,
-    "DWORD":      winreg.REG_DWORD,
-    "QWord":      winreg.REG_QWORD,
-    "QWORD":      winreg.REG_QWORD,
-    "String":     winreg.REG_SZ,
-    "REG_SZ":     winreg.REG_SZ,
-    "ExpandString": winreg.REG_EXPAND_SZ,
-    "Binary":     winreg.REG_BINARY,
-    "MultiString": winreg.REG_MULTI_SZ,
-}
-
-def _parse_reg_path(path: str):
-    path = path.replace("/", "\\")
-    parts = path.split("\\", 1)
-    hive_str = parts[0].upper().rstrip(":")
-    subkey   = parts[1] if len(parts) > 1 else ""
-    hive     = _REG_ROOTS.get(hive_str)
-    if hive is None:
-        raise ValueError(f"알 수 없는 레지스트리 루트: {hive_str}")
-    return hive, subkey
-
-
-def _run_ps(command: str) -> str:
-    result = subprocess.run(
-        ["powershell", "-NoProfile", "-NonInteractive",
-         "-ExecutionPolicy", "Bypass", "-Command", command],
-        capture_output=True, text=True, timeout=60,
-        creationflags=subprocess.CREATE_NO_WINDOW
-    )
-    return result.stdout.strip()
-
-
-def reg_read(path: str, name: str):
-    try:
-        hive, subkey = _parse_reg_path(path)
-        with winreg.OpenKey(hive, subkey, 0, winreg.KEY_READ) as key:
-            val, _ = winreg.QueryValueEx(key, name)
-            return val
-    except Exception:
-        return None
-
-
-def reg_write(path: str, name: str, value, reg_type: str = "DWord"):
+def _snapshot(path, name):
     hive, subkey = _parse_reg_path(path)
-    wtype = _REG_TYPES.get(reg_type, winreg.REG_DWORD)
-    # DWord 값은 정수 변환
-    if wtype in (winreg.REG_DWORD, winreg.REG_QWORD):
+    try:
+        with winreg.OpenKey(hive, subkey, 0, winreg.KEY_READ | winreg.KEY_WOW64_64KEY) as key:
+            value, typ = winreg.QueryValueEx(key, name)
+        return {'exists': True, 'value': value, 'type': typ}
+    except FileNotFoundError:
+        return {'exists': False}
+
+
+def reg_read(path, name):
+    return _snapshot(path, name).get('value')
+
+
+def reg_write(path, name, value, reg_type='DWord'):
+    typ = _TYPES[reg_type] if isinstance(reg_type, str) else reg_type
+    if typ in (winreg.REG_DWORD, winreg.REG_QWORD):
         value = int(value)
-    with winreg.CreateKeyEx(hive, subkey, 0, winreg.KEY_WRITE) as key:
-        winreg.SetValueEx(key, name, 0, wtype, value)
+    hive, subkey = _parse_reg_path(path)
+    with winreg.CreateKeyEx(hive, subkey, 0, winreg.KEY_SET_VALUE | winreg.KEY_WOW64_64KEY) as key:
+        winreg.SetValueEx(key, name, 0, typ, value)
 
 
-# ── 메인 조치 함수 ────────────────────────────────────────────────────
-def invoke_remediation(
-    vulnerability_results: list[dict],
-    backup_dir: str,
-    evidence_dir: str = "",
-    log_callback=None
-) -> None:
-    """
-    취약 항목에 대해 자동 보안 조치를 수행합니다.
-    log_callback(msg, level): GUI 로그 출력용 콜백 (optional)
-    level: 'info' | 'good' | 'warn' | 'error'
-    """
-    os.makedirs(backup_dir, exist_ok=True)
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+def _restore_registry(path, name, old):
+    if old['exists']:
+        reg_write(path, name, old['value'], old['type'])
+    else:
+        hive, subkey = _parse_reg_path(path)
+        try:
+            with winreg.OpenKey(hive, subkey, 0, winreg.KEY_SET_VALUE | winreg.KEY_WOW64_64KEY) as key:
+                winreg.DeleteValue(key, name)
+        except FileNotFoundError:
+            pass
+    if _snapshot(path, name) != old:
+        raise RuntimeError('Registry rollback verification failed')
 
-    def log(msg, level="info"):
+
+def _encode(value):
+    if isinstance(value, bytes):
+        return {'__bytes__': base64.b64encode(value).decode('ascii')}
+    raise TypeError(type(value).__name__)
+
+
+def _decode(value):
+    if set(value) == {'__bytes__'}:
+        return base64.b64decode(value['__bytes__'])
+    return value
+
+
+def restore_backup(filename):
+    """Explicit administrator recovery of one saved setting; never auto-load arbitrary files."""
+    if not ctypes.windll.shell32.IsUserAnAdmin():
+        raise PermissionError('Administrator required')
+    data = json.loads(Path(filename).read_text(encoding='utf-8'), object_hook=_decode)
+    if data['kind'] == 'registry':
+        _restore_registry(data['path'], data['name'], data['before'])
+    elif data['kind'] == 'secedit':
+        apply_security_policy(data['before'])
+        current = export_security_policy()
+        if any(str(current.get(k)) != str(v) for k, v in data['before'].items()):
+            raise RuntimeError('Security policy rollback verification failed')
+    else:
+        raise ValueError('Unknown backup kind')
+
+
+def invoke_remediation(vulnerability_results, backup_dir, evidence_dir='', log_callback=None,
+                       approved_items=None):
+    approved = set(approved_items or [])
+    def log(msg, level='info'):
         if log_callback:
             log_callback(msg, level)
-
-    for result in vulnerability_results:
-        status    = result.get("Status", "")
-        item      = result.get("ConfigItem", {})
-        item_id   = result.get("ItemId", "")
-        tech_type = result.get("TechType", "")
-
-        # 양호 / 수동조치 항목은 건너뜀
-        if "양호" in status or "수동 조치" in status:
-            log(f"[{item_id}] 상태 양호 – 조치 건너뜀", "good")
-            continue
-
-        log(f"[{item_id}] 취약 → 자동 보안 조치 적용 중... ({tech_type})", "warn")
-        backup_file = os.path.join(backup_dir, f"{item_id}_{timestamp}.bak")
-        rollback = None
-
-        try:
-            if tech_type == "Type_Powershell":
-                prev = result.get("CurrentValue", "")
-                with open(backup_file, "w", encoding="utf-8") as bf:
-                    bf.write(f"PreviousState={prev}")
-                cmd = item.get("RemediationCommand", "")
-                if cmd:
-                    _run_ps(cmd)
-
-            elif tech_type == "Type_Registry":
-                reg_path = item.get("RegistryPath", "")
-                reg_name = item.get("RegistryName", "")
-                reg_type = item.get("RegistryType", "DWord")
-                prev_val = reg_read(reg_path, reg_name)
-                with open(backup_file, "w", encoding="utf-8") as bf:
-                    json.dump({reg_name: prev_val}, bf, ensure_ascii=False)
-
-                def _rollback_reg(rp=reg_path, rn=reg_name, rt=reg_type, pv=prev_val):
-                    if pv is not None:
-                        reg_write(rp, rn, pv, rt)
-
-                rollback = _rollback_reg
-                reg_write(reg_path, reg_name, item.get("SecureValue"), reg_type)
-
-            elif tech_type == "Type_Secedit":
-                key      = item.get("SeceditKey", "")
-                sec_val  = item.get("SecureValue", "")
-                sec_temp = os.path.join(tempfile.gettempdir(), "sec_backup.inf")
-                subprocess.run(
-                    ["secedit", "/export", "/cfg", sec_temp, "/quiet"],
-                    capture_output=True, timeout=30,
-                    creationflags=subprocess.CREATE_NO_WINDOW
-                )
-                shutil.copy2(sec_temp, backup_file)
-
-                def _rollback_sec(bf=backup_file):
-                    sdb = os.path.join(tempfile.gettempdir(), "sec_rollback.sdb")
-                    subprocess.run(
-                        ["secedit", "/configure", "/db", sdb, "/cfg", bf, "/quiet"],
-                        capture_output=True, timeout=60,
-                        creationflags=subprocess.CREATE_NO_WINDOW
-                    )
-
-                rollback = _rollback_sec
-
-                with open(sec_temp, encoding="utf-16-le", errors="replace") as f:
-                    content = f.read()
-                import re
-                content = re.sub(
-                    rf"^{re.escape(key)}\s*=.*",
-                    f"{key} = {sec_val}",
-                    content, flags=re.MULTILINE
-                )
-                with open(sec_temp, "w", encoding="utf-16-le") as f:
-                    f.write(content)
-                sdb = os.path.join(tempfile.gettempdir(), "sec_apply.sdb")
-                subprocess.run(
-                    ["secedit", "/configure", "/db", sdb, "/cfg", sec_temp, "/quiet"],
-                    capture_output=True, timeout=60,
-                    creationflags=subprocess.CREATE_NO_WINDOW
-                )
-                if os.path.exists(sec_temp):
-                    os.remove(sec_temp)
-
-            elif tech_type == "Type_Defender":
-                with open(backup_file, "w", encoding="utf-8") as bf:
-                    bf.write("Signature Update Triggered")
-                log(f"  → Defender 서명 업데이트를 백그라운드로 시작합니다.", "info")
-                _run_ps("Update-MpSignature")
-
-            elif tech_type == "Type_Python_ServiceCheck":
-                target_services_raw = item.get("targetItem") or item.get("targetServices") or []
-                target_services = []
-                for s in target_services_raw:
-                    if isinstance(s, dict):
-                        target_services.append(s.get("name"))
-                    else:
-                        target_services.append(s)
-                
-                failed_services = []
-                with open(backup_file, "w", encoding="utf-8") as bf:
-                    bf.write("Service remediation triggered for: " + ", ".join(target_services))
-                
-                for svc in target_services:
-                    # 서비스 중지 및 비활성화 (오류 무시)
-                    stop_cmd = f"Stop-Service -Name '{svc}' -Force -ErrorAction SilentlyContinue; Set-Service -Name '{svc}' -StartupType Disabled -ErrorAction SilentlyContinue"
-                    _run_ps(stop_cmd)
-                    
-                    # 조치 후 상태 확인
-                    ps_out = _run_ps(f"(Get-Service -Name '{svc}' -ErrorAction SilentlyContinue).Status").strip()
-                    if ps_out == "Running":
-                        failed_services.append(svc)
-                
-                if failed_services:
-                    fail_note = f"~~서비스 종료 X ({', '.join(failed_services[:3])})"
-                    result["Note"] = fail_note
-                    log(f"  → 일부 서비스 종료 실패: {fail_note}", "warn")
-
-            log(f"  → 조치 완료 / 백업: {backup_file}", "good")
-
-        except Exception as e:
-            log(f"  → [오류] 자동 조치 실패: {e}", "error")
-            if rollback:
-                try:
-                    rollback()
-                    log(f"  → 롤백 성공", "info")
-                except Exception as re_err:
-                    log(f"  → 롤백 실패: {re_err}", "error")
+    if not _LOCK.acquire(blocking=False):
+        for result in vulnerability_results:
+            result['FixStatus'] = '실패'
+            result['Note'] = '다른 조치가 실행 중입니다'
+        return vulnerability_results
+    try:
+        for result in vulnerability_results:
+            item = result.get('ConfigItem', {})
+            iid = result.get('ItemId', '')
+            kind = item.get('TechType')
+            result['FixStatus'] = '건너뜀'
+            if result.get('Status') != '취약':
+                continue
+            if kind not in ('Type_Registry', 'Type_Secedit'):
+                result.update(FixStatus='수동 조치 필요', Note='안전한 백업·복원 구현이 없는 조치는 자동 실행하지 않습니다')
+                log(f'[{iid}] {result["Note"]}', 'warn')
+                continue
+            if item.get('RequiresConfirmation') and iid not in approved:
+                result.update(FixStatus='승인 필요', Note=item.get('Impact', '운영 영향 검토 필요'))
+                continue
+            backup = None
+            attempted = False
+            try:
+                if not re.fullmatch(r'W-\d{2}(?:_[A-Za-z]+)?', iid):
+                    raise ValueError('Invalid item id')
+                if not ctypes.windll.shell32.IsUserAnAdmin():
+                    raise PermissionError('관리자 권한이 필요합니다')
+                # Local writes cannot demonstrate domain resultant policy compliance.
+                role = json.loads(run_ps('Get-CimInstance Win32_ComputerSystem | Select-Object PartOfDomain,DomainRole | ConvertTo-Json -Compress'))
+                if role.get('PartOfDomain') is not False or int(role['DomainRole']) >= 4:
+                    result.update(FixStatus='수동 조치 필요', Note='도메인/GPO 관리 장비는 중앙 정책과 유효 정책 확인 후 적용하세요')
+                    continue
+                Path(backup_dir).mkdir(parents=True, exist_ok=True)
+                backup = Path(backup_dir)/f'{iid}_{uuid.uuid4().hex}.json'
+                if kind == 'Type_Registry':
+                    path, name = item['RegistryPath'], item['RegistryName']
+                    old = _snapshot(path, name)
+                    data = {'kind': 'registry', 'path': path, 'name': name, 'before': old}
+                else:
+                    wanted = item.get('SeceditValues', {item.get('SeceditKey'): item.get('SecureValue')})
+                    current = export_security_policy()
+                    if any(k not in current for k in wanted):
+                        raise RuntimeError('변경 전 정책 값을 확인할 수 없어 조치를 중단합니다')
+                    old = {k: current[k] for k in wanted}
+                    # Preserve stronger existing settings in a compound policy.
+                    wanted = {k: (current[k] if matches(current[k], v, item.get('Comparisons', {}).get(k, 'eq')) else v)
+                              for k, v in wanted.items()}
+                    if 'LockoutDuration' in wanted:
+                        wanted['LockoutDuration'] = max(int(wanted['LockoutDuration']), int(wanted['ResetLockoutCount']))
+                    data = {'kind': 'secedit', 'before': old}
+                with backup.open('x', encoding='utf-8') as stream:
+                    json.dump(data, stream, ensure_ascii=False, default=_encode)
+                    stream.flush()
+                    os.fsync(stream.fileno())
+                result['BackupFile'] = str(backup)
+                attempted = True
+                if kind == 'Type_Registry':
+                    reg_write(path, name, item['SecureValue'], item.get('RegistryType', 'DWord'))
+                    after = _snapshot(path, name)
+                    if not after['exists'] or not matches(after['value'], item['SecureValue'], item.get('Comparison', 'eq')):
+                        raise RuntimeError('조치 후 레지스트리 검증 실패')
+                else:
+                    apply_security_policy(wanted)
+                    after = export_security_policy()
+                    if any(str(after.get(k)) != str(v) for k, v in wanted.items()):
+                        raise RuntimeError('조치 후 보안 정책 검증 실패')
+                result.update(FixStatus='완료', AfterValue=after, Note='변경값 재조회 검증 완료. 업무 기능 검증은 별도 필요')
+                log(f'[{iid}] 설정 검증 완료 / 백업: {backup}', 'good')
+            except Exception as exc:
+                result.update(FixStatus='실패', Note=str(exc))
+                log(f'[{iid}] 조치 실패: {exc}', 'error')
+                if attempted and backup:
+                    try:
+                        restore_backup(backup)
+                        result['RollbackStatus'] = '성공'
+                    except Exception as rollback_error:
+                        result['RollbackStatus'] = '실패'
+                        result['Note'] += f'; 복원 실패: {rollback_error}'
+                        log(result['Note'], 'error')
+    finally:
+        _LOCK.release()
+    return vulnerability_results

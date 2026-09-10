@@ -45,27 +45,16 @@ def reg_read(path: str, name: str):
     """레지스트리 값 읽기, 없으면 None 반환"""
     try:
         hive, subkey = _parse_reg_path(path)
-        with winreg.OpenKey(hive, subkey, 0, winreg.KEY_READ) as key:
+        with winreg.OpenKey(hive, subkey, 0, winreg.KEY_READ | winreg.KEY_WOW64_64KEY) as key:
             val, _ = winreg.QueryValueEx(key, name)
             return val
-    except Exception:
+    except FileNotFoundError:
         return None
 
 
 def _run_ps(command: str) -> str:
-    """간단한 PowerShell 식(Check/Remediation) 실행, stdout 반환 (창 숨김)"""
-    try:
-        result = subprocess.run(
-            ["powershell", "-NoProfile", "-NonInteractive",
-             "-ExecutionPolicy", "Bypass", "-Command", command],
-            capture_output=True, text=True, timeout=3,  # 타임아웃 3초로 최적화
-            creationflags=subprocess.CREATE_NO_WINDOW
-        )
-        return result.stdout.strip()
-    except subprocess.TimeoutExpired:
-        return "Timeout"
-    except Exception as e:
-        return f"Error: {e}"
+    from .execution import run_ps
+    return run_ps(command)
 
 
 # ── Secedit 캐시 ──────────────────────────────────────────────────────
@@ -76,25 +65,8 @@ def _load_secedit() -> dict[str, str]:
     global _secedit_cache, _secedit_loaded
     if _secedit_loaded:
         return _secedit_cache
-    tmp = os.path.join(tempfile.gettempdir(), "secedit_dump.inf")
-    try:
-        subprocess.run(
-            ["secedit", "/export", "/cfg", tmp, "/quiet"],
-            capture_output=True, timeout=30,
-            creationflags=subprocess.CREATE_NO_WINDOW
-        )
-        cache = {}
-        with open(tmp, encoding="utf-16-le", errors="replace") as f:
-            for line in f:
-                if "=" in line:
-                    k, _, v = line.partition("=")
-                    cache[k.strip()] = v.strip()
-        _secedit_cache = cache
-    except Exception:
-        pass
-    finally:
-        if os.path.exists(tmp):
-            os.remove(tmp)
+    from .execution import export_security_policy
+    _secedit_cache = export_security_policy()
     _secedit_loaded = True
     return _secedit_cache
 
@@ -121,7 +93,8 @@ def get_vulnerability_status(config_path: str) -> list[dict]:
                 criteria_list.append(json.load(fp))
     else:
         with open(config_path, encoding="utf-8-sig") as fp:
-            criteria_list = json.load(fp)
+            loaded = json.load(fp)
+            criteria_list = loaded if isinstance(loaded, list) else [loaded]
 
     results = []
 
@@ -132,10 +105,11 @@ def get_vulnerability_status(config_path: str) -> list[dict]:
         tech_type  = item.get("TechType", "")
         secure_val = str(item.get("SecureValue", "")) if item.get("SecureValue") is not None else ""
 
-        status        = "양호"
+        status        = "오류"
         current_value = None
 
         try:
+            status = "양호"
             if tech_type == "Type_Skip":
                 status = f"수동 조치({item.get('Description', '')})"
                 check_cmd = item.get("CheckCommand")
@@ -143,7 +117,11 @@ def get_vulnerability_status(config_path: str) -> list[dict]:
 
             elif tech_type == "Type_Powershell":
                 check_cmd = item.get("CheckCommand", "")
+                if not check_cmd:
+                    raise ValueError("점검 명령 없음")
                 current_value = _run_ps(check_cmd)
+                if not current_value:
+                    raise ValueError("점검 결과가 비어 있습니다")
                 if current_value != secure_val:
                     status = "취약"
 
@@ -156,22 +134,22 @@ def get_vulnerability_status(config_path: str) -> list[dict]:
                         status = "취약"
                     current_value = "Not Found"
                 else:
-                    if str(current_value) != secure_val:
+                    from .execution import matches
+                    if not matches(current_value, item.get("SecureValue"), item.get("Comparison", "eq")):
                         status = "취약"
 
             elif tech_type == "Type_Secedit":
                 sec = _load_secedit()
                 key = item.get("SeceditKey", "")
                 current_value = sec.get(key, "Not Found")
-                if key == "LockoutBadCount":
-                    try:
-                        if int(current_value) > int(secure_val) or int(current_value) == 0:
-                            status = "취약"
-                    except ValueError:
-                        status = "취약"
-                else:
-                    if str(current_value) != secure_val:
-                        status = "취약"
+                from .execution import matches
+                values = item.get("SeceditValues", {key: item.get("SecureValue")})
+                current_value = {k: sec.get(k) for k in values}
+                if any(v is None for v in current_value.values()):
+                    raise ValueError("보안 정책 값을 읽지 못했습니다")
+                if not all(matches(current_value[k], target, item.get("Comparisons", {}).get(k, "eq"))
+                           for k, target in values.items()):
+                    status = "취약"
 
             elif tech_type == "Type_Defender":
                 try:
@@ -225,6 +203,9 @@ def get_vulnerability_status(config_path: str) -> list[dict]:
                     else:
                         status = "양호"
                         current_value = "모두 중지 및 사용안함"
+
+            else:
+                raise ValueError(f"지원하지 않는 진단 유형: {tech_type}")
 
         except Exception as e:
             status = "오류"
