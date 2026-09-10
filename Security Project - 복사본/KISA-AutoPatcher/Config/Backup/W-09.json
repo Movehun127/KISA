@@ -1,0 +1,31 @@
+﻿{
+    "itemId":  "W-09",
+    "appTarget":  "gpedit.msc",
+    "treePath":  [
+                     [
+                         "보안 설정",
+                         "Security Settings"
+                     ],
+                     [
+                         "계정 정책",
+                         "Account Policies"
+                     ],
+                     [
+                         "암호 정책",
+                         "Password Policy"
+                     ]
+                 ],
+    "targetItem":  [
+                       "최소 암호 길이",
+                       "Minimum password length"
+                   ],
+    "actionType":  "KeyMacro",
+    "keySequence":  "%e8{ENTER}",
+    "captureOnly":  false,
+    "Level":  "상",
+    "Category":  "계정 관리",
+    "Title":  "비밀번호 관리정책 설정 - 최소 암호 길이",
+    "TechType":  "Type_Secedit",
+    "Description":  "최소 암호 길이 설정",
+    "SecureValue":  "8"
+}

@@ -1,0 +1,32 @@
+{
+    "Title": "로그온 시 경고 메시지 설정 (내용)",
+    "Category": "보안 관리",
+    "Level": "하",
+    "TechType": "Type_Powershell",
+    "CheckCommand": "([string]::IsNullOrEmpty((Get-ItemProperty -Path 'HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System' -Name LegalNoticeCaption -ErrorAction SilentlyContinue).LegalNoticeCaption)).ToString()",
+    "RemediationCommand": "Set-ItemProperty -Path 'HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System' -Name LegalNoticeCaption -Value 'Warning'",
+    "SecureValue": "False",
+    "ItemId": "W-57_Text",
+    "Description": "보안 메시지 세부 고지 내용 설정",
+    "appTarget": "secpol.msc",
+    "treePath": [
+        [
+            "보안 설정",
+            "Security Settings"
+        ],
+        [
+            "로컬 정책",
+            "Local Policies"
+        ],
+        [
+            "보안 옵션",
+            "Security Options"
+        ]
+    ],
+    "targetItem": [
+        "대화형 로그온: 로그온 시도하는 사용자에 대한 메시지 텍스트",
+        "대화형 로그온: 로그온을 시도하는 사용자에 대한 메시지 텍스트",
+        "메시지 텍스트",
+        "Interactive logon: Message text for users attempting to log on"
+    ]
+}

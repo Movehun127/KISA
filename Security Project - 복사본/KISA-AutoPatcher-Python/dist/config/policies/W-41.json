@@ -1,0 +1,16 @@
+{
+    "Title": "NTP 및 시각 동기화 설정",
+    "Category": "서비스 관리",
+    "Level": "중",
+    "TechType": "Type_Powershell",
+    "CheckCommand": "(Get-Service -Name W32Time -ErrorAction SilentlyContinue).Status -eq 'Running'",
+    "RemediationCommand": "Start-Service -Name W32Time -ErrorAction SilentlyContinue; Set-Service -Name W32Time -StartupType Automatic -ErrorAction SilentlyContinue",
+    "SecureValue": "True",
+    "ItemId": "W-41",
+    "appTarget": "timedate.cpl",
+    "treePath": [],
+    "targetItem": [
+        "Windows Time",
+        "W32Time"
+    ]
+}

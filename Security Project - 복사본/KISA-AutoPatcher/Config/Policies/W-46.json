@@ -1,0 +1,12 @@
+﻿{
+    "ItemId":  "W-46",
+    "Level":  "중",
+    "Category":  "로그 관리",
+    "Title":  "이벤트 로그 파일 접근 통제 설정",
+    "TechType":  "Type_Powershell",
+    "Description":  "config 및 LogFiles 디렉터리에 대한 Everyone 접근 권한 배제",
+    "CheckCommand":  "$c = \"$env:SystemRoot\\System32\\config\"; $l = \"$env:SystemRoot\\System32\\LogFiles\"; $ok = $true; if (Test-Path $c) { if (((Get-Acl -Path $c).Access | Where-Object { $_.IdentityReference -eq \u0027Everyone\u0027 }).Count -gt 0) { $ok = $false } }; if (Test-Path $l) { if (((Get-Acl -Path $l).Access | Where-Object { $_.IdentityReference -eq \u0027Everyone\u0027 }).Count -gt 0) { $ok = $false } }; $ok.ToString()",
+    "RemediationCommand":  "$c = \"$env:SystemRoot\\System32\\config\"; $l = \"$env:SystemRoot\\System32\\LogFiles\"; if (Test-Path $c) { icacls $c /remove:g Everyone /c /q -ErrorAction SilentlyContinue }; if (Test-Path $l) { icacls $l /remove:g Everyone /t /c /q -ErrorAction SilentlyContinue }",
+    "SecureValue":  "True"
+}
+

@@ -1,0 +1,19 @@
+﻿{
+    "ItemId":  "W-55",
+    "RemediationCommand":  "Set-ItemProperty -Path \"HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\" -Name AutoAdminLogon -Value \"0\" -Type String -Force",
+    "appTarget":  "regedit.exe",
+    "treePath":  null,
+    "targetItem":  null,
+    "actionType":  "OpenPropertiesOnly",
+    "keySequence":  "",
+    "CheckCommand":  "((Get-ItemProperty -Path \"HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\" -ErrorAction SilentlyContinue).AutoAdminLogon -eq \"0\").ToString()",
+    "Level":  "상",
+    "Category":  "보안 관리",
+    "Title":  "Autologon 기능 제어",
+    "TechType":  "Type_Skip",
+    "Description":  "자동 관리 로그온(AutoAdminLogon) 기능 해제",
+    "SecureValue":  "0",
+    "RegistryPath":  "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon",
+    "RegistryName":  "AutoAdminLogon"
+}
+

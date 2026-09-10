@@ -1,0 +1,29 @@
+{
+    "Title": "Administrator 계정 이름 변경 등 보안성 강화",
+    "Category": "계정 관리",
+    "Level": "상",
+    "TechType": "Type_Powershell",
+    "CheckCommand": "(Get-LocalUser | Where-Object { $_.SID -like '*-500' }).Name -ne 'Administrator'",
+    "RemediationCommand": "Rename-LocalUser -Name 'Administrator' -NewName 'Admin_Secure' -ErrorAction SilentlyContinue",
+    "SecureValue": "True",
+    "ItemId": "W-01",
+    "appTarget": "secpol.msc",
+    "treePath": [
+        [
+            "보안 설정",
+            "Security Settings"
+        ],
+        [
+            "로컬 정책",
+            "Local Policies"
+        ],
+        [
+            "보안 옵션",
+            "Security Options"
+        ]
+    ],
+    "targetItem": [
+        "계정: Administrator 계정 이름 바꾸기",
+        "Accounts: Rename administrator account"
+    ]
+}

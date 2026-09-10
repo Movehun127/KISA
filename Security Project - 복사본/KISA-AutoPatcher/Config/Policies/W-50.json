@@ -1,0 +1,19 @@
+﻿{
+    "ItemId":  "W-50",
+    "RemediationCommand":  "Set-ItemProperty -Path \"HKCU:\\Control Panel\\Desktop\" -Name ScreenSaveActive -Value \"1\" -Force; Set-ItemProperty -Path \"HKCU:\\Control Panel\\Desktop\" -Name ScreenSaveTimeOut -Value \"600\" -Force; Set-ItemProperty -Path \"HKCU:\\Control Panel\\Desktop\" -Name SCRNSAVE.EXE -Value \"C:\\Windows\\System32\\ssText3d.scr\" -Force",
+    "CheckCommand":  "$active = (Get-ItemProperty -Path \"HKCU:\\Control Panel\\Desktop\" -ErrorAction SilentlyContinue).ScreenSaveActive; $timeout = (Get-ItemProperty -Path \"HKCU:\\Control Panel\\Desktop\" -ErrorAction SilentlyContinue).ScreenSaveTimeOut; $scr = (Get-ItemProperty -Path \"HKCU:\\Control Panel\\Desktop\" -ErrorAction SilentlyContinue).\"SCRNSAVE.EXE\"; (($active -eq \"1\") -and ($timeout -eq \"600\") -and ($scr -like \"*ssText3d.scr*\")).ToString()",
+    "appTarget":  "control.exe",
+    "arguments":  "desk.cpl,,@screensaver",
+    "treePath":  null,
+    "targetItem":  null,
+    "actionType":  "KeyMacro",
+    "keySequence":  "{DOWN}{TAB}{TAB}{TAB}10",
+    "captureOnly":  false,
+    "Level":  "상",
+    "Category":  "보안 관리",
+    "Title":  "화면보호기 설정",
+    "TechType":  "Type_Powershell",
+    "Description":  "화면보호기 활성화 설정 (3차원 텍스트, 대기 시간 10분/600초)",
+    "SecureValue":  "True"
+}
+

@@ -1,0 +1,43 @@
+{
+    "Title": "터미널 서비스 암호화 수준 설정",
+    "Category": "서비스 관리",
+    "Level": "상",
+    "TechType": "Type_Powershell",
+    "CheckCommand": "(Get-ItemProperty -Path 'HKLM:\\System\\CurrentControlSet\\Control\\Terminal Server\\WinStations\\RDP-Tcp' -Name MinEncryptionLevel -ErrorAction SilentlyContinue).MinEncryptionLevel.ToString()",
+    "RemediationCommand": "Set-ItemProperty -Path 'HKLM:\\System\\CurrentControlSet\\Control\\Terminal Server\\WinStations\\RDP-Tcp' -Name MinEncryptionLevel -Value 3",
+    "SecureValue": "3",
+    "ItemId": "W-28",
+    "appTarget": "gpedit.msc",
+    "treePath": [
+        [
+            "컴퓨터 구성",
+            "Computer Configuration"
+        ],
+        [
+            "관리 템플릿",
+            "Administrative Templates"
+        ],
+        [
+            "Windows 구성 요소",
+            "Windows Components"
+        ],
+        [
+            "원격 데스크톱 서비스",
+            "터미널 서비스",
+            "Remote Desktop Services",
+            "Terminal Services"
+        ],
+        [
+            "원격 데스크톱 세션 호스트",
+            "Remote Desktop Session Host"
+        ],
+        [
+            "보안",
+            "Security"
+        ]
+    ],
+    "targetItem": [
+        "클라이언트 연결 암호화 수준 설정",
+        "Set client connection encryption level"
+    ]
+}

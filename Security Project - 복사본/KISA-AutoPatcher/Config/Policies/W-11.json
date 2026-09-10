@@ -1,0 +1,34 @@
+﻿{
+    "ItemId":  "W-11",
+    "appTarget":  "secpol.msc",
+    "treePath":  [
+                     [
+                         "보안 설정",
+                         "Security Settings"
+                     ],
+                     [
+                         "로컬 정책",
+                         "Local Policies"
+                     ],
+                     [
+                         "사용자 권한 지정",
+                         "사용자 권한 할당",
+                         "User Rights Assignment"
+                     ]
+                 ],
+    "targetItem":  [
+                       "로컬 로그온 허용",
+                       "Allow log on locally"
+                   ],
+    "actionType":  "OpenPropertiesOnly",
+    "keySequence":  "",
+    "captureOnly":  false,
+    "Level":  "중",
+    "Category":  "계정 관리",
+    "Title":  "로컬 로그온 허용 설정",
+    "TechType":  "Type_Powershell",
+    "Description":  "로컬 로그온 허용 권한에 Administrators, IUSR만 존재하는지 검증 및 조치",
+    "CheckCommand":  "$temp = \"$env:TEMP\\sec_w11.inf\"; if (Test-Path $temp) { Remove-Item $temp -Force }; secedit /export /cfg $temp /quiet; if (Test-Path $temp) { $line = Get-Content $temp | Where-Object { $_ -match \"^\\s*SeInteractiveLogonRight\\s*=\\s*(.*)$\" } | Select-Object -First 1; Remove-Item $temp -Force; if ($line -and $Matches) { $val = $Matches[1].Trim(); $accounts = $val.Split(\u0027,\u0027) | ForEach-Object { $_.Trim().Replace(\"*\", \"\") }; $ok = $true; foreach ($acc in $accounts) { if ($acc -ne \"S-1-5-32-544\" -and $acc -ne \"S-1-5-17\" -and $acc -ne \"Administrators\" -and $acc -ne \"IUSR\") { $ok = $false } }; $ok.ToString() } else { \u0027False\u0027 } } else { \u0027False\u0027 }",
+    "RemediationCommand":  "$temp = \"$env:TEMP\\sec_w11_rem.inf\"; secedit /export /cfg $temp /quiet; if (Test-Path $temp) { $content = Get-Content $temp -Raw; if ($content -match \"(?m)^\\s*SeInteractiveLogonRight\\s*=\") { $content = $content -replace \"(?m)^\\s*SeInteractiveLogonRight\\s*=.*\", \"SeInteractiveLogonRight = *S-1-5-32-544,*S-1-5-17\" } else { if ($content -match \u0027\\[Privilege Rights\\]\u0027) { $content = $content -replace \u0027\\[Privilege Rights\\]\u0027, \"[Privilege Rights]`r`nSeInteractiveLogonRight = *S-1-5-32-544,*S-1-5-17\" } }; $content | Set-Content $temp; secedit /configure /db \"$env:TEMP\\sec_w11.sdb\" /cfg $temp /quiet; Remove-Item $temp -Force }",
+    "SecureValue":  "True"
+}

@@ -1,0 +1,21 @@
+﻿{
+    "ItemId":  "W-18",
+    "appTarget":  "services.msc",
+    "treePath":  null,
+    "targetItem":  [
+                       "Remote Registry",
+                       "원격 레지스트리"
+                   ],
+    "actionType":  "OpenPropertiesOnly",
+    "keySequence":  "",
+    "captureOnly":  false,
+    "Level":  "상",
+    "Category":  "서비스 관리",
+    "Title":  "불필요한 서비스 제거",
+    "TechType":  "Type_Skip",
+    "Description":  "Alerter, ClipBook, Messenger, SimpTcp, RemoteRegistry, Browser, mnmsrvc, WmdmPmSN, upnphost 등 불필요 서비스 중지 및 비활성화",
+    "CheckCommand":  "@(Get-Service -Name Alerter,ClipBook,Messenger,SimpTcp,RemoteRegistry,Browser,mnmsrvc,WmdmPmSN,upnphost -ErrorAction SilentlyContinue | Where-Object { $_.Status -eq \u0027Running\u0027 -or $_.StartType -ne \u0027Disabled\u0027 }).Count",
+    "RemediationCommand":  "Get-Service -Name Alerter,ClipBook,Messenger,SimpTcp,RemoteRegistry,Browser,mnmsrvc,WmdmPmSN,upnphost -ErrorAction SilentlyContinue | Stop-Service -Force; Get-Service -Name Alerter,ClipBook,Messenger,SimpTcp,RemoteRegistry,Browser,mnmsrvc,WmdmPmSN,upnphost -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled",
+    "SecureValue":  "0"
+}
+

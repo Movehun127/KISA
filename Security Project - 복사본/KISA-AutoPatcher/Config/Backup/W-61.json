@@ -1,0 +1,15 @@
+﻿{
+    "ItemId":  "W-61",
+    "appTarget":  null,
+    "treePath":  null,
+    "targetItem":  null,
+    "actionType":  "OpenPropertiesOnly",
+    "keySequence":  "",
+    "captureOnly":  false,
+    "Level":  "중",
+    "Category":  "보안 관리",
+    "Title":  "사용자별 홈 디렉터리 권한 설정",
+    "TechType":  "Type_Skip",
+    "Description":  "홈 디렉터리 권한 수동 점검 필요"
+}
+

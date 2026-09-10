@@ -1,0 +1,34 @@
+﻿{
+    "ItemId":  "W-13",
+    "appTarget":  "secpol.msc",
+    "treePath":  [
+                     [
+                         "보안 설정",
+                         "Security Settings"
+                     ],
+                     [
+                         "로컬 정책",
+                         "Local Policies"
+                     ],
+                     [
+                         "보안 옵션",
+                         "Security Options"
+                     ]
+                 ],
+    "targetItem":  [
+                       "계정: 콘솔 로그온 시 로컬 계정에서 빈 암호 사용 제한",
+                       "콘솔 로그온 시 로컬 계정에서 빈 암호 사용 제한",
+                       "Accounts: Limit local account use of blank passwords to console logon only"
+                   ],
+    "actionType":  "KeyMacro",
+    "keySequence":  "%e{UP}{ENTER}",
+    "captureOnly":  false,
+    "Level":  "중",
+    "Category":  "계정 관리",
+    "Title":  "콘솔 로그온 시 로컬 계정에서 빈 암호 사용 제한",
+    "TechType":  "Type_Registry",
+    "Description":  "로컬 계정의 빈 암호 사용 제한 설정 활성화",
+    "SecureValue":  "1",
+    "RegistryPath":  "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Lsa",
+    "RegistryName":  "LimitBlankPasswordUse"
+}

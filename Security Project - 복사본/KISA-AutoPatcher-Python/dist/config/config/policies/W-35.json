@@ -1,0 +1,11 @@
+{
+    "Title": "불필요한 ODBC/OLE-DB 데이터 소스와 드라이브 제거",
+    "Category": "서비스 관리",
+    "Level": "상",
+    "TechType": "Type_Skip",
+    "Description": "기본 제공 ODBC 드라이버 명세 분석 및 불필요 항목 제거 수동 점검",
+    "captureOnly": true,
+    "ItemId": "W-35",
+    "appTarget": "ncpa.cpl",
+    "actionType": "NetworkDNS"
+}

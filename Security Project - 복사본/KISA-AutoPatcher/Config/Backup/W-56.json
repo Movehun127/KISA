@@ -1,0 +1,34 @@
+﻿{
+    "ItemId":  "W-56",
+    "RemediationCommand":  "Set-ItemProperty -Path \"HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\" -Name AllocateDASD -Value \"0\" -Type String -Force",
+    "CheckCommand":  "$val = Get-ItemProperty -Path \"HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\" -ErrorAction SilentlyContinue; $kind = (Get-Item -Path \"HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\").GetValueKind(\"AllocateDASD\"); ($null -ne $val -and $val.AllocateDASD -eq \"0\" -and $kind -eq \"String\").ToString()",
+    "appTarget":  "secpol.msc",
+    "treePath":  [
+                     [
+                         "보안 설정",
+                         "Security Settings"
+                     ],
+                     [
+                         "로컬 정책",
+                         "Local Policies"
+                     ],
+                     [
+                         "보안 옵션",
+                         "Security Options"
+                     ]
+                 ],
+    "targetItem":  [
+                       "장치: 이동식 미디어 포맷 및 꺼내기 허용",
+                       "Devices: Allowed to format and eject removable media"
+                   ],
+    "actionType":  "OpenPropertiesOnly",
+    "keySequence":  "",
+    "captureOnly":  false,
+    "Level":  "상",
+    "Category":  "보안 관리",
+    "Title":  "이동식 미디어 포맷 및 꺼내기 허용",
+    "TechType":  "Type_Powershell",
+    "Description":  "미디어 포맷 및 꺼내기 허용 대상을 Administrator로 제한",
+    "SecureValue":  "True"
+}
+

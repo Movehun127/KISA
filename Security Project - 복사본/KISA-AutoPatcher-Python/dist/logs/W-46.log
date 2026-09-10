@@ -1,0 +1,9 @@
+[14:50:51] 
+🔷 [W-46]  SAM 파일 접근 통제 설정
+[14:50:51]   → 조치 불필요 (양호)
+[14:50:51]   📷 증빙 화면 캡처 대기 중...
+[14:50:51]   [실행] explorer.exe 프로그램 로드 시도 중...
+[14:50:51]   [실행] C:\Windows\System32\config\SAM 속성 창 로드 시도 중...
+[14:50:53]     -> 속성 대화상자 감지 성공 (Name: SAM 속성). 우측 정렬 수행.
+[14:50:56]   [캡처] 활성화된 속성 다이얼로그(SAM 속성) 영역 캡처 진행.
+[14:50:56]   📷 증빙 캡처 완료: C:\Users\new-s\Desktop\Security Project\KISA-AutoPatcher-Python\dist\evidence\W-46.png

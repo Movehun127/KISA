@@ -1,0 +1,24 @@
+﻿{
+    "ItemId":  "W-48",
+    "appTarget":  "services.msc",
+    "treePath":  null,
+    "targetItem":  [
+                       "Windows Defender Antivirus Service",
+                       "Windows Defender 서비스",
+                       "Microsoft Defender Antivirus Service",
+                       "Microsoft Defender 백신 서비스",
+                       "WinDefend"
+                   ],
+    "actionType":  "OpenPropertiesOnly",
+    "keySequence":  "",
+    "captureOnly":  false,
+    "Level":  "상",
+    "Category":  "보안 관리",
+    "Title":  "백신 프로그램 설치",
+    "TechType":  "Type_Powershell",
+    "Description":  "Windows Defender 서비스 구동 상태",
+    "CheckCommand":  "(Get-Service -Name WinDefend -ErrorAction SilentlyContinue).Status -eq \u0027Running\u0027",
+    "RemediationCommand":  "Start-Service -Name WinDefend",
+    "SecureValue":  "True"
+}
+

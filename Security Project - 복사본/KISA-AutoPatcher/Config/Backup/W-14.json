@@ -1,0 +1,29 @@
+﻿{
+    "itemId":  "W-14",
+    "appTarget":  "gpedit.msc",
+    "treePath":  [
+                     [
+                         "로컬 사용자 및 그룹",
+                         "Local Users and Groups"
+                     ],
+                     [
+                         "그룹",
+                         "Groups"
+                     ]
+                 ],
+    "targetItem":  [
+                       "Remote Desktop Users",
+                       "원격 데스크톱 사용자"
+                   ],
+    "actionType":  "OpenPropertiesOnly",
+    "keySequence":  "",
+    "captureOnly":  false,
+    "Level":  "중",
+    "Category":  "계정 관리",
+    "Title":  "원격터미널 접속 가능한 사용자 그룹 제한",
+    "TechType":  "Type_Powershell",
+    "Description":  "원격 데스크톱 서비스 접속 권한 제한",
+    "CheckCommand":  "((Get-LocalGroupMember -Group \u0027Remote Desktop Users\u0027 -ErrorAction SilentlyContinue | Where-Object { $_.Name -notmatch \u0027Administrators|new-s\u0027 }).Count -eq 0).ToString()",
+    "RemediationCommand":  "Write-Host \u0027  -\u003e [주의] 수동 점검 필요: RDP 권한 허용 계정을 수동으로 검증하십시오.\u0027",
+    "SecureValue":  "True"
+}

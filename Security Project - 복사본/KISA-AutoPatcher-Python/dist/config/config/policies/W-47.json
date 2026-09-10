@@ -1,0 +1,12 @@
+{
+    "Title": "화면보호기 설정",
+    "Category": "보안 관리",
+    "Level": "상",
+    "TechType": "Type_Powershell",
+    "CheckCommand": "(Get-ItemProperty -Path 'HKCU:\\Control Panel\\Desktop' -Name ScreenSaveActive -ErrorAction SilentlyContinue).ScreenSaveActive.ToString() -eq '1'",
+    "RemediationCommand": "Set-ItemProperty -Path 'HKCU:\\Control Panel\\Desktop' -Name ScreenSaveActive -Value 1; Set-ItemProperty -Path 'HKCU:\\Control Panel\\Desktop' -Name ScreenSaverIsSecure -Value 1; Set-ItemProperty -Path 'HKCU:\\Control Panel\\Desktop' -Name ScreenSaveTimeOut -Value 600",
+    "SecureValue": "True",
+    "ItemId": "W-47",
+    "appTarget": "control desk.cpl,screensaver,@screensaver",
+    "Description": "화면 보호기 '다시 시작할 때 로그온 화면 표시' 활성화 및 대기 시간 10분(600초) 이하 설정 수동 확인"
+}

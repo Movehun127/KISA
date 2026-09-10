@@ -1,0 +1,16 @@
+{
+    "Title": "RDS(Remote Data Services)제거",
+    "Category": "서비스 관리",
+    "Level": "상",
+    "TechType": "Type_Powershell",
+    "CheckCommand": "$s = Get-Service -Name W3SVC -ErrorAction SilentlyContinue; if ($s -eq $null -or $s.Status -ne 'Running') { 'True' } else { 'False' }",
+    "RemediationCommand": "Write-Host '  -> [주의] IIS 서비스 실행 중. RDS 취약점 차단 레지스트리를 설정하십시오.'",
+    "SecureValue": "True",
+    "ItemId": "W-26",
+    "appTarget": "services.msc",
+    "treePath": [],
+    "targetItem": [
+        "World Wide Web",
+        "W3SVC"
+    ]
+}

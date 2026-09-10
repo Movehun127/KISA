@@ -1,0 +1,9 @@
+﻿{
+    "ItemId":  "W-35",
+    "Level":  "중",
+    "Category":  "서비스 관리",
+    "Title":  "DNS 서비스 구동 점검",
+    "TechType":  "Type_Skip",
+    "Description":  "DNS 미사용"
+}
+

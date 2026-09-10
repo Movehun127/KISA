@@ -1,0 +1,34 @@
+﻿{
+    "ItemId":  "W-63",
+    "appTarget":  "secpol.msc",
+    "treePath":  [
+                     [
+                         "보안 설정",
+                         "Security Settings"
+                     ],
+                     [
+                         "로컬 정책",
+                         "Local Policies"
+                     ],
+                     [
+                         "보안 옵션",
+                         "Security Options"
+                     ]
+                 ],
+    "targetItem":  [
+                       "도메인 구성원: 보안 채널 데이터를 디지털 암호화 또는 서명(항상)",
+                       "Domain member: Digitally encrypt or sign secure channel data (always)"
+                   ],
+    "actionType":  "KeyMacro",
+    "keySequence":  "%e{DOWN}{ENTER}",
+    "captureOnly":  false,
+    "Level":  "중",
+    "Category":  "보안 관리",
+    "Title":  "보안 채널 데이터 디지털 암호화 또는 서명",
+    "TechType":  "Type_Powershell",
+    "Description":  "도메인 간 보안 채널 데이터 항상 디지털 암호화 또는 서명 설정",
+    "CheckCommand":  "$p = Get-ItemProperty -Path \"HKLM:\\SYSTEM\\CurrentControlSet\\Services\\Netlogon\\Parameters\" -ErrorAction SilentlyContinue; (($p.RequireSignOrEncrypt -eq 1) -and ($p.SealSecureChannel -eq 1) -and ($p.SignSecureChannel -eq 1)).ToString()",
+    "RemediationCommand":  "Set-ItemProperty -Path \"HKLM:\\SYSTEM\\CurrentControlSet\\Services\\Netlogon\\Parameters\" -Name RequireSignOrEncrypt -Value 1 -Type DWord -Force; Set-ItemProperty -Path \"HKLM:\\SYSTEM\\CurrentControlSet\\Services\\Netlogon\\Parameters\" -Name SealSecureChannel -Value 1 -Type DWord -Force; Set-ItemProperty -Path \"HKLM:\\SYSTEM\\CurrentControlSet\\Services\\Netlogon\\Parameters\" -Name SignSecureChannel -Value 1 -Type DWord -Force",
+    "SecureValue":  "True"
+}
+

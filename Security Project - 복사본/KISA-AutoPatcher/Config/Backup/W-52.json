@@ -1,0 +1,36 @@
+﻿{
+    "itemId":  "W-52",
+    "appTarget":  "gpedit.msc",
+    "treePath":  [
+                     [
+                         "보안 설정",
+                         "Security Settings"
+                     ],
+                     [
+                         "로컬 정책",
+                         "Local Policies"
+                     ],
+                     [
+                         "사용자 권한 지정",
+                         "사용자 권한 할당",
+                         "User Rights Assignment"
+                     ]
+                 ],
+    "targetItem":  [
+                       "원격 시스템에서 강제로 시스템 종료",
+                       "원격 시스템에서 강제 종료",
+                       "Force shutdown from a remote system"
+                   ],
+    "actionType":  "OpenPropertiesOnly",
+    "keySequence":  "",
+    "captureOnly":  false,
+    "Level":  "상",
+    "Category":  "보안 관리",
+    "Title":  "원격 시스템에서 강제로 시스템 종료 권한 제한",
+    "TechType":  "Type_Powershell",
+    "Description":  "원격 시스템 종료 권한을 Administrators 그룹으로 한정",
+    "CheckCommand":  "((net localgroup \u0027Administrators\u0027 | Select-String -Pattern \u0027Everyone\u0027 -ErrorAction SilentlyContinue) -eq $null).ToString()",
+    "RemediationCommand":  "Write-Host \u0027  -\u003e [주의] 원격 시스템 강제 종료 권한 설정을 점검하십시오.\u0027",
+    "SecureValue":  "True"
+}
+

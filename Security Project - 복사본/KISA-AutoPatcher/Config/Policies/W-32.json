@@ -1,0 +1,9 @@
+﻿{
+    "ItemId":  "W-32",
+    "Level":  "상",
+    "Category":  "서비스 관리",
+    "Title":  "RDS(Remote Data Services)제거",
+    "TechType":  "Type_Skip",
+    "Description":  "IIS 미사용"
+}
+

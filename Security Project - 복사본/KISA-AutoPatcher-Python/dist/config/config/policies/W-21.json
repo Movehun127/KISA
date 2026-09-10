@@ -1,0 +1,16 @@
+{
+    "Title": "암호화되지 않는 FTP 서비스 비활성화",
+    "Category": "서비스 관리",
+    "Level": "상",
+    "TechType": "Type_Powershell",
+    "CheckCommand": "$s = Get-Service -Name MSFTPSVC -ErrorAction SilentlyContinue; if ($s -eq $null -or $s.Status -ne 'Running') { 'True' } else { 'False' }",
+    "RemediationCommand": "Stop-Service -Name MSFTPSVC -Force -ErrorAction SilentlyContinue; Set-Service -Name MSFTPSVC -StartupType Disabled -ErrorAction SilentlyContinue",
+    "SecureValue": "True",
+    "ItemId": "W-21",
+    "appTarget": "services.msc",
+    "treePath": [],
+    "targetItem": [
+        "Microsoft FTP Service",
+        "MSFTPSVC"
+    ]
+}

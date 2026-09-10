@@ -1,0 +1,34 @@
+﻿{
+    "ItemId":  "W-29",
+    "appTarget":  "secpol.msc",
+    "treePath":  [
+                     [
+                         "보안 설정",
+                         "Security Settings"
+                     ],
+                     [
+                         "로컬 정책",
+                         "Local Policies"
+                     ],
+                     [
+                         "보안 옵션",
+                         "Security Options"
+                     ]
+                 ],
+    "targetItem":  [
+                       "네트워크 액세스: 익명으로 액세스할 수 있는 네트워크 공유",
+                       "Network access: Shares that can be accessed anonymously"
+                   ],
+    "actionType":  "KeyMacro",
+    "keySequence":  "%e{DOWN}{ENTER}",
+    "captureOnly":  false,
+    "Level":  "상",
+    "Category":  "서비스 관리",
+    "Title":  "공유 서비스에 대한 익명 접근 제한 설정",
+    "TechType":  "Type_Powershell",
+    "Description":  "NullSessionShares 등을 통한 익명 접속 제한",
+    "CheckCommand":  "$v = (Get-ItemProperty -Path \"HKLM:\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters\" -ErrorAction SilentlyContinue).NullSessionShares; ($null -eq $v -or $v.Count -eq 0 -or ($v.Count -eq 1 -and [string]::IsNullOrEmpty($v[0]))).ToString()",
+    "RemediationCommand":  "Set-ItemProperty -Path \"HKLM:\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters\" -Name NullSessionShares -Value @() -Type MultiString -Force",
+    "SecureValue":  "True"
+}
+

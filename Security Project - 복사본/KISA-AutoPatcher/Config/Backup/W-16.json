@@ -1,0 +1,26 @@
+﻿{
+    "itemId":  "W-16",
+    "appTarget":  "gpedit.msc",
+    "treePath":  [
+                     [
+                         "공유 폴더",
+                         "Shared Folders"
+                     ],
+                     [
+                         "공유",
+                         "Shares"
+                     ]
+                 ],
+    "targetItem":  null,
+    "actionType":  "SelectOnly",
+    "keySequence":  "",
+    "captureOnly":  true,
+    "Level":  "상",
+    "Category":  "서비스 관리",
+    "Title":  "공유 권한 및 사용자 그룹 설정",
+    "TechType":  "Type_Powershell",
+    "Description":  "기본 공유 폴더 이외의 폴더 권한 Everyone 제거",
+    "CheckCommand":  "((Get-SmbShare | Where-Object { $_.Name -notmatch \u0027C\\$|ADMIN\\$|IPC\\$\u0027 } | ForEach-Object { Get-SmbShareAccess -Name $_.Name } | Where-Object { $_.AccountName -eq \u0027Everyone\u0027 }).Count -eq 0).ToString()",
+    "RemediationCommand":  "Write-Host \u0027  -\u003e [주의] 일반 공유 폴더의 Everyone 접근 권한을 수동으로 점검 및 변경하십시오.\u0027",
+    "SecureValue":  "True"
+}

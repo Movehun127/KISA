@@ -1,0 +1,12 @@
+{
+    "Title": "Autologon 기능 제어",
+    "Category": "보안 관리",
+    "Level": "상",
+    "TechType": "Type_Powershell",
+    "CheckCommand": "(Get-ItemProperty -Path 'HKLM:\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon' -Name AutoAdminLogon -ErrorAction SilentlyContinue).AutoAdminLogon.ToString()",
+    "RemediationCommand": "Set-ItemProperty -Path 'HKLM:\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon' -Name AutoAdminLogon -Value 0",
+    "SecureValue": "0",
+    "ItemId": "W-52",
+    "appTarget": "regedit",
+    "RegistryPath": "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon"
+}

@@ -1,0 +1,24 @@
+{
+    "Title": "불필요한 계정 제거",
+    "Category": "계정 관리",
+    "Level": "상",
+    "TechType": "Type_Skip",
+    "Description": "기본 계정 이외의 비활성 사용자 계정 수동 진단 및 삭제",
+    "captureOnly": true,
+    "ItemId": "W-03",
+    "appTarget": "lusrmgr.msc",
+    "treePath": [
+        [
+            "로컬 사용자 및 그룹(로컬)",
+            "Local Users and Groups (Local)"
+        ],
+        [
+            "사용자",
+            "Users"
+        ]
+    ],
+    "targetItem": [
+        "사용자",
+        "Users"
+    ]
+}

@@ -1,0 +1,34 @@
+﻿{
+    "ItemId":  "W-58",
+    "appTarget":  "secpol.msc",
+    "treePath":  [
+                     [
+                         "보안 설정",
+                         "Security Settings"
+                     ],
+                     [
+                         "로컬 정책",
+                         "Local Policies"
+                     ],
+                     [
+                         "보안 옵션",
+                         "Security Options"
+                     ]
+                 ],
+    "targetItem":  [
+                       "장치: 사용자가 프린터 드라이버를 설치할 수 없게 함",
+                       "Devices: Prevent users from installing printer drivers"
+                   ],
+    "actionType":  "KeyMacro",
+    "keySequence":  "%e{DOWN}{ENTER}",
+    "captureOnly":  false,
+    "Level":  "중",
+    "Category":  "보안 관리",
+    "Title":  "사용자가 프린터 드라이버를 설치할 수 없게 함",
+    "TechType":  "Type_Powershell",
+    "Description":  "일반 사용자의 추가 프린터 드라이버 다운로드 및 등록 제한",
+    "CheckCommand":  "((Get-ItemProperty -Path \"HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Print\\Providers\\LanMan Print Services\\Servers\" -ErrorAction SilentlyContinue).AddPrinterDrivers -eq 1).ToString()",
+    "RemediationCommand":  "Set-ItemProperty -Path \"HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Print\\Providers\\LanMan Print Services\\Servers\" -Name AddPrinterDrivers -Value 1 -Type DWord -Force",
+    "SecureValue":  "True"
+}
+

@@ -1,0 +1,26 @@
+﻿{
+    "ItemId":  "W-17",
+    "appTarget":  "fsmgmt.msc",
+    "treePath":  [
+                     [
+                         "공유 폴더",
+                         "Shared Folders"
+                     ],
+                     [
+                         "공유",
+                         "Shares"
+                     ]
+                 ],
+    "targetItem":  null,
+    "actionType":  "SelectOnly",
+    "keySequence":  "",
+    "captureOnly":  true,
+    "Level":  "상",
+    "Category":  "서비스 관리",
+    "Title":  "하드디스크 기본 공유 제거",
+    "TechType":  "Type_Registry",
+    "Description":  "시스템 기본 관리 목적의 자동 공유 비활성화",
+    "SecureValue":  "0",
+    "RegistryPath":  "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters",
+    "RegistryName":  "AutoShareWks"
+}

@@ -1,0 +1,9 @@
+﻿{
+    "ItemId":  "W-37",
+    "Level":  "중",
+    "Category":  "서비스 관리",
+    "Title":  "Telnet 서비스 비활성화",
+    "TechType":  "Type_Skip",
+    "Description":  "Telnet 미사용"
+}
+

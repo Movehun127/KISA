@@ -1,0 +1,52 @@
+﻿{
+    "ItemId":  "W-34",
+    "appTarget":  "gpedit.msc",
+    "treePath":  [
+                     [
+                         "로컬 컴퓨터 정책",
+                         "Local Computer Policy"
+                     ],
+                     [
+                         "컴퓨터 구성",
+                         "Computer Configuration"
+                     ],
+                     [
+                         "관리 템플릿",
+                         "Administrative Templates"
+                     ],
+                     [
+                         "Windows 구성 요소",
+                         "Windows Components"
+                     ],
+                     [
+                         "터미널 서비스",
+                         "원격 데스크톱 서비스",
+                         "Terminal Services",
+                         "Remote Desktop Services"
+                     ],
+                     [
+                         "원격 데스크톱 세션 호스트",
+                         "Remote Desktop Session Host"
+                     ],
+                     [
+                         "보안",
+                         "Security"
+                     ]
+                 ],
+    "targetItem":  [
+                       "클라이언트 연결 암호화 수준 설정",
+                       "Set client connection encryption level"
+                   ],
+    "actionType":  "KeyMacro",
+    "keySequence":  "%e{TAB}{TAB}{TAB}{F4}{HOME}{DOWN}{DOWN}{ENTER}{ENTER}",
+    "captureOnly":  false,
+    "Level":  "중",
+    "Category":  "서비스 관리",
+    "Title":  "터미널 서비스 암호화 수준 설정",
+    "TechType":  "Type_Registry",
+    "Description":  "RDP 암호화 수준을 클라이언트 호환 가능(Client Compatible)으로 설정",
+    "SecureValue":  "2",
+    "RegistryPath":  "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Terminal Server\\WinStations\\RDP-Tcp",
+    "RegistryName":  "MinEncryptionLevel"
+}
+

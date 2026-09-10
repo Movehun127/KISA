@@ -1,0 +1,44 @@
+{
+    "Title": "원격터미널 접속 타임아웃 설정",
+    "Category": "서비스 관리",
+    "Level": "중",
+    "TechType": "Type_Powershell",
+    "CheckCommand": "(Get-ItemProperty -Path 'HKLM:\\System\\CurrentControlSet\\Control\\Terminal Server\\WinStations\\RDP-Tcp' -Name MaxIdleTime -ErrorAction SilentlyContinue).MaxIdleTime.ToString() -ne '0'",
+    "RemediationCommand": "Set-ItemProperty -Path 'HKLM:\\System\\CurrentControlSet\\Control\\Terminal Server\\WinStations\\RDP-Tcp' -Name MaxIdleTime -Value 900000",
+    "SecureValue": "True",
+    "ItemId": "W-36",
+    "appTarget": "gpedit.msc",
+    "treePath": [
+        [
+            "컴퓨터 구성",
+            "Computer Configuration"
+        ],
+        [
+            "관리 템플릿",
+            "Administrative Templates"
+        ],
+        [
+            "Windows 구성 요소",
+            "Windows Components"
+        ],
+        [
+            "원격 데스크톱 서비스",
+            "터미널 서비스",
+            "Remote Desktop Services",
+            "Terminal Services"
+        ],
+        [
+            "원격 데스크톱 세션 호스트",
+            "Remote Desktop Session Host"
+        ],
+        [
+            "세션 시간 제한",
+            "Session Time Limits"
+        ]
+    ],
+    "targetItem": [
+        "활성 상태지만 유휴 원격 데스크톱 서비스 세션에 대한 시간 제한 설정",
+        "활성 상태이지만 유휴 원격 데스크톱 서비스 세션에 대한 시간 제한 설정",
+        "Set time limit for active but idle Remote Desktop Services sessions"
+    ]
+}

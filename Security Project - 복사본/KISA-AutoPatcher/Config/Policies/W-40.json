@@ -1,0 +1,27 @@
+﻿{
+    "ItemId":  "W-40",
+    "appTarget":  "taskschd.msc",
+    "treePath":  [
+                     [
+                         "작업 스케줄러",
+                         "Task Scheduler"
+                     ],
+                     [
+                         "작업 스케줄러 라이브러리",
+                         "Task Scheduler Library"
+                     ]
+                 ],
+    "targetItem":  null,
+    "actionType":  "SelectOnly",
+    "keySequence":  "",
+    "captureOnly":  true,
+    "Level":  "중",
+    "Category":  "서비스 관리",
+    "Title":  "예약된 작업에 의심스러운 명령이 등록되어 있는지 점검",
+    "TechType":  "Type_Powershell",
+    "Description":  "작업 스케줄러 내 취약한 쉘 호출 명령 필터링",
+    "CheckCommand":  "(Get-ScheduledTask | Where-Object { $_.Actions.Execute -match \u0027powershell|cmd|eval|download\u0027 }).Count.ToString()",
+    "RemediationCommand":  "Write-Host \u0027  -\u003e [주의] 수동 검토 필요: 스케줄러에 등록된 스크립트 실행 작업을 정밀 검증하십시오.\u0027",
+    "SecureValue":  "0"
+}
+

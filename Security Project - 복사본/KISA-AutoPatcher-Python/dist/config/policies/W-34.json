@@ -1,0 +1,16 @@
+{
+    "Title": "Telnet 서비스 비활성화",
+    "Category": "서비스 관리",
+    "Level": "상",
+    "TechType": "Type_Powershell",
+    "CheckCommand": "$s = Get-Service -Name TlntSvr -ErrorAction SilentlyContinue; if ($s -eq $null -or $s.Status -ne 'Running') { 'True' } else { 'False' }",
+    "RemediationCommand": "Stop-Service -Name TlntSvr -Force -ErrorAction SilentlyContinue; Set-Service -Name TlntSvr -StartupType Disabled -ErrorAction SilentlyContinue",
+    "SecureValue": "True",
+    "ItemId": "W-34",
+    "appTarget": "services.msc",
+    "treePath": [],
+    "targetItem": [
+        "Telnet",
+        "TlntSvr"
+    ]
+}

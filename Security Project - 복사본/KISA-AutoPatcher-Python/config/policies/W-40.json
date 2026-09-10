@@ -1,0 +1,29 @@
+{
+    "Title": "정책에 따른 시스템 로깅 설정",
+    "Category": "서비스 관리",
+    "Level": "상",
+    "TechType": "Type_Skip",
+    "Description": "로컬 감사 정책(로그온, 권한 사용 등) 이벤트 구성 감사 수동 점검",
+    "captureOnly": true,
+    "ItemId": "W-40",
+    "appTarget": "secpol.msc",
+    "treePath": [
+        [
+            "보안 설정",
+            "Security Settings"
+        ],
+        [
+            "로컬 정책",
+            "Local Policies"
+        ],
+        [
+            "감사 정책",
+            "Audit Policy"
+        ]
+    ],
+    "targetItem": [
+        "로그온 이벤트",
+        "로그온",
+        "Audit logon events"
+    ]
+}

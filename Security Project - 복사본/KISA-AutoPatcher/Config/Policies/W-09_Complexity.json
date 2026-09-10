@@ -1,0 +1,32 @@
+﻿{
+    "ItemId":  "W-09_Complexity",
+    "SeceditKey":  "PasswordComplexity",
+    "appTarget":  "secpol.msc",
+    "treePath":  [
+                     [
+                         "보안 설정",
+                         "Security Settings"
+                     ],
+                     [
+                         "계정 정책",
+                         "Account Policies"
+                     ],
+                     [
+                         "암호 정책",
+                         "Password Policy"
+                     ]
+                 ],
+    "targetItem":  [
+                       "복잡성",
+                       "complexity requirements"
+                   ],
+    "actionType":  "KeyMacro",
+    "keySequence":  "%e{UP}{ENTER}",
+    "captureOnly":  false,
+    "Level":  "상",
+    "Category":  "계정 관리",
+    "Title":  "비밀번호 관리정책 설정 - 암호 복잡성",
+    "TechType":  "Type_Secedit",
+    "Description":  "암호 복잡성 만족 요구 설정",
+    "SecureValue":  "1"
+}

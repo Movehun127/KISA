@@ -1,0 +1,34 @@
+﻿{
+    "ItemId":  "W-60_Text",
+    "appTarget":  "secpol.msc",
+    "treePath":  [
+                     [
+                         "보안 설정",
+                         "Security Settings"
+                     ],
+                     [
+                         "로컬 정책",
+                         "Local Policies"
+                     ],
+                     [
+                         "보안 옵션",
+                         "Security Options"
+                     ]
+                 ],
+    "targetItem":  [
+                       "대화형 로그온: 로그온을 시도하는 사용자에 대한 메시지 텍스트",
+                       "Interactive logon: Message text for users attempting to log on"
+                   ],
+    "actionType":  "KeyMacro",
+    "keySequence":  "관리자외 접근을 허용하지 않습니다.{ENTER}",
+    "captureOnly":  false,
+    "Level":  "하",
+    "Category":  "보안 관리",
+    "Title":  "로그온 시 경고 메시지 설정 (내용)",
+    "TechType":  "Type_Powershell",
+    "Description":  "로그인 전 법적 주의사항 경고 내용 설정 (텍스트: 관리자외 접근을 허용하지 않습니다.)",
+    "CheckCommand":  "$val = Get-ItemProperty -Path \"HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\" -ErrorAction SilentlyContinue; ($null -ne $val -and $val.legalnoticetext -eq \"관리자외 접근을 허용하지 않습니다.\").ToString()",
+    "RemediationCommand":  "Set-ItemProperty -Path \"HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\" -Name legalnoticetext -Value \"관리자외 접근을 허용하지 않습니다.\" -Force",
+    "SecureValue":  "True"
+}
+

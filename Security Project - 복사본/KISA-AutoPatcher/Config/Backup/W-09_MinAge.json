@@ -1,0 +1,31 @@
+﻿{
+    "itemId":  "W-09_MinAge",
+    "appTarget":  "gpedit.msc",
+    "treePath":  [
+                     [
+                         "보안 설정",
+                         "Security Settings"
+                     ],
+                     [
+                         "계정 정책",
+                         "Account Policies"
+                     ],
+                     [
+                         "암호 정책",
+                         "Password Policy"
+                     ]
+                 ],
+    "targetItem":  [
+                       "최소 암호 사용 기간",
+                       "Minimum password age"
+                   ],
+    "actionType":  "KeyMacro",
+    "keySequence":  "%e1{ENTER}",
+    "captureOnly":  false,
+    "Level":  "상",
+    "Category":  "계정 관리",
+    "Title":  "비밀번호 관리정책 설정 - 최소 암호 사용기간",
+    "TechType":  "Type_Secedit",
+    "Description":  "최소 암호 사용기간 설정",
+    "SecureValue":  "1"
+}

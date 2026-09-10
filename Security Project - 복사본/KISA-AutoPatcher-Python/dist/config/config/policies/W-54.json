@@ -1,0 +1,12 @@
+{
+    "Title": "Dos공격 방어 레지스트리 설정",
+    "Category": "보안 관리",
+    "Level": "중",
+    "TechType": "Type_Powershell",
+    "CheckCommand": "(Get-ItemProperty -Path 'HKLM:\\System\\CurrentControlSet\\Services\\Tcpip\\Parameters' -Name SynAttackProtect -ErrorAction SilentlyContinue).SynAttackProtect.ToString()",
+    "RemediationCommand": "Set-ItemProperty -Path 'HKLM:\\System\\CurrentControlSet\\Services\\Tcpip\\Parameters' -Name SynAttackProtect -Value 2",
+    "SecureValue": "2",
+    "ItemId": "W-54",
+    "appTarget": "regedit",
+    "RegistryPath": "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters"
+}

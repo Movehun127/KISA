@@ -1,0 +1,16 @@
+{
+    "Title": "SNMP Access control 설정",
+    "Category": "서비스 관리",
+    "Level": "상",
+    "TechType": "Type_Powershell",
+    "CheckCommand": "$s = Get-Service -Name SNMP -ErrorAction SilentlyContinue; if ($s -eq $null -or $s.Status -ne 'Running') { 'True' } else { 'False' }",
+    "RemediationCommand": "Write-Host '  -> [주의] SNMP 서비스 구동 중. 허용된 IP 호스트 목록 대역만을 제한 등록하십시오.'",
+    "SecureValue": "True",
+    "ItemId": "W-31",
+    "appTarget": "services.msc",
+    "treePath": [],
+    "targetItem": [
+        "SNMP Service",
+        "SNMP"
+    ]
+}

@@ -1,0 +1,23 @@
+﻿{
+    "ItemId":  "W-67",
+    "appTarget":  "WF.msc",
+    "treePath":  [
+                     "고급 보안",
+                     "Advanced Security",
+                     "방화벽",
+                     "Firewall"
+                 ],
+    "targetItem":  null,
+    "actionType":  "SelectOnly",
+    "keySequence":  "",
+    "captureOnly":  true,
+    "Level":  "중",
+    "Category":  "보안 관리",
+    "Title":  "윈도우 방화벽 설정",
+    "TechType":  "Type_Powershell",
+    "Description":  "도메인, 공용, 개인 모든 프로필 방화벽 사용 설정",
+    "CheckCommand":  "(Get-NetFirewallProfile -Profile Domain,Private,Public | Where-Object { $_.Enabled -ne $true }).Count.ToString()",
+    "RemediationCommand":  "Set-NetFirewallProfile -Profile Domain,Private,Public -Enabled True",
+    "SecureValue":  "0"
+}
+

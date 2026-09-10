@@ -1,0 +1,18 @@
+{
+    "Title": "불필요한 서비스 제거",
+    "Category": "서비스 관리",
+    "Level": "상",
+    "TechType": "Type_Skip",
+    "Description": "불필요하거나 보안위협이 있는 기본 백그라운드 서비스 동작 수동 검증",
+    "captureOnly": true,
+    "multiCapture": true,
+    "ItemId": "W-18",
+    "appTarget": "services.msc",
+    "treePath": [],
+    "targetServices": [
+        { "name": "TrkWks", "displayName": "Distributed Link Tracking Client" },
+        { "name": "Spooler", "displayName": "Print Spooler" },
+        { "name": "RemoteRegistry", "displayName": "Remote Registry" },
+        { "name": "CryptSvc", "displayName": "Cryptographic Services" }
+    ]
+}

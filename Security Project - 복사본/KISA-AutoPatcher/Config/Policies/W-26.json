@@ -1,0 +1,9 @@
+﻿{
+    "ItemId":  "W-26",
+    "Level":  "상",
+    "Category":  "서비스 관리",
+    "Title":  "불필요한 IIS 서비스 구동 점검",
+    "TechType":  "Type_Skip",
+    "Description":  "IIS 미사용"
+}
+

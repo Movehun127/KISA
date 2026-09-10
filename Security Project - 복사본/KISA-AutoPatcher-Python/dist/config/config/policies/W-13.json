@@ -1,0 +1,29 @@
+{
+    "Title": "콘솔 로그온 시 로컬 계정에서 빈 암호 사용 제한",
+    "Category": "계정 관리",
+    "Level": "상",
+    "TechType": "Type_Powershell",
+    "CheckCommand": "(Get-ItemProperty -Path 'HKLM:\\System\\CurrentControlSet\\Control\\Lsa' -Name LimitBlankPasswordUse -ErrorAction SilentlyContinue).LimitBlankPasswordUse.ToString()",
+    "RemediationCommand": "Set-ItemProperty -Path 'HKLM:\\System\\CurrentControlSet\\Control\\Lsa' -Name LimitBlankPasswordUse -Value 1",
+    "SecureValue": "1",
+    "ItemId": "W-13",
+    "appTarget": "secpol.msc",
+    "treePath": [
+        [
+            "보안 설정",
+            "Security Settings"
+        ],
+        [
+            "로컬 정책",
+            "Local Policies"
+        ],
+        [
+            "보안 옵션",
+            "Security Options"
+        ]
+    ],
+    "targetItem": [
+        "계정: 콘솔 로그온 시 로컬 계정에서 빈 암호 사용 제한",
+        "Accounts: Limit local account use of blank passwords to console logon only"
+    ]
+}

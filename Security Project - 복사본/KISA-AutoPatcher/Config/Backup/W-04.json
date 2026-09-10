@@ -1,0 +1,31 @@
+﻿{
+    "itemId":  "W-04",
+    "appTarget":  "gpedit.msc",
+    "treePath":  [
+                     [
+                         "보안 설정",
+                         "Security Settings"
+                     ],
+                     [
+                         "계정 정책",
+                         "Account Policies"
+                     ],
+                     [
+                         "계정 잠금 정책",
+                         "Account Lockout Policy"
+                     ]
+                 ],
+    "targetItem":  [
+                       "계정 잠금 임계값",
+                       "Account lockout threshold"
+                   ],
+    "actionType":  "KeyMacro",
+    "keySequence":  "%e5{ENTER}",
+    "captureOnly":  false,
+    "Level":  "상",
+    "Category":  "계정 관리",
+    "Title":  "계정 잠금 임계값 설정",
+    "TechType":  "Type_Secedit",
+    "Description":  "계정 잠금 임계값을 5 이하로 설정",
+    "SecureValue":  "5"
+}

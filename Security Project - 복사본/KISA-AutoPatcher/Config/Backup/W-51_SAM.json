@@ -1,0 +1,32 @@
+﻿{
+    "ItemId":  "W-51_SAM",
+    "RemediationCommand":  "Set-ItemProperty -Path \"HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Lsa\" -Name RestrictAnonymousSAM -Value 1 -Type DWord -Force",
+    "treePath":  [
+                     [
+                         "보안 설정",
+                         "Security Settings"
+                     ],
+                     [
+                         "로컬 정책",
+                         "Local Policies"
+                     ],
+                     [
+                         "보안 옵션",
+                         "Security Options"
+                     ]
+                 ],
+    "appTarget":  "secpol.msc",
+    "targetItem":  [
+                       "네트워크 액세스: SAM 계정의 익명 열거 허용 안 함",
+                       "Network access: Do not allow anonymous enumeration of SAM accounts"
+                   ],
+    "actionType": "KeyMacro",
+    "keySequence": "%e{DOWN}{ENTER}",
+    "CheckCommand":  "((Get-ItemProperty -Path \"HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Lsa\" -ErrorAction SilentlyContinue).RestrictAnonymousSAM -eq 1).ToString()",
+    "Level":  "상",
+    "Category":  "보안 관리",
+    "Title":  "네트워크 액세스: SAM 계정의 익명 열거 허용 안 함",
+    "TechType":  "Type_Powershell",
+    "Description":  "네트워크 익명 접근에 의한 SAM 계정 익명 열거 비활성화",
+    "SecureValue":  "True"
+}

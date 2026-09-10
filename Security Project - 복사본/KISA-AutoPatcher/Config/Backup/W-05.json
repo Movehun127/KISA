@@ -1,0 +1,31 @@
+﻿{
+    "itemId":  "W-05",
+    "appTarget":  "gpedit.msc",
+    "treePath":  [
+                     [
+                         "보안 설정",
+                         "Security Settings"
+                     ],
+                     [
+                         "계정 정책",
+                         "Account Policies"
+                     ],
+                     [
+                         "암호 정책",
+                         "Password Policy"
+                     ]
+                 ],
+    "targetItem":  [
+                       "해독 가능한 암호화",
+                       "reversible encryption"
+                   ],
+    "actionType":  "KeyMacro",
+    "keySequence":  "%e{DOWN}{ENTER}",
+    "captureOnly":  false,
+    "Level":  "상",
+    "Category":  "계정 관리",
+    "Title":  "해독 가능한 암호화를 사용하여 암호 저장 해제",
+    "TechType":  "Type_Secedit",
+    "Description":  "암호를 해독 가능한 형식으로 저장하지 않음",
+    "SecureValue":  "0"
+}

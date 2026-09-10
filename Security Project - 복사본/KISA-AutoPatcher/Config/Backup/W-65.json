@@ -1,0 +1,15 @@
+﻿{
+    "ItemId":  "W-65",
+    "appTarget":  null,
+    "treePath":  null,
+    "targetItem":  null,
+    "actionType":  "OpenPropertiesOnly",
+    "keySequence":  "",
+    "captureOnly":  false,
+    "Level":  "중",
+    "Category":  "보안 관리",
+    "Title":  "시작프로그램 목록 분석",
+    "TechType":  "Type_Skip",
+    "Description":  "시작프로그램 목록 수동 점검 필요"
+}
+

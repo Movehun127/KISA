@@ -1,0 +1,18 @@
+﻿{
+    "ItemId":  "W-49",
+    "appTarget":  null,
+    "treePath":  null,
+    "targetItem":  null,
+    "actionType":  "OpenPropertiesOnly",
+    "keySequence":  "",
+    "captureOnly":  false,
+    "Level":  "상",
+    "Category":  "보안 관리",
+    "Title":  "SAM 파일 접근 통제 설정",
+    "TechType":  "Type_Powershell",
+    "Description":  "SAM 보안 파일에 대한 Everyone 권한 배제",
+    "CheckCommand":  "((Get-Acl -Path $env:SystemRoot\\System32\\Config\\SAM -ErrorAction SilentlyContinue).Access | Where-Object { $_.IdentityReference -eq \u0027Everyone\u0027 }).Count -eq 0",
+    "RemediationCommand":  "Write-Host \u0027  -\u003e [주의] SAM 파일의 NTFS 접근 권한 중 Everyone 계정 존재 여부를 확인하고 수동 제거하십시오.\u0027",
+    "SecureValue":  "True"
+}
+

@@ -1,0 +1,9 @@
+﻿{
+    "ItemId":  "W-36",
+    "Level":  "하",
+    "Category":  "서비스 관리",
+    "Title":  "HTTP/FTP/SMTP 배너 차단",
+    "TechType":  "Type_Skip",
+    "Description":  "HTTP/FTP/SMTP 미사용"
+}
+

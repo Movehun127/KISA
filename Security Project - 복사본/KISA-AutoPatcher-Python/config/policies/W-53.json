@@ -1,0 +1,29 @@
+{
+    "Title": "이동식 미디어 포맷 및 꺼내기 허용",
+    "Category": "보안 관리",
+    "Level": "상",
+    "TechType": "Type_Powershell",
+    "CheckCommand": "(Get-ItemProperty -Path 'HKLM:\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon' -Name AllocateDASD -ErrorAction SilentlyContinue).AllocateDASD.ToString()",
+    "RemediationCommand": "Set-ItemProperty -Path 'HKLM:\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon' -Name AllocateDASD -Value 0",
+    "SecureValue": "0",
+    "ItemId": "W-53",
+    "appTarget": "secpol.msc",
+    "treePath": [
+        [
+            "보안 설정",
+            "Security Settings"
+        ],
+        [
+            "로컬 정책",
+            "Local Policies"
+        ],
+        [
+            "보안 옵션",
+            "Security Options"
+        ]
+    ],
+    "targetItem": [
+        "장치: 이동식 미디어 포맷 및 꺼내기 허용",
+        "Devices: Allowed to format and eject removable media"
+    ]
+}

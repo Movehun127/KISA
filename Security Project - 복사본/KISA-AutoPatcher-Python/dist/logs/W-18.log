@@ -1,0 +1,17 @@
+[16:35:02] 
+🔷 [W-18]  불필요한 서비스 제거
+[16:35:02]   → 조치 불필요 (수동 조치(불필요하거나 보안위협이 있는 기본 백그라운드 서비스 동작 수동 검증))
+[16:35:03]   📷 증빙 화면 캡처 대기 중...
+[16:35:03]   📢 [W-18] 수동 조치 가이드 팝업을 표시합니다.
+[16:35:03]   [W-18] 멀티 서비스 개별 캡처를 순차 진행합니다.
+[16:35:03]   [W-18] 서비스 'Distributed Link Tracking Client' 캡처 개시...
+[16:35:03]   ⚠️ 'Distributed Link Tracking Client' 캡처 중 오류: cannot access local variable 'app_name' where it is not associated with a value
+[16:35:04]   [W-18] 서비스 'Print Spooler' 캡처 개시...
+[16:35:04]   ⚠️ 'Print Spooler' 캡처 중 오류: cannot access local variable 'app_name' where it is not associated with a value
+[16:35:05]   [W-18] 서비스 'Remote Registry' 캡처 개시...
+[16:35:05]   ⚠️ 'Remote Registry' 캡처 중 오류: cannot access local variable 'app_name' where it is not associated with a value
+[16:35:07]   [W-18] 서비스 'Cryptographic Services' 캡처 개시...
+[16:35:07]   ⚠️ 'Cryptographic Services' 캡처 중 오류: cannot access local variable 'app_name' where it is not associated with a value
+[16:35:08] 
+🔷 [W-19]  불필요한 IIS 서비스 구동 점검
+[16:35:08]   → 서비스 미사용 설정(IIS/DNS/SNMP/Telnet)에 의해 보안 조치 및 증빙 수집 생략

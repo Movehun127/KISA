@@ -1,0 +1,18 @@
+﻿{
+    "ItemId":  "W-57",
+    "appTarget":  null,
+    "treePath":  null,
+    "targetItem":  null,
+    "actionType":  "OpenPropertiesOnly",
+    "keySequence":  "",
+    "captureOnly":  false,
+    "Level":  "중",
+    "Category":  "보안 관리",
+    "Title":  "Dos공격 방어 레지스트리 설정",
+    "TechType":  "Type_Registry",
+    "Description":  "SynAttackProtect를 통한 SYN 플러딩 공격 완화",
+    "SecureValue":  "1",
+    "RegistryPath":  "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters",
+    "RegistryName":  "SynAttackProtect"
+}
+

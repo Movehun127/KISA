@@ -1,0 +1,16 @@
+{
+    "Title": "FTP 접근 제어 설정",
+    "Category": "서비스 관리",
+    "Level": "중",
+    "TechType": "Type_Powershell",
+    "CheckCommand": "$s = Get-Service -Name MSFTPSVC -ErrorAction SilentlyContinue; if ($s -eq $null -or $s.Status -ne 'Running') { 'True' } else { 'False' }",
+    "RemediationCommand": "Write-Host '  -> [주의] FTP 사용자 격리 및 접근IP 리스트 필터를 설정하십시오.'",
+    "SecureValue": "True",
+    "ItemId": "W-24",
+    "appTarget": "services.msc",
+    "treePath": [],
+    "targetItem": [
+        "Microsoft FTP Service",
+        "MSFTPSVC"
+    ]
+}

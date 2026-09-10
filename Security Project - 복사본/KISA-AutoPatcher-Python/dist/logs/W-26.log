@@ -1,0 +1,12 @@
+[16:36:06] 
+🔷 [W-26]  RDS(Remote Data Services)제거
+[16:36:06]   → 조치 불필요 (양호)
+[16:36:06]   📷 증빙 화면 캡처 대기 중...
+[16:36:06]   [실행] services.msc 프로그램 로드 시도 중...
+[16:36:07]     -> MMC 윈도우 감지 성공 (Name: 서비스). 우측 정렬 수행.
+[16:36:08]   [진행] MSC 트리 탐색 개시. 경로 깊이: 0, 타겟 아이템: ['World Wide Web Publishing Service', 'W3SVC']
+[16:36:09]   [확인] MMC 창 발견 (Name: 서비스, Class: MMCMainFrame)
+[16:36:09]   [알림] treePath가 비어 있으므로 좌측 트리 탐색을 건너뛰고 창 전체 화면을 캡처합니다.
+[16:36:11]   ⏳ 설정 대화상자 조작 대기 (사용자 캡처 확인 대기 중)...
+[16:36:41]   [캡처] 활성화된 속성 다이얼로그(Remote Registry 속성(로컬 컴퓨터)) 영역 캡처 진행.
+[16:36:41]   📷 증빙 캡처 완료: C:\Users\new-s\Desktop\Security Project\KISA-AutoPatcher-Python\dist\evidence\W-26.png

@@ -1,0 +1,34 @@
+﻿{
+    "itemId":  "W-43",
+    "appTarget":  "gpedit.msc",
+    "treePath":  [
+                     [
+                         "보안 설정",
+                         "Security Settings"
+                     ],
+                     [
+                         "로컬 정책",
+                         "Local Policies"
+                     ],
+                     [
+                         "감사 정책",
+                         "Audit Policy"
+                     ]
+                 ],
+    "targetItem":  [
+                       "로그온 이벤트 감사",
+                       "Audit logon events"
+                   ],
+    "actionType":  "SelectOnly",
+    "keySequence":  "",
+    "captureOnly":  true,
+    "Level":  "중",
+    "Category":  "로그 관리",
+    "Title":  "정책에 따른 시스템 로깅 설정",
+    "TechType":  "Type_Powershell",
+    "Description":  "계정 관리(실패), 계정 로그온/권한 사용/로그온/정책 변경(성공 및 실패), 디렉터리 서비스(실패) 감사 설정",
+    "CheckCommand":  "$temp = \"$env:TEMP\\sec_audit_chk.inf\"; if (Test-Path $temp) { Remove-Item $temp -Force }; secedit /export /cfg $temp /quiet; if (Test-Path $temp) { $content = Get-Content $temp; $ok = $true; $policies = @{ \u0027AuditAccountManage\u0027 = \u00272\u0027; \u0027AuditAccountLogon\u0027 = \u00273\u0027; \u0027AuditPrivilegeUse\u0027 = \u00273\u0027; \u0027AuditDSAccess\u0027 = \u00272\u0027; \u0027AuditLogonEvents\u0027 = \u00273\u0027; \u0027AuditPolicyChange\u0027 = \u00273\u0027 }; foreach ($k in $policies.Keys) { $line = $content | Where-Object { $_ -match \"^\\s*$k\\s*=\\s*(.*)$\" } | Select-Object -First 1; if ($line -and $Matches) { if ($Matches[1].Trim() -ne $policies[$k]) { $ok = $false } } else { $ok = $false } }; Remove-Item $temp -Force; $ok.ToString() } else { \u0027False\u0027 }",
+    "RemediationCommand":  "$temp = \"$env:TEMP\\sec_audit_rem.inf\"; if (Test-Path $temp) { Remove-Item $temp -Force }; secedit /export /cfg $temp /quiet; if (Test-Path $temp) { $content = Get-Content $temp -Raw; $policies = @{ \u0027AuditAccountManage\u0027 = \u00272\u0027; \u0027AuditAccountLogon\u0027 = \u00273\u0027; \u0027AuditPrivilegeUse\u0027 = \u00273\u0027; \u0027AuditDSAccess\u0027 = \u00272\u0027; \u0027AuditLogonEvents\u0027 = \u00273\u0027; \u0027AuditPolicyChange\u0027 = \u00273\u0027 }; foreach ($k in $policies.Keys) { if ($content -match \"(?m)^\\s*$k\\s*=\") { $content = $content -replace \"(?m)^\\s*$k\\s*=.*\", \"$k = $($policies[$k])\" } else { if ($content -match \u0027\\[Event Audit\\]\u0027) { $content = $content -replace \u0027\\[Event Audit\\]\u0027, \"[Event Audit]`r`n$k = $($policies[$k])\" } } }; $content | Set-Content $temp; secedit /configure /db \"$env:TEMP\\sec_audit.sdb\" /cfg $temp /quiet; Remove-Item $temp -Force }",
+    "SecureValue":  "True"
+}
+

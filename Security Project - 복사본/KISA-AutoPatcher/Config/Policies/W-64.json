@@ -1,0 +1,10 @@
+﻿{
+    "ItemId":  "W-64",
+    "CheckCommand":  "((Get-CimInstance -ClassName Win32_LogicalDisk -Filter \"DeviceID=\u0027C:\u0027\" -ErrorAction SilentlyContinue).FileSystem -eq \"NTFS\").ToString()",
+    "Level":  "중",
+    "Category":  "보안 관리",
+    "Title":  "파일 및 디렉토리 보호",
+    "TechType":  "Type_Skip",
+    "Description":  "파일 및 디렉토리 권한 수동 점검 필요"
+}
+

@@ -1,0 +1,31 @@
+﻿{
+    "ItemId":  "W-20",
+    "appTarget":  "ncpa.cpl",
+    "treePath":  null,
+    "targetItem":  [
+                       "이더넷",
+                       "Ethernet"
+                   ],
+    "actionType":  "KeyMacro",
+    "keySequence":  "%r{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}%r{TAB}{TAB}{TAB}{TAB}{ENTER}",
+    "captureOnly":  false,
+    "Level":  "상",
+    "Category":  "서비스 관리",
+    "Title":  "NetBIOS 바인딩 서비스 구동 점검",
+    "TechType":  "Type_Powershell",
+    "Description":  "NetBIOS over TCP/IP 비활성화 설정",
+    "CheckCommand":  "@(Get-WmiObject -Class Win32_NetworkAdapterConfiguration -ErrorAction SilentlyContinue | Where-Object { $_.IPEnabled -eq $true -and $_.TcpipNetbiosOptions -ne 2 }).Count",
+    "RemediationCommand":  "Get-WmiObject -Class Win32_NetworkAdapterConfiguration | Where-Object { $_.IPEnabled -eq $true } | ForEach-Object { $_.SetTcpipNetbios(2) }",
+    "SecureValue":  "0",
+    "cleanupTitles": [
+        "이더넷",
+        "Ethernet",
+        "로컬 영역 연결",
+        "네트워크 연결",
+        "속성",
+        "Properties",
+        "고급 TCP/IP"
+    ],
+    "forceCancel": true,
+    "cleanupRetries": 10
+}

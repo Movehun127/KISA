@@ -1,0 +1,52 @@
+﻿{
+    "itemId":  "W-39",
+    "appTarget":  "gpedit.msc",
+    "treePath":  [
+                     [
+                         "로컬 컴퓨터 정책",
+                         "Local Computer Policy"
+                     ],
+                     [
+                         "컴퓨터 구성",
+                         "Computer Configuration"
+                     ],
+                     [
+                         "관리 템플릿",
+                         "Administrative Templates"
+                     ],
+                     [
+                         "Windows 구성 요소",
+                         "Windows Components"
+                     ],
+                     [
+                         "터미널 서비스",
+                         "원격 데스크톱 서비스",
+                         "Terminal Services",
+                         "Remote Desktop Services"
+                     ],
+                     [
+                         "원격 데스크톱 세션 호스트",
+                         "Remote Desktop Session Host"
+                     ],
+                     [
+                         "세션 시간 제한",
+                         "Session Time Limits"
+                     ]
+                 ],
+    "targetItem":  [
+                       "활성 상태지만 유휴 터미널 서비스 세션에 시간 제한 설정",
+                       "Set time limit for active but idle Remote Desktop Services sessions"
+                   ],
+    "actionType":  "KeyMacro",
+    "keySequence":  "%e{TAB}{TAB}{TAB}3{ENTER}",
+    "captureOnly":  false,
+    "Level":  "중",
+    "Category":  "서비스 관리",
+    "Title":  "원격터미널 접속 타임아웃 설정",
+    "TechType":  "Type_Registry",
+    "Description":  "RDP 연결의 유휴 세션 제한 시간을 30분(1,800,000ms)으로 설정",
+    "SecureValue":  "1800000",
+    "RegistryPath":  "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Terminal Server\\WinStations\\RDP-Tcp",
+    "RegistryName":  "MaxIdleTime"
+}
+

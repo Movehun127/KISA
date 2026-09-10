@@ -1,0 +1,10 @@
+﻿{
+    "ItemId":  "W-65",
+    "CheckCommand":  "$s = Get-CimInstance Win32_StartupCommand -ErrorAction SilentlyContinue; if ($s.Count -gt 0) { $names = $s | ForEach-Object { $_.Name + \" (\" + $_.Command + \")\" }; [string]::Join(\", \", $names) } else { \"None\" }",
+    "Level":  "중",
+    "Category":  "보안 관리",
+    "Title":  "시작프로그램 목록 분석",
+    "TechType":  "Type_Skip",
+    "Description":  "시작프로그램 목록 수동 점검 필요"
+}
+

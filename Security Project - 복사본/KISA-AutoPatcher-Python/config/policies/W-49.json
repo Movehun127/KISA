@@ -1,0 +1,29 @@
+{
+    "Title": "원격 시스템에서 강제로 시스템 종료",
+    "Category": "보안 관리",
+    "Level": "상",
+    "TechType": "Type_Skip",
+    "Description": "로컬 보안 정책의 '원격 시스템에서 강제로 시스템 종료' 사용자 권한 할당 검증",
+    "captureOnly": true,
+    "ItemId": "W-49",
+    "appTarget": "secpol.msc",
+    "treePath": [
+        [
+            "보안 설정",
+            "Security Settings"
+        ],
+        [
+            "로컬 정책",
+            "Local Policies"
+        ],
+        [
+            "사용자 권한 할당",
+            "사용자 권한 지정",
+            "User Rights Assignment"
+        ]
+    ],
+    "targetItem": [
+        "원격 시스템에서 강제로 시스템 종료",
+        "Force shutdown from a remote system"
+    ]
+}

@@ -1,0 +1,21 @@
+﻿{
+    "ItemId":  "W-44",
+    "appTarget":  "timedate.cpl",
+    "treePath":  null,
+    "targetItem":  [
+                       "인터넷 시간",
+                       "Internet Time"
+                   ],
+    "actionType":  "KeyMacro",
+    "keySequence":  "{TAB}{RIGHT}{RIGHT}{TAB}{ENTER}",
+    "captureOnly":  false,
+    "Level":  "중",
+    "Category":  "로그 관리",
+    "Title":  "NTP 및 시각 동기화 설정",
+    "TechType":  "Type_Powershell",
+    "Description":  "Windows Time 서비스 활성화 및 자동 구동",
+    "CheckCommand":  "(Get-Service -Name W32Time -ErrorAction SilentlyContinue).StartType -eq \u0027Automatic\u0027",
+    "RemediationCommand":  "Set-Service -Name W32Time -StartupType Automatic; Start-Service -Name W32Time -ErrorAction SilentlyContinue",
+    "SecureValue":  "True"
+}
+

@@ -1,0 +1,34 @@
+﻿{
+    "ItemId":  "W-53",
+    "appTarget":  "secpol.msc",
+    "treePath":  [
+                     [
+                         "보안 설정",
+                         "Security Settings"
+                     ],
+                     [
+                         "로컬 정책",
+                         "Local Policies"
+                     ],
+                     [
+                         "보안 옵션",
+                         "Security Options"
+                     ]
+                 ],
+    "targetItem":  [
+                       "감사: 보안 감사를 로그할 수 없는 경우 즉시 시스템 종료",
+                       "Shut down system immediately if unable to log security audits"
+                   ],
+    "actionType":  "KeyMacro",
+    "keySequence":  "%e{DOWN}{ENTER}",
+    "captureOnly":  false,
+    "RemediationCommand":  "Set-ItemProperty -Path \"HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Lsa\" -Name CrashOnAuditFail -Value 0 -Type DWord -Force",
+    "CheckCommand":  "((Get-ItemProperty -Path \"HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Lsa\" -ErrorAction SilentlyContinue).CrashOnAuditFail -eq 0).ToString()",
+    "Level":  "상",
+    "Category":  "보안 관리",
+    "Title":  "보안 감사를 로그할 수 없는 경우 즉시 시스템 종료 해제",
+    "TechType":  "Type_Powershell",
+    "Description":  "감사 기록 부족 시 즉각 시스템 중지 비활성화",
+    "SecureValue":  "True"
+}
+

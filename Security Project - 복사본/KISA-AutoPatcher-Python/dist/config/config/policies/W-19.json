@@ -1,0 +1,16 @@
+{
+    "Title": "불필요한 IIS 서비스 구동 점검",
+    "Category": "서비스 관리",
+    "Level": "상",
+    "TechType": "Type_Powershell",
+    "CheckCommand": "$s = Get-Service -Name W3SVC -ErrorAction SilentlyContinue; if ($s -eq $null -or $s.Status -ne 'Running') { 'True' } else { 'False' }",
+    "RemediationCommand": "Stop-Service -Name W3SVC -Force -ErrorAction SilentlyContinue; Set-Service -Name W3SVC -StartupType Disabled -ErrorAction SilentlyContinue",
+    "SecureValue": "True",
+    "ItemId": "W-19",
+    "appTarget": "services.msc",
+    "treePath": [],
+    "targetItem": [
+        "World Wide Web Publishing Service",
+        "W3SVC"
+    ]
+}

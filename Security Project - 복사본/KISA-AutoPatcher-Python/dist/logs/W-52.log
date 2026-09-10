@@ -1,0 +1,10 @@
+[14:52:24] 
+🔷 [W-52]  Autologon 기능 제어
+[14:52:24]   🔧 보안 조치 적용 중...
+[14:52:24] [W-52] 취약 → 자동 보안 조치 적용 중... (Type_Powershell)
+[14:52:24]   → 조치 완료 / 백업: C:\Users\new-s\Desktop\Security Project\KISA-AutoPatcher-Python\dist\backups\W-52_20260909_145224.bak
+[14:52:24]   📷 증빙 화면 캡처 대기 중...
+[14:52:24]   [실행] regedit 프로그램 로드 시도 중...
+[14:52:26]     -> 레지스트리 편집기 윈도우 감지 성공. 우측 정렬 수행.
+[14:52:31]   [캡처] 메인 설정 윈도우 영역 캡처 진행.
+[14:52:31]   📷 증빙 캡처 완료: C:\Users\new-s\Desktop\Security Project\KISA-AutoPatcher-Python\dist\evidence\W-52.png

@@ -1,0 +1,21 @@
+﻿{
+    "ItemId":  "W-47",
+    "appTarget":  "services.msc",
+    "treePath":  null,
+    "targetItem":  [
+                       "Remote Registry",
+                       "원격 레지스트리"
+                   ],
+    "actionType":  "OpenPropertiesOnly",
+    "keySequence":  "",
+    "captureOnly":  false,
+    "Level":  "상",
+    "Category":  "보안 관리",
+    "Title":  "원격 레지스트리 서비스 비활성화",
+    "TechType":  "Type_Powershell",
+    "Description":  "원격 레지스트리 서비스 상태(Stopped) 및 시작 유형(Disabled) 설정",
+    "CheckCommand":  "((Get-Service -Name RemoteRegistry -ErrorAction SilentlyContinue).Status -eq \u0027Stopped\u0027 -and (Get-Service -Name RemoteRegistry -ErrorAction SilentlyContinue).StartType -eq \u0027Disabled\u0027).ToString()",
+    "RemediationCommand":  "Stop-Service -Name RemoteRegistry -Force -ErrorAction SilentlyContinue; Set-Service -Name RemoteRegistry -StartupType Disabled",
+    "SecureValue":  "True"
+}
+

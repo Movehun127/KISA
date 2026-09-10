@@ -1,0 +1,18 @@
+﻿{
+    "ItemId":  "W-38",
+    "appTarget":  "odbcad32.exe",
+    "treePath":  null,
+    "targetItem":  [
+                       "System DSN",
+                       "시스템 DSN"
+                   ],
+    "actionType":  "KeyMacro",
+    "keySequence":  "{TAB}{RIGHT}{TAB}{TAB}{TAB}",
+    "captureOnly":  false,
+    "Level":  "중",
+    "Category":  "서비스 관리",
+    "Title":  "불필요한 ODBC/OLE-DB 데이터 소스와 드라이브 제거",
+    "TechType":  "Type_Skip",
+    "Description":  "ODBC/OLE-DB 수동 점검 필요"
+}
+

@@ -1,0 +1,10 @@
+﻿{
+    "ItemId":  "W-42",
+    "Level":  "상",
+    "Category":  "패치 관리",
+    "Title":  "백신 프로그램 업데이트",
+    "TechType":  "Type_Defender",
+    "Description":  "Windows Defender 활성화 및 서명 최신 여부",
+    "SecureValue":  "UpToDate"
+}
+

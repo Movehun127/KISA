@@ -1,0 +1,31 @@
+﻿{
+    "itemId":  "W-08_Reset",
+    "appTarget":  "gpedit.msc",
+    "treePath":  [
+                     [
+                         "보안 설정",
+                         "Security Settings"
+                     ],
+                     [
+                         "계정 정책",
+                         "Account Policies"
+                     ],
+                     [
+                         "계정 잠금 정책",
+                         "Account Lockout Policy"
+                     ]
+                 ],
+    "targetItem":  [
+                       "계정 잠금 수를 원래대로",
+                       "Reset account lockout counter"
+                   ],
+    "actionType":  "KeyMacro",
+    "keySequence":  "%e60{ENTER}",
+    "captureOnly":  false,
+    "Level":  "중",
+    "Category":  "계정 관리",
+    "Title":  "다음 시간 후 계정 잠금 수를 원래대로 설정",
+    "TechType":  "Type_Secedit",
+    "Description":  "계정 잠금 임계값 카운터 원래대로 설정 시간",
+    "SecureValue":  "60"
+}

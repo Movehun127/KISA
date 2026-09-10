@@ -1,0 +1,9 @@
+﻿{
+    "ItemId":  "W-66",
+    "Level":  "중",
+    "Category":  "보안 관리",
+    "Title":  "도메인 컨트롤러-사용자의 시간 동기화",
+    "TechType":  "Type_Skip",
+    "Description":  "시간 동기화 수동 점검 필요"
+}
+
