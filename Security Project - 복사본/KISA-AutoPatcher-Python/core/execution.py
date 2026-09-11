@@ -6,6 +6,8 @@ from pathlib import Path
 
 
 def matches(actual, desired, comparison='eq'):
+    if comparison == 'file_exists':
+        return isinstance(actual, str) and os.path.isfile(os.path.expandvars(actual))
     if comparison == 'nonempty':
         return bool(str(actual).strip()) if actual is not None else False
     if comparison == 'eq':
@@ -20,6 +22,16 @@ def matches(actual, desired, comparison='eq'):
     if comparison == 'ntlmv2':
         return value in (3, 4, 5)
     raise ValueError(f'Unknown comparison: {comparison}')
+
+
+def registry_settings(item):
+    settings = [dict(s) for s in item.get('RegistryValues', [])]
+    if not settings or len({s['RegistryName'] for s in settings}) != len(settings):
+        raise ValueError('Registry setting group is empty or contains duplicate names')
+    for setting in settings:
+        if setting.get('ExpandEnvironment'):
+            setting['SecureValue'] = os.path.expandvars(setting['SecureValue'])
+    return settings
 
 
 def run_checked(args, timeout=60):
@@ -66,9 +78,13 @@ def apply_security_policy(values):
     # Only the requested settings are imported. Never replay a whole security export.
     allowed = {'LockoutBadCount', 'LockoutDuration', 'ResetLockoutCount', 'ClearTextPassword',
                'PasswordComplexity', 'MinimumPasswordLength', 'MaximumPasswordAge',
-               'MinimumPasswordAge', 'PasswordHistorySize'}
+               'MinimumPasswordAge', 'PasswordHistorySize', 'EnableGuestAccount',
+               'LSAAnonymousNameLookup'}
     if not values or not set(values) <= allowed:
         raise ValueError('Unsupported security policy keys')
+    for key in ('EnableGuestAccount', 'LSAAnonymousNameLookup'):
+        if key in values and int(values[key]) not in (0, 1):
+            raise ValueError('Boolean security policy requires 0 or 1')
     lines = ['[Unicode]', 'Unicode=yes', '[Version]', 'signature="$CHICAGO$"',
              'Revision=1', '[System Access]']
     lines.extend(f'{k} = {int(v)}' for k, v in values.items())

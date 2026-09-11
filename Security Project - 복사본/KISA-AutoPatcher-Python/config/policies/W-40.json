@@ -22,11 +22,11 @@
     ]
   ],
   "targetItem": [
-    "로그온 이벤트",
-    "로그온",
+    "로그온 이벤트 감사",
     "Audit logon events"
   ],
   "Impact": "로컬 감사 정책(로그온, 권한 사용 등) 이벤트 구성 감사 수동 점검",
   "RequiresConfirmation": false,
-  "AutoRemediationSupported": false
+  "AutoRemediationSupported": false,
+  "CheckCommand": "auditpol.exe /get /category:* /r; if($LASTEXITCODE -ne 0){throw 'Audit policy query failed'}"
 }
