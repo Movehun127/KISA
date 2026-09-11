@@ -1,0 +1,66 @@
+{
+  "ItemId": "W-59",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T07:39:18.204425+00:00",
+  "PolicySHA256": "42c9867c197461061584d45e07ca3eb21d3484280864d70e861a5a40e2d1b691",
+  "Policy": {
+    "Title": "LAN Manager 인증 수준",
+    "Category": "보안 관리",
+    "Level": "중",
+    "TechType": "Type_Registry",
+    "SecureValue": 3,
+    "ItemId": "W-59",
+    "appTarget": "secpol.msc",
+    "treePath": [
+      [
+        "보안 설정",
+        "Security Settings"
+      ],
+      [
+        "로컬 정책",
+        "Local Policies"
+      ],
+      [
+        "보안 옵션",
+        "Security Options"
+      ]
+    ],
+    "targetItem": [
+      "네트워크 보안: LAN Manager 인증 수준",
+      "Network security: LAN Manager authentication level"
+    ],
+    "RegistryPath": "HKLM:\\System\\CurrentControlSet\\Control\\Lsa",
+    "RegistryName": "LmCompatibilityLevel",
+    "RegistryType": "DWord",
+    "Comparison": "ntlmv2",
+    "Impact": "구형 NAS·장비·앱 인증 실패 가능",
+    "RequiresConfirmation": true,
+    "AutoRemediationSupported": true
+  },
+  "BeforeStatus": "양호",
+  "BeforeValue": 5,
+  "AfterStatus": "양호",
+  "AfterValue": 5,
+  "FixStatus": "양호",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": null,
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "저장됨(내용 검토 필요)",
+  "Screenshot": "W-59.png",
+  "ScreenshotSHA256": "c0c9e5bbf82d251a7d45e7871d4cfbb3ac9fabba6fe16369ed9dccdbeb6c706a",
+  "ScreenshotFiles": [],
+  "ExpectedComponentCount": null,
+  "CollectedComponentCount": 0
+}

@@ -1,0 +1,19 @@
+{
+  "Title": "SNMP Community String 복잡성 설정",
+  "Category": "서비스 관리",
+  "Level": "중",
+  "TechType": "Type_Skip",
+  "SecureValue": "True",
+  "ItemId": "W-30",
+  "appTarget": "services.msc",
+  "treePath": [],
+  "targetItem": [
+    "SNMP Service",
+    "SNMP"
+  ],
+  "Description": "SNMP Community를 장비 및 관제 서버와 함께 검토.",
+  "captureOnly": true,
+  "Impact": "SNMP Community를 장비 및 관제 서버와 함께 검토.",
+  "RequiresConfirmation": false,
+  "AutoRemediationSupported": false
+}

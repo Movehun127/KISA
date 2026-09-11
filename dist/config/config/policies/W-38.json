@@ -1,0 +1,14 @@
+{
+  "Title": "주기적 보안 패치 및 벤더 권고사항 적용",
+  "Category": "패치 관리",
+  "Level": "상",
+  "TechType": "Type_Skip",
+  "SecureValue": "True",
+  "ItemId": "W-38",
+  "appTarget": "ms-settings:windowsupdate",
+  "Description": "패치 존재 여부만으로 최신성 판정 불가. 패치 주기·절차·설치 목록 검토.",
+  "captureOnly": true,
+  "Impact": "패치 존재 여부만으로 최신성 판정 불가. 패치 주기·절차·설치 목록 검토.",
+  "RequiresConfirmation": false,
+  "AutoRemediationSupported": false
+}

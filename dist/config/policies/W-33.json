@@ -1,0 +1,16 @@
+{
+    "Title": "HTTP/FTP/SMTP 배너 차단",
+    "Category": "서비스 관리",
+    "Level": "중",
+    "TechType": "Type_Powershell",
+    "CheckCommand": "$s1 = Get-Service -Name W3SVC -ErrorAction SilentlyContinue; $s2 = Get-Service -Name MSFTPSVC -ErrorAction SilentlyContinue; if (($s1 -eq $null -or $s1.Status -ne 'Running') -and ($s2 -eq $null -or $s2.Status -ne 'Running')) { 'True' } else { 'False' }",
+    "RemediationCommand": "Write-Host '  -> [주의] 웹/FTP 서비스의 시스템 버전 정보를 배너에서 차단하십시오.'",
+    "SecureValue": "True",
+    "ItemId": "W-33",
+    "appTarget": "services.msc",
+    "treePath": [],
+    "targetItem": [
+        "World Wide Web Publishing Service",
+        "W3SVC"
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "Title": "도메인 컨트롤러-사용자의 시간 동기화",
+    "Category": "보안 관리",
+    "Level": "중",
+    "TechType": "Type_Powershell",
+    "CheckCommand": "(Get-Service -Name W32Time -ErrorAction SilentlyContinue).Status -eq 'Running'",
+    "RemediationCommand": "Start-Service -Name W32Time -ErrorAction SilentlyContinue; Set-Service -Name W32Time -StartupType Automatic -ErrorAction SilentlyContinue",
+    "SecureValue": "True",
+    "ItemId": "W-63",
+    "appTarget": "services.msc",
+    "treePath": [],
+    "targetItem": [
+        "Windows Time",
+        "W32Time"
+    ]
+}

@@ -1,0 +1,23 @@
+{
+    "Title": "NetBIOS 바인딩 서비스 구동 점검",
+    "Category": "서비스 관리",
+    "Level": "상",
+    "TechType": "Type_Powershell",
+    "CheckCommand": "$ids = @(Get-WmiObject -Class Win32_NetworkAdapter -ErrorAction SilentlyContinue | Where-Object { $_.NetConnectionStatus -eq 2 -and $_.AdapterTypeId -eq 0 -and $_.PhysicalAdapter -eq $true } | Select-Object -ExpandProperty SettingID); if ($ids.Count -eq 0) { 0 } else { @(Get-WmiObject -Class Win32_NetworkAdapterConfiguration -ErrorAction SilentlyContinue | Where-Object { $_.SettingID -in $ids -and $_.TcpipNetbiosOptions -ne 2 }).Count }",
+    "RemediationCommand": "$ids = @(Get-WmiObject -Class Win32_NetworkAdapter -ErrorAction SilentlyContinue | Where-Object { $_.NetConnectionStatus -eq 2 -and $_.AdapterTypeId -eq 0 -and $_.PhysicalAdapter -eq $true } | Select-Object -ExpandProperty SettingID); foreach ($id in $ids) { Set-ItemProperty -Path \"HKLM:\\SYSTEM\\CurrentControlSet\\Services\\NetBT\\Parameters\\Interfaces\\Tcpip_$id\" -Name 'NetbiosOptions' -Value 2 -Force -ErrorAction SilentlyContinue }; Get-WmiObject -Class Win32_NetworkAdapterConfiguration | Where-Object { $_.SettingID -in $ids } | ForEach-Object { $_.SetTcpipNetbios(2) }",
+    "SecureValue": "0",
+    "appTarget": "ncpa.cpl",
+    "actionType": "NetworkWins",
+    "cleanupTitles": [
+        "이더넷",
+        "Ethernet",
+        "로컬 영역 연결",
+        "네트워크 연결",
+        "속성",
+        "Properties",
+        "고급 TCP/IP"
+    ],
+    "forceCancel": true,
+    "cleanupRetries": 10,
+    "ItemId": "W-20"
+}

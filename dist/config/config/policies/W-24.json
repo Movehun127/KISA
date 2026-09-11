@@ -1,0 +1,19 @@
+{
+  "Title": "FTP 접근 제어 설정",
+  "Category": "서비스 관리",
+  "Level": "상",
+  "TechType": "Type_Skip",
+  "SecureValue": "True",
+  "ItemId": "W-24",
+  "appTarget": "services.msc",
+  "treePath": [],
+  "targetItem": [
+    "Microsoft FTP Service",
+    "MSFTPSVC"
+  ],
+  "Description": "FTP 접근 IP 및 사용자 접근 제어 확인.",
+  "captureOnly": true,
+  "Impact": "FTP 접근 IP 및 사용자 접근 제어 확인.",
+  "RequiresConfirmation": false,
+  "AutoRemediationSupported": false
+}

@@ -1,0 +1,70 @@
+{
+  "ItemId": "W-15",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T07:32:15.730385+00:00",
+  "PolicySHA256": "22d83c295ae3135e76e52e1f345426730f8569e5b9cc09c9434b512e360df08c",
+  "Policy": {
+    "Title": "사용자 개인키 사용 시 암호 입력",
+    "Category": "서비스 관리",
+    "Level": "상",
+    "TechType": "Type_Registry",
+    "Description": "사용자 개인키 저장소 보안 접근 및 비밀번호 요구 여부 점검",
+    "captureOnly": true,
+    "ItemId": "W-15",
+    "appTarget": "secpol.msc",
+    "treePath": [
+      [
+        "보안 설정",
+        "Security Settings"
+      ],
+      [
+        "로컬 정책",
+        "Local Policies"
+      ],
+      [
+        "보안 옵션",
+        "Security Options"
+      ]
+    ],
+    "targetItem": [
+      "시스템 암호화: 컴퓨터에 저장된 사용자 키에 대해 강력한 키 보호 사용",
+      "시스템 암호화: 컴퓨터에 저장된 사용자 개인 키에 대해 강력한 키 보호 사용",
+      "시스템 암호화: 컴퓨터에 저장된 사용자 개인 키의 강력한 키 보호 수준",
+      "시스템 암호화: 컴퓨터에 저장된 사용자 키에 대해 강력한 보호 사용",
+      "System cryptography: Force strong key protection for user private keys"
+    ],
+    "SecureValue": 2,
+    "RegistryPath": "HKLM:\\Software\\Policies\\Microsoft\\Cryptography",
+    "RegistryName": "ForceKeyProtection",
+    "RegistryType": "DWord",
+    "Impact": "개인키 암호 입력으로 무인 인증·서명 작업 중단 가능",
+    "RequiresConfirmation": true,
+    "AutoRemediationSupported": true
+  },
+  "BeforeStatus": "양호",
+  "BeforeValue": 2,
+  "AfterStatus": "양호",
+  "AfterValue": 2,
+  "FixStatus": "양호",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": null,
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "저장됨(내용 검토 필요)",
+  "Screenshot": "W-15.png",
+  "ScreenshotSHA256": "c319bb5ce6df380e8a9464594005116f9f2b1accdd9a863388768bf89bae8979",
+  "ScreenshotFiles": [],
+  "ExpectedComponentCount": null,
+  "CollectedComponentCount": 0
+}

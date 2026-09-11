@@ -1,0 +1,19 @@
+{
+  "Title": "FTP 디렉토리 접근권한 설정",
+  "Category": "서비스 관리",
+  "Level": "상",
+  "TechType": "Type_Skip",
+  "SecureValue": "True",
+  "ItemId": "W-22",
+  "appTarget": "services.msc",
+  "treePath": [],
+  "targetItem": [
+    "Microsoft FTP Service",
+    "MSFTPSVC"
+  ],
+  "Description": "FTP 홈 디렉터리 ACL을 직접 확인. 서비스 상태만으로 판정 불가.",
+  "captureOnly": true,
+  "Impact": "FTP 홈 디렉터리 ACL을 직접 확인. 서비스 상태만으로 판정 불가.",
+  "RequiresConfirmation": false,
+  "AutoRemediationSupported": false
+}

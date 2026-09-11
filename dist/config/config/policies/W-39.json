@@ -1,0 +1,13 @@
+{
+  "Title": "백신 프로그램 업데이트",
+  "Category": "패치 관리",
+  "Level": "상",
+  "TechType": "Type_Skip",
+  "Description": "백신 프로그램 최신 바이러스 서명 데이터 업데이트 주기 수동 검증",
+  "captureOnly": true,
+  "ItemId": "W-39",
+  "appTarget": "windowsdefender:",
+  "Impact": "백신 프로그램 최신 바이러스 서명 데이터 업데이트 주기 수동 검증",
+  "RequiresConfirmation": false,
+  "AutoRemediationSupported": false
+}

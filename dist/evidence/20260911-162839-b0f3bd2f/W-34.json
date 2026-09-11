@@ -1,0 +1,41 @@
+{
+  "ItemId": "W-34",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T07:33:24.098819+00:00",
+  "PolicySHA256": "ed33f8985eb5b4b1962b08954813b195dd4cfa4e9767da36063575561e531844",
+  "Policy": {
+    "Title": "Telnet 서비스 비활성화",
+    "Category": "서비스 관리",
+    "Level": "중",
+    "TechType": "Type_Skip",
+    "SecureValue": "True",
+    "ItemId": "W-34",
+    "appTarget": "services.msc",
+    "treePath": [],
+    "targetItem": [
+      "Telnet",
+      "TlntSvr"
+    ],
+    "Description": "Telnet 미사용 또는 NTLM 인증 여부 확인. 업무 연계 확인 후 중지.",
+    "captureOnly": true,
+    "Impact": "Telnet 미사용 또는 NTLM 인증 여부 확인. 업무 연계 확인 후 중지.",
+    "RequiresConfirmation": false,
+    "AutoRemediationSupported": false
+  },
+  "BeforeStatus": "수동 조치(Telnet 미사용 또는 NTLM 인증 여부 확인. 업무 연계 확인 후 중지.)",
+  "BeforeValue": "N/A",
+  "AfterStatus": "수동 조치(Telnet 미사용 또는 NTLM 인증 여부 확인. 업무 연계 확인 후 중지.)",
+  "AfterValue": "N/A",
+  "FixStatus": "생략",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": "사용자가 서비스 항목 생략을 선택했습니다. 미설치/미사용을 검증한 판정이 아닙니다.",
+  "ExecutionStages": [],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "미수집",
+  "ScreenshotFiles": [],
+  "ExpectedComponentCount": null,
+  "CollectedComponentCount": 0
+}

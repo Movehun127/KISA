@@ -1,0 +1,13 @@
+[16:32:23] 
+🔷 [W-17]  하드디스크 기본 공유 제거
+[16:32:23]   📷 증빙 화면 캡처 대기 중...
+[16:32:24]   [W-17] 단계: 창 열기
+[16:32:25]   대상 창 확인: 레지스트리 편집기 / HWND=3671854 / PID=15176
+[16:32:25]   [W-17] 단계: 오른쪽 정렬 확인
+[16:32:25]   [W-17] 단계: 조치 및 설정 재조회
+[16:32:25]   → 자동 변경 없음 (수동 조치(AutoShareServer/AutoShareWks 및 실제 기본 공유를 함께 확인. AD·백업·배포 도구 영향 검토.))
+[16:32:26]   [W-17] 단계: 증빙 대상 탐색
+[16:32:32]   [W-17] 대상 탐색/캡처 오류: 레지스트리 실제 선택 경로가 요청 경로와 다릅니다: HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters
+[16:32:33]   증빙 창 닫기 완료 → 다음 항목 진행
+[16:32:33]   [W-17] 단계: 창 닫힘 확인
+[16:32:33]   ⚠️ 항목 처리 중단 또는 오류: 레지스트리 실제 선택 경로가 요청 경로와 다릅니다: HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters

@@ -1,0 +1,1 @@
+{"kind": "registry", "path": "HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System", "name": "LegalNoticeCaption", "before": {"exists": true, "value": "", "type": 1}}

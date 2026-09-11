@@ -1,0 +1,41 @@
+{
+  "ItemId": "W-22",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T07:32:55.258428+00:00",
+  "PolicySHA256": "d4b4b22c7154309d05b1c5a16d7e1e745d54578f09b0ce5b33b1c7065c356dfa",
+  "Policy": {
+    "Title": "FTP 디렉토리 접근권한 설정",
+    "Category": "서비스 관리",
+    "Level": "상",
+    "TechType": "Type_Skip",
+    "SecureValue": "True",
+    "ItemId": "W-22",
+    "appTarget": "services.msc",
+    "treePath": [],
+    "targetItem": [
+      "Microsoft FTP Service",
+      "MSFTPSVC"
+    ],
+    "Description": "FTP 홈 디렉터리 ACL을 직접 확인. 서비스 상태만으로 판정 불가.",
+    "captureOnly": true,
+    "Impact": "FTP 홈 디렉터리 ACL을 직접 확인. 서비스 상태만으로 판정 불가.",
+    "RequiresConfirmation": false,
+    "AutoRemediationSupported": false
+  },
+  "BeforeStatus": "수동 조치(FTP 홈 디렉터리 ACL을 직접 확인. 서비스 상태만으로 판정 불가.)",
+  "BeforeValue": "N/A",
+  "AfterStatus": "수동 조치(FTP 홈 디렉터리 ACL을 직접 확인. 서비스 상태만으로 판정 불가.)",
+  "AfterValue": "N/A",
+  "FixStatus": "생략",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": "사용자가 서비스 항목 생략을 선택했습니다. 미설치/미사용을 검증한 판정이 아닙니다.",
+  "ExecutionStages": [],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "미수집",
+  "ScreenshotFiles": [],
+  "ExpectedComponentCount": null,
+  "CollectedComponentCount": 0
+}

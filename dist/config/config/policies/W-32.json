@@ -1,0 +1,19 @@
+{
+  "Title": "DNS 서비스 구동 점검",
+  "Category": "서비스 관리",
+  "Level": "중",
+  "TechType": "Type_Skip",
+  "SecureValue": "True",
+  "ItemId": "W-32",
+  "appTarget": "services.msc",
+  "treePath": [],
+  "targetItem": [
+    "DNS Server",
+    "DNS"
+  ],
+  "Description": "DNS 영역별 동적 업데이트 설정 검토.",
+  "captureOnly": true,
+  "Impact": "DNS 영역별 동적 업데이트 설정 검토.",
+  "RequiresConfirmation": false,
+  "AutoRemediationSupported": false
+}

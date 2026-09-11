@@ -1,0 +1,41 @@
+{
+  "ItemId": "W-32",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T07:33:23.909855+00:00",
+  "PolicySHA256": "618c43a32eeb2e2603c6a9b280cc03afae69bc27425331eec91140a0849d6233",
+  "Policy": {
+    "Title": "DNS 서비스 구동 점검",
+    "Category": "서비스 관리",
+    "Level": "중",
+    "TechType": "Type_Skip",
+    "SecureValue": "True",
+    "ItemId": "W-32",
+    "appTarget": "services.msc",
+    "treePath": [],
+    "targetItem": [
+      "DNS Server",
+      "DNS"
+    ],
+    "Description": "DNS 영역별 동적 업데이트 설정 검토.",
+    "captureOnly": true,
+    "Impact": "DNS 영역별 동적 업데이트 설정 검토.",
+    "RequiresConfirmation": false,
+    "AutoRemediationSupported": false
+  },
+  "BeforeStatus": "수동 조치(DNS 영역별 동적 업데이트 설정 검토.)",
+  "BeforeValue": "N/A",
+  "AfterStatus": "수동 조치(DNS 영역별 동적 업데이트 설정 검토.)",
+  "AfterValue": "N/A",
+  "FixStatus": "생략",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": "사용자가 서비스 항목 생략을 선택했습니다. 미설치/미사용을 검증한 판정이 아닙니다.",
+  "ExecutionStages": [],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "미수집",
+  "ScreenshotFiles": [],
+  "ExpectedComponentCount": null,
+  "CollectedComponentCount": 0
+}

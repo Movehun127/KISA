@@ -1,0 +1,12 @@
+{
+  "Host": "DESKTOP-BKBAM6H",
+  "CollectedAt": "2026-09-11T07:35:04.840173+00:00",
+  "EvidenceType": "실제 조회 결과 표시 (Windows 설정 대화상자가 아님)",
+  "Data": {
+    "Policy": "원격 시스템에서 강제로 시스템 종료",
+    "ExportCommand": "secedit /export /areas USER_RIGHTS",
+    "RawValue": "*S-1-5-32-544",
+    "Expected": "*S-1-5-32-544 (Administrators)",
+    "AdministratorsOnly": true
+  }
+}

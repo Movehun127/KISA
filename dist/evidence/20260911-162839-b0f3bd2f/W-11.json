@@ -1,0 +1,64 @@
+{
+  "ItemId": "W-11",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T07:31:23.247252+00:00",
+  "PolicySHA256": "8a3b71fb3b853df1c844a6e41ae52f6bb93dd1e9e0490a7c3a11298d44390b2e",
+  "Policy": {
+    "Title": "로컬 로그온 허용",
+    "Category": "계정 관리",
+    "Level": "중",
+    "TechType": "Type_Skip",
+    "Description": "로컬 로그온을 허용하는 권한의 할당 리스트 수동 점검",
+    "captureOnly": true,
+    "ItemId": "W-11",
+    "appTarget": "secpol.msc",
+    "treePath": [
+      [
+        "보안 설정",
+        "Security Settings"
+      ],
+      [
+        "로컬 정책",
+        "Local Policies"
+      ],
+      [
+        "사용자 권한 할당",
+        "User Rights Assignment"
+      ]
+    ],
+    "targetItem": [
+      "로컬 로그온 허용",
+      "Allow log on locally"
+    ],
+    "actionType": "Properties",
+    "Impact": "로컬 로그온을 허용하는 권한의 할당 리스트 수동 점검",
+    "RequiresConfirmation": false,
+    "AutoRemediationSupported": false
+  },
+  "BeforeStatus": "수동 조치(로컬 로그온을 허용하는 권한의 할당 리스트 수동 점검)",
+  "BeforeValue": "N/A",
+  "AfterStatus": "수동 조치(로컬 로그온을 허용하는 권한의 할당 리스트 수동 점검)",
+  "AfterValue": "N/A",
+  "FixStatus": "수동 조치(로컬 로그온을 허용하는 권한의 할당 리스트 수동 점검)",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": null,
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "저장됨(내용 검토 필요)",
+  "Screenshot": "W-11.png",
+  "ScreenshotSHA256": "be142ace2c27e7f25cf0b7b2ab5ecea4d1017be166cd932e0d36dd2ee23530c9",
+  "ScreenshotFiles": [],
+  "ExpectedComponentCount": null,
+  "CollectedComponentCount": 0
+}

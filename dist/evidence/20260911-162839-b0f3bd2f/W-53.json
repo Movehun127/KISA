@@ -1,0 +1,65 @@
+{
+  "ItemId": "W-53",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T07:36:02.780433+00:00",
+  "PolicySHA256": "f75dcf5b700eec7a2c370c4e7861343c4425abd130ac204f157308c9fc2380d7",
+  "Policy": {
+    "Title": "이동식 미디어 포맷 및 꺼내기 허용",
+    "Category": "보안 관리",
+    "Level": "상",
+    "TechType": "Type_Registry",
+    "SecureValue": "0",
+    "ItemId": "W-53",
+    "appTarget": "secpol.msc",
+    "treePath": [
+      [
+        "보안 설정",
+        "Security Settings"
+      ],
+      [
+        "로컬 정책",
+        "Local Policies"
+      ],
+      [
+        "보안 옵션",
+        "Security Options"
+      ]
+    ],
+    "targetItem": [
+      "장치: 이동식 미디어 포맷 및 꺼내기 허용",
+      "Devices: Allowed to format and eject removable media"
+    ],
+    "RegistryPath": "HKLM:\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon",
+    "RegistryName": "AllocateDASD",
+    "RegistryType": "String",
+    "Impact": "설정 적용 범위 및 업무 영향 확인",
+    "RequiresConfirmation": false,
+    "AutoRemediationSupported": true
+  },
+  "BeforeStatus": "양호",
+  "BeforeValue": "0",
+  "AfterStatus": "양호",
+  "AfterValue": "0",
+  "FixStatus": "양호",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": null,
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "저장됨(내용 검토 필요)",
+  "Screenshot": "W-53.png",
+  "ScreenshotSHA256": "96355e630ccb3a772be92a4ca5ec7a5c5a04c2b4c5b32e2960ee8adad01b9aa3",
+  "ScreenshotFiles": [],
+  "ExpectedComponentCount": null,
+  "CollectedComponentCount": 0
+}

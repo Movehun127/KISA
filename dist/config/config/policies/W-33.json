@@ -1,0 +1,19 @@
+{
+  "Title": "HTTP/FTP/SMTP 배너 차단",
+  "Category": "서비스 관리",
+  "Level": "하",
+  "TechType": "Type_Skip",
+  "SecureValue": "True",
+  "ItemId": "W-33",
+  "appTarget": "services.msc",
+  "treePath": [],
+  "targetItem": [
+    "World Wide Web Publishing Service",
+    "W3SVC"
+  ],
+  "Description": "HTTP/FTP/SMTP 실제 응답 배너 확인.",
+  "captureOnly": true,
+  "Impact": "HTTP/FTP/SMTP 실제 응답 배너 확인.",
+  "RequiresConfirmation": false,
+  "AutoRemediationSupported": false
+}

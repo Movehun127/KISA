@@ -1,0 +1,41 @@
+{
+  "ItemId": "W-25",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T07:33:09.527884+00:00",
+  "PolicySHA256": "8fe6d64fc94bc66132f462b67bb1cbf74cb815ee04bcd0bbe37c524e687bd3e0",
+  "Policy": {
+    "Title": "DNS Zone Transfer 설정",
+    "Category": "서비스 관리",
+    "Level": "상",
+    "TechType": "Type_Skip",
+    "SecureValue": "True",
+    "ItemId": "W-25",
+    "appTarget": "services.msc",
+    "treePath": [],
+    "targetItem": [
+      "DNS Server",
+      "DNS"
+    ],
+    "Description": "DNS 영역별 전송 허용 서버 확인.",
+    "captureOnly": true,
+    "Impact": "DNS 영역별 전송 허용 서버 확인.",
+    "RequiresConfirmation": false,
+    "AutoRemediationSupported": false
+  },
+  "BeforeStatus": "수동 조치(DNS 영역별 전송 허용 서버 확인.)",
+  "BeforeValue": "N/A",
+  "AfterStatus": "수동 조치(DNS 영역별 전송 허용 서버 확인.)",
+  "AfterValue": "N/A",
+  "FixStatus": "생략",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": "사용자가 서비스 항목 생략을 선택했습니다. 미설치/미사용을 검증한 판정이 아닙니다.",
+  "ExecutionStages": [],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "미수집",
+  "ScreenshotFiles": [],
+  "ExpectedComponentCount": null,
+  "CollectedComponentCount": 0
+}

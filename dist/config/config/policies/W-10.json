@@ -1,0 +1,33 @@
+{
+  "Title": "마지막 사용자 이름 표시 안 함",
+  "Category": "계정 관리",
+  "Level": "중",
+  "TechType": "Type_Registry",
+  "SecureValue": 1,
+  "ItemId": "W-10",
+  "appTarget": "secpol.msc",
+  "treePath": [
+    [
+      "보안 설정",
+      "Security Settings"
+    ],
+    [
+      "로컬 정책",
+      "Local Policies"
+    ],
+    [
+      "보안 옵션",
+      "Security Options"
+    ]
+  ],
+  "targetItem": [
+    "대화형 로그온: 마지막 로그인 사용자 이름 표시 안 함",
+    "Interactive logon: Do not display last user name"
+  ],
+  "RegistryPath": "HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
+  "RegistryName": "DontDisplayLastUserName",
+  "RegistryType": "DWord",
+  "Impact": "설정 적용 범위 및 업무 영향 확인",
+  "RequiresConfirmation": false,
+  "AutoRemediationSupported": true
+}

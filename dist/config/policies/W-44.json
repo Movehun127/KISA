@@ -1,0 +1,15 @@
+{
+    "Title": "원격으로 액세스할 수 있는 레지스트리 경로",
+    "Category": "서비스 관리",
+    "Level": "상",
+    "TechType": "Type_Powershell",
+    "CheckCommand": "$s = Get-Service -Name RemoteRegistry -ErrorAction SilentlyContinue; if ($s -eq $null -or $s.Status -ne 'Running') { 'True' } else { 'False' }",
+    "RemediationCommand": "Stop-Service -Name RemoteRegistry -Force -ErrorAction SilentlyContinue; Set-Service -Name RemoteRegistry -StartupType Disabled -ErrorAction SilentlyContinue",
+    "SecureValue": "True",
+    "ItemId": "W-44",
+    "appTarget": "services.msc",
+    "targetItem": [
+        "Remote Registry"
+    ],
+    "RegistryPath": "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\SecurePipeServers\\winreg"
+}

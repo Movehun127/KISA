@@ -1,0 +1,12 @@
+{
+    "Title": "하드디스크 기본 공유 제거",
+    "Category": "서비스 관리",
+    "Level": "상",
+    "TechType": "Type_Powershell",
+    "CheckCommand": "(Get-ItemProperty -Path 'HKLM:\\System\\CurrentControlSet\\Services\\LanmanServer\\Parameters' -Name AutoShareWks -ErrorAction SilentlyContinue).AutoShareWks.ToString()",
+    "RemediationCommand": "Set-ItemProperty -Path 'HKLM:\\System\\CurrentControlSet\\Services\\LanmanServer\\Parameters' -Name AutoShareWks -Value 0 -ErrorAction SilentlyContinue; Set-ItemProperty -Path 'HKLM:\\System\\CurrentControlSet\\Services\\LanmanServer\\Parameters' -Name AutoShareServer -Value 0 -ErrorAction SilentlyContinue",
+    "SecureValue": "0",
+    "ItemId": "W-17",
+    "appTarget": "regedit",
+    "RegistryPath": "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters"
+}

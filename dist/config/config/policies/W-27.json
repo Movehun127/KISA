@@ -1,0 +1,14 @@
+{
+  "Title": "최신 Windows OS Build 버전 적용",
+  "Category": "서비스 관리",
+  "Level": "상",
+  "TechType": "Type_Skip",
+  "SecureValue": "True",
+  "ItemId": "W-27",
+  "appTarget": "winver",
+  "Description": "OS 제품·지원 버전별 최신 빌드 및 패치 절차 확인.",
+  "captureOnly": true,
+  "Impact": "OS 제품·지원 버전별 최신 빌드 및 패치 절차 확인.",
+  "RequiresConfirmation": false,
+  "AutoRemediationSupported": false
+}

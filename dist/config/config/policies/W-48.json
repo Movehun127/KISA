@@ -1,0 +1,33 @@
+{
+  "Title": "로그온하지 않고 시스템 종료 허용",
+  "Category": "보안 관리",
+  "Level": "상",
+  "TechType": "Type_Registry",
+  "SecureValue": 0,
+  "ItemId": "W-48",
+  "appTarget": "secpol.msc",
+  "treePath": [
+    [
+      "보안 설정",
+      "Security Settings"
+    ],
+    [
+      "로컬 정책",
+      "Local Policies"
+    ],
+    [
+      "보안 옵션",
+      "Security Options"
+    ]
+  ],
+  "targetItem": [
+    "로그온하지 않고 시스템 종료 허용",
+    "Shutdown: Allow system to be shut down without having to log on"
+  ],
+  "RegistryPath": "HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
+  "RegistryName": "ShutdownWithoutLogon",
+  "RegistryType": "DWord",
+  "Impact": "설정 적용 범위 및 업무 영향 확인",
+  "RequiresConfirmation": false,
+  "AutoRemediationSupported": true
+}

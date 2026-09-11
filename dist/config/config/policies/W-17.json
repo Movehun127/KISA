@@ -1,0 +1,15 @@
+{
+  "Title": "하드디스크 기본 공유 제거",
+  "Category": "서비스 관리",
+  "Level": "상",
+  "TechType": "Type_Skip",
+  "SecureValue": "0",
+  "ItemId": "W-17",
+  "appTarget": "regedit",
+  "RegistryPath": "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters",
+  "Description": "AutoShareServer/AutoShareWks 및 실제 기본 공유를 함께 확인. AD·백업·배포 도구 영향 검토.",
+  "captureOnly": true,
+  "Impact": "AutoShareServer/AutoShareWks 및 실제 기본 공유를 함께 확인. AD·백업·배포 도구 영향 검토.",
+  "RequiresConfirmation": false,
+  "AutoRemediationSupported": false
+}

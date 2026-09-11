@@ -1,0 +1,66 @@
+{
+  "ItemId": "W-48",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T07:35:01.080373+00:00",
+  "PolicySHA256": "01287265ef28b595a70cd5206ed946383f6ca5b73cf8344391d8e060d7928515",
+  "Policy": {
+    "Title": "로그온하지 않고 시스템 종료 허용",
+    "Category": "보안 관리",
+    "Level": "상",
+    "TechType": "Type_Registry",
+    "SecureValue": 0,
+    "ItemId": "W-48",
+    "appTarget": "secpol.msc",
+    "treePath": [
+      [
+        "보안 설정",
+        "Security Settings"
+      ],
+      [
+        "로컬 정책",
+        "Local Policies"
+      ],
+      [
+        "보안 옵션",
+        "Security Options"
+      ]
+    ],
+    "targetItem": [
+      "시스템 종료: 로그온하지 않고 시스템 종료 허용",
+      "로그온하지 않고 시스템 종료 허용",
+      "Shutdown: Allow system to be shut down without having to log on"
+    ],
+    "RegistryPath": "HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
+    "RegistryName": "ShutdownWithoutLogon",
+    "RegistryType": "DWord",
+    "Impact": "설정 적용 범위 및 업무 영향 확인",
+    "RequiresConfirmation": false,
+    "AutoRemediationSupported": true
+  },
+  "BeforeStatus": "취약",
+  "BeforeValue": 1,
+  "AfterStatus": "양호",
+  "AfterValue": 0,
+  "FixStatus": "완료",
+  "BackupFile": "C:\\Users\\new-s\\Desktop\\KISA-fix-evidence-verification\\KISA-fix-evidence-verification\\Security Project - 복사본\\KISA-AutoPatcher-Python\\dist\\backups\\W-48_21f51907a43542bebc258311117b4168.json",
+  "RollbackStatus": null,
+  "Note": "변경값 재조회 검증 완료. 업무 기능 검증은 별도 필요. ",
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "저장됨(내용 검토 필요)",
+  "Screenshot": "W-48.png",
+  "ScreenshotSHA256": "f69306026578e8c31150d3e695173935b35bebb8df0040d5f5665488b9994af4",
+  "ScreenshotFiles": [],
+  "ExpectedComponentCount": null,
+  "CollectedComponentCount": 0
+}

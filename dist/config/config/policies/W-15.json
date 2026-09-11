@@ -1,0 +1,38 @@
+{
+  "Title": "사용자 개인키 사용 시 암호 입력",
+  "Category": "서비스 관리",
+  "Level": "상",
+  "TechType": "Type_Registry",
+  "Description": "사용자 개인키 저장소 보안 접근 및 비밀번호 요구 여부 점검",
+  "captureOnly": true,
+  "ItemId": "W-15",
+  "appTarget": "secpol.msc",
+  "treePath": [
+    [
+      "보안 설정",
+      "Security Settings"
+    ],
+    [
+      "로컬 정책",
+      "Local Policies"
+    ],
+    [
+      "보안 옵션",
+      "Security Options"
+    ]
+  ],
+  "targetItem": [
+    "시스템 암호화: 컴퓨터에 저장된 사용자 키에 대해 강력한 키 보호 사용",
+    "시스템 암호화: 컴퓨터에 저장된 사용자 개인 키에 대해 강력한 키 보호 사용",
+    "시스템 암호화: 컴퓨터에 저장된 사용자 개인 키의 강력한 키 보호 수준",
+    "시스템 암호화: 컴퓨터에 저장된 사용자 키에 대해 강력한 보호 사용",
+    "System cryptography: Force strong key protection for user private keys"
+  ],
+  "SecureValue": 2,
+  "RegistryPath": "HKLM:\\Software\\Policies\\Microsoft\\Cryptography",
+  "RegistryName": "ForceKeyProtection",
+  "RegistryType": "DWord",
+  "Impact": "개인키 암호 입력으로 무인 인증·서명 작업 중단 가능",
+  "RequiresConfirmation": true,
+  "AutoRemediationSupported": true
+}

@@ -1,0 +1,19 @@
+{
+  "Title": "RDS(Remote Data Services)제거",
+  "Category": "서비스 관리",
+  "Level": "상",
+  "TechType": "Type_Skip",
+  "SecureValue": "True",
+  "ItemId": "W-26",
+  "appTarget": "services.msc",
+  "treePath": [],
+  "targetItem": [
+    "World Wide Web",
+    "W3SVC"
+  ],
+  "Description": "IIS RDS 구성 및 사용 여부 확인.",
+  "captureOnly": true,
+  "Impact": "IIS RDS 구성 및 사용 여부 확인.",
+  "RequiresConfirmation": false,
+  "AutoRemediationSupported": false
+}

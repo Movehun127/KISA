@@ -1,0 +1,1 @@
+{"kind": "registry", "path": "HKLM:\\System\\CurrentControlSet\\Control\\Lsa", "name": "RestrictAnonymous", "before": {"exists": true, "value": 0, "type": 4}}

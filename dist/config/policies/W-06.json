@@ -1,0 +1,25 @@
+{
+    "Title": "관리자 그룹에 최소한의 사용자 포함",
+    "Category": "계정 관리",
+    "Level": "상",
+    "TechType": "Type_Powershell",
+    "CheckCommand": "(Get-LocalGroupMember -Group 'Administrators' -ErrorAction SilentlyContinue).Count -le 3",
+    "RemediationCommand": "Write-Host '  -> [주의] Administrators 그룹 내 사용자 등록 개수를 최소화하십시오.'",
+    "SecureValue": "True",
+    "ItemId": "W-06",
+    "appTarget": "lusrmgr.msc",
+    "treePath": [
+        [
+            "로컬 사용자 및 그룹(로컬)",
+            "Local Users and Groups (Local)"
+        ],
+        [
+            "그룹",
+            "Groups"
+        ]
+    ],
+    "targetItem": [
+        "Administrators"
+    ],
+    "actionType": "Properties"
+}

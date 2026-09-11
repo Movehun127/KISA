@@ -1,0 +1,11 @@
+{
+    "Title": "윈도우 방화벽 설정",
+    "Category": "보안 관리",
+    "Level": "상",
+    "TechType": "Type_Powershell",
+    "CheckCommand": "(Get-NetFirewallProfile -Profile Domain,Private,Public).Enabled -notcontains $false",
+    "RemediationCommand": "Set-NetFirewallProfile -Profile Domain,Private,Public -Enabled True",
+    "SecureValue": "True",
+    "ItemId": "W-64",
+    "appTarget": "firewall.cpl"
+}

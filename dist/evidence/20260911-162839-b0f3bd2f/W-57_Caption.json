@@ -1,0 +1,69 @@
+{
+  "ItemId": "W-57_Caption",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T07:38:42.448219+00:00",
+  "PolicySHA256": "5b8c3afd9cd4b5025637ed120f23d6da541aefd6e0f7ea1dd23e22fd871a1558",
+  "Policy": {
+    "Title": "로그온 시 경고 메시지 설정 (제목)",
+    "Category": "보안 관리",
+    "Level": "하",
+    "TechType": "Type_Registry",
+    "SecureValue": "Warning!",
+    "ItemId": "W-57_Caption",
+    "Description": "보안 메시지 창 제목 설정",
+    "appTarget": "secpol.msc",
+    "treePath": [
+      [
+        "보안 설정",
+        "Security Settings"
+      ],
+      [
+        "로컬 정책",
+        "Local Policies"
+      ],
+      [
+        "보안 옵션",
+        "Security Options"
+      ]
+    ],
+    "targetItem": [
+      "대화형 로그온: 로그온 시도하는 사용자에 대한 메시지 제목",
+      "대화형 로그온: 로그온을 시도하는 사용자에 대한 메시지 제목",
+      "메시지 제목",
+      "Interactive logon: Message title for users attempting to log on"
+    ],
+    "RegistryPath": "HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
+    "RegistryName": "LegalNoticeCaption",
+    "RegistryType": "String",
+    "Comparison": "eq",
+    "Impact": "로그온 메시지로 자동 로그인 흐름에 영향 가능",
+    "RequiresConfirmation": true,
+    "AutoRemediationSupported": true
+  },
+  "BeforeStatus": "취약",
+  "BeforeValue": "",
+  "AfterStatus": "양호",
+  "AfterValue": "Warning!",
+  "FixStatus": "완료",
+  "BackupFile": "C:\\Users\\new-s\\Desktop\\KISA-fix-evidence-verification\\KISA-fix-evidence-verification\\Security Project - 복사본\\KISA-AutoPatcher-Python\\dist\\backups\\W-57_Caption_9d1dabbc417c4008b954684e287e7e00.json",
+  "RollbackStatus": null,
+  "Note": "변경값 재조회 검증 완료. 업무 기능 검증은 별도 필요. ",
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "저장됨(내용 검토 필요)",
+  "Screenshot": "W-57_Caption.png",
+  "ScreenshotSHA256": "62da79eaa49aedd7bd00c9895de737f62e18a38face11defd4a83ae84e2fddaa",
+  "ScreenshotFiles": [],
+  "ExpectedComponentCount": null,
+  "CollectedComponentCount": 0
+}

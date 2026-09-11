@@ -1,0 +1,50 @@
+{
+  "ItemId": "W-45",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T07:34:38.080342+00:00",
+  "PolicySHA256": "811271dadbacca51665b9514d81e53cdc5d088e1f9817a3b030548369ee953b4",
+  "Policy": {
+    "Title": "백신 프로그램 설치",
+    "Category": "보안 관리",
+    "Level": "상",
+    "TechType": "Type_Skip",
+    "Description": "안전한 상용 또는 윈도우 빌트인 백신 백그라운드 엔진 동작 수동 점검",
+    "captureOnly": true,
+    "ItemId": "W-45",
+    "appTarget": "windowsdefender:",
+    "treePath": [],
+    "targetItem": [
+      "Windows Defender Antivirus Service",
+      "Windefend"
+    ],
+    "Impact": "안전한 상용 또는 윈도우 빌트인 백신 백그라운드 엔진 동작 수동 점검",
+    "RequiresConfirmation": false,
+    "AutoRemediationSupported": false
+  },
+  "BeforeStatus": "수동 조치(안전한 상용 또는 윈도우 빌트인 백신 백그라운드 엔진 동작 수동 점검)",
+  "BeforeValue": "N/A",
+  "AfterStatus": "수동 조치(안전한 상용 또는 윈도우 빌트인 백신 백그라운드 엔진 동작 수동 점검)",
+  "AfterValue": "N/A",
+  "FixStatus": "수동 조치(안전한 상용 또는 윈도우 빌트인 백신 백그라운드 엔진 동작 수동 점검)",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": null,
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "저장됨(내용 검토 필요)",
+  "Screenshot": "W-45.png",
+  "ScreenshotSHA256": "bce5f730feaf550a2fdc6645297d7bd6b466b858787d803843e7f49a28e4a3a0",
+  "ScreenshotFiles": [],
+  "ExpectedComponentCount": null,
+  "CollectedComponentCount": 0
+}

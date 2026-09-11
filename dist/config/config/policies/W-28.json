@@ -1,0 +1,48 @@
+{
+  "Title": "터미널 서비스 암호화 수준 설정",
+  "Category": "서비스 관리",
+  "Level": "중",
+  "TechType": "Type_Registry",
+  "SecureValue": 2,
+  "ItemId": "W-28",
+  "appTarget": "gpedit.msc",
+  "treePath": [
+    [
+      "컴퓨터 구성",
+      "Computer Configuration"
+    ],
+    [
+      "관리 템플릿",
+      "Administrative Templates"
+    ],
+    [
+      "Windows 구성 요소",
+      "Windows Components"
+    ],
+    [
+      "원격 데스크톱 서비스",
+      "터미널 서비스",
+      "Remote Desktop Services",
+      "Terminal Services"
+    ],
+    [
+      "원격 데스크톱 세션 호스트",
+      "Remote Desktop Session Host"
+    ],
+    [
+      "보안",
+      "Security"
+    ]
+  ],
+  "targetItem": [
+    "클라이언트 연결 암호화 수준 설정",
+    "Set client connection encryption level"
+  ],
+  "Impact": "RDP 암호화 설정 변경으로 구형 클라이언트 접속 영향. 유효 GPO 및 원격 서비스 사용 여부 별도 확인",
+  "RequiresConfirmation": true,
+  "RegistryPath": "HKLM:\\System\\CurrentControlSet\\Control\\Terminal Server\\WinStations\\RDP-Tcp",
+  "RegistryName": "MinEncryptionLevel",
+  "RegistryType": "DWord",
+  "Comparison": "rdp_encryption",
+  "AutoRemediationSupported": true
+}

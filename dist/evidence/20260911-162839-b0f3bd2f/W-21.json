@@ -1,0 +1,41 @@
+{
+  "ItemId": "W-21",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T07:32:55.180629+00:00",
+  "PolicySHA256": "de53dff69e124977304ff7a7fe4e8fd2ca90fe4ae6b032eb3718e4faa0487613",
+  "Policy": {
+    "Title": "암호화되지 않는 FTP 서비스 비활성화",
+    "Category": "서비스 관리",
+    "Level": "상",
+    "TechType": "Type_Skip",
+    "SecureValue": "True",
+    "ItemId": "W-21",
+    "appTarget": "services.msc",
+    "treePath": [],
+    "targetItem": [
+      "Microsoft FTP Service",
+      "MSFTPSVC"
+    ],
+    "Description": "FTP 사용 여부와 암호화 설정 확인. FTPSVC/MSFTPSVC 구분 및 업무 영향 검토.",
+    "captureOnly": true,
+    "Impact": "FTP 사용 여부와 암호화 설정 확인. FTPSVC/MSFTPSVC 구분 및 업무 영향 검토.",
+    "RequiresConfirmation": false,
+    "AutoRemediationSupported": false
+  },
+  "BeforeStatus": "수동 조치(FTP 사용 여부와 암호화 설정 확인. FTPSVC/MSFTPSVC 구분 및 업무 영향 검토.)",
+  "BeforeValue": "N/A",
+  "AfterStatus": "수동 조치(FTP 사용 여부와 암호화 설정 확인. FTPSVC/MSFTPSVC 구분 및 업무 영향 검토.)",
+  "AfterValue": "N/A",
+  "FixStatus": "생략",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": "사용자가 서비스 항목 생략을 선택했습니다. 미설치/미사용을 검증한 판정이 아닙니다.",
+  "ExecutionStages": [],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "미수집",
+  "ScreenshotFiles": [],
+  "ExpectedComponentCount": null,
+  "CollectedComponentCount": 0
+}

@@ -1,0 +1,19 @@
+{
+  "Title": "SNMP Access control 설정",
+  "Category": "서비스 관리",
+  "Level": "중",
+  "TechType": "Type_Skip",
+  "SecureValue": "True",
+  "ItemId": "W-31",
+  "appTarget": "services.msc",
+  "treePath": [],
+  "targetItem": [
+    "SNMP Service",
+    "SNMP"
+  ],
+  "Description": "SNMP 허용 호스트 검토.",
+  "captureOnly": true,
+  "Impact": "SNMP 허용 호스트 검토.",
+  "RequiresConfirmation": false,
+  "AutoRemediationSupported": false
+}

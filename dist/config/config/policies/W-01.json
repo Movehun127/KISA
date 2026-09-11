@@ -1,0 +1,32 @@
+{
+  "Title": "Administrator 계정 이름 변경 등 보안성 강화",
+  "Category": "계정 관리",
+  "Level": "상",
+  "TechType": "Type_Skip",
+  "SecureValue": "True",
+  "ItemId": "W-01",
+  "appTarget": "secpol.msc",
+  "treePath": [
+    [
+      "보안 설정",
+      "Security Settings"
+    ],
+    [
+      "로컬 정책",
+      "Local Policies"
+    ],
+    [
+      "보안 옵션",
+      "Security Options"
+    ]
+  ],
+  "targetItem": [
+    "계정: Administrator 계정 이름 바꾸기",
+    "Accounts: Rename administrator account"
+  ],
+  "Description": "기본 이름 변경 또는 강력한 암호 중 하나로 충족 가능. 계정 의존 서비스 확인 후 수동 판단.",
+  "captureOnly": true,
+  "Impact": "기본 이름 변경 또는 강력한 암호 중 하나로 충족 가능. 계정 의존 서비스 확인 후 수동 판단.",
+  "RequiresConfirmation": false,
+  "AutoRemediationSupported": false
+}

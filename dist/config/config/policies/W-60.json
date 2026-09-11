@@ -1,0 +1,34 @@
+{
+  "Title": "보안 채널 데이터 디지털 암호화 또는 서명",
+  "Category": "보안 관리",
+  "Level": "중",
+  "TechType": "Type_Skip",
+  "SecureValue": "1",
+  "ItemId": "W-60",
+  "appTarget": "secpol.msc",
+  "treePath": [
+    [
+      "보안 설정",
+      "Security Settings"
+    ],
+    [
+      "로컬 정책",
+      "Local Policies"
+    ],
+    [
+      "보안 옵션",
+      "Security Options"
+    ]
+  ],
+  "targetItem": [
+    "도메인 구성원: 보안 채널 데이터를 디지털 암호화 또는 서명(항상)",
+    "도메인 구성원: 보안 채널 데이터 디지털 서명(가능한 경우)",
+    "도메인 구성원: 보안 채널 데이터를 디지털 암호화(가능한 경우)",
+    "Domain member: Digitally encrypt or sign secure channel data (always)"
+  ],
+  "Description": "도메인 구성원 여부 및 보안 채널 암호화·서명 3개 정책 모두 확인.",
+  "captureOnly": true,
+  "Impact": "도메인 구성원 여부 및 보안 채널 암호화·서명 3개 정책 모두 확인.",
+  "RequiresConfirmation": false,
+  "AutoRemediationSupported": false
+}
