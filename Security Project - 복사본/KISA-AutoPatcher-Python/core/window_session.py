@@ -23,6 +23,30 @@ class CaptureCancelled(RuntimeError):
     pass
 
 
+def focus_window(window, api):
+    handle = window.NativeWindowHandle
+    attached = []
+    try:
+        if isinstance(api, ctypes.CDLL):
+            api.AttachThreadInput.argtypes = [wintypes.DWORD, wintypes.DWORD, wintypes.BOOL]
+            api.BringWindowToTop.argtypes = [wintypes.HWND]
+            api.SetFocus.argtypes = [wintypes.HWND]
+            current = ctypes.windll.kernel32.GetCurrentThreadId()
+            for other in {api.GetWindowThreadProcessId(handle, None),
+                          api.GetWindowThreadProcessId(api.GetForegroundWindow(), None)}:
+                if other and other != current and api.AttachThreadInput(current, other, True):
+                    attached.append((current, other))
+            api.BringWindowToTop(handle)
+            api.SetForegroundWindow(handle)
+            api.SetFocus(handle)
+        else:
+            focus_window(window, api)
+            api.SetForegroundWindow(handle)
+    finally:
+        for current, other in reversed(attached):
+            api.AttachThreadInput(current, other, False)
+
+
 def prepare_window(window, api, screen_size, timeout=3):
     """Position the native top-level window; verify physical bounds and foreground."""
     handle = window.NativeWindowHandle
@@ -51,8 +75,7 @@ def prepare_window(window, api, screen_size, timeout=3):
     deadline = time.monotonic() + timeout
     while True:
         try:
-            window.SetActive()
-            window.SetFocus()
+            focus_window(window, api)
         except Exception:
             pass
         api.SetForegroundWindow(handle)

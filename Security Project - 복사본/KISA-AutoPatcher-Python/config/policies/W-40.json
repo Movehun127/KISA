@@ -2,31 +2,15 @@
   "Title": "정책에 따른 시스템 로깅 설정",
   "Category": "로그 관리",
   "Level": "중",
-  "TechType": "Type_Skip",
-  "Description": "로컬 감사 정책(로그온, 권한 사용 등) 이벤트 구성 감사 수동 점검",
-  "captureOnly": true,
+  "TechType": "Type_Audit",
+  "Description": "Model.pdf p.236 감사 6개 범주의 유효 하위 범주 설정. 기존 성공/실패 설정 보존.",
+  "captureOnly": false,
   "ItemId": "W-40",
-  "appTarget": "secpol.msc",
-  "treePath": [
-    [
-      "보안 설정",
-      "Security Settings"
-    ],
-    [
-      "로컬 정책",
-      "Local Policies"
-    ],
-    [
-      "감사 정책",
-      "Audit Policy"
-    ]
-  ],
-  "targetItem": [
-    "로그온 이벤트 감사",
-    "Audit logon events"
-  ],
-  "Impact": "로컬 감사 정책(로그온, 권한 사용 등) 이벤트 구성 감사 수동 점검",
-  "RequiresConfirmation": false,
-  "AutoRemediationSupported": false,
-  "CheckCommand": "auditpol.exe /get /category:* /r; if($LASTEXITCODE -ne 0){throw 'Audit policy query failed'}"
+  "appTarget": "kisa-evidence",
+  "Impact": "감사 이벤트 양 증가. 고급 감사 설정을 기본 감사 정책보다 우선하도록 적용합니다.",
+  "RequiresConfirmation": true,
+  "AutoRemediationSupported": true,
+  "EvidenceCollector": "audit",
+  "SecureValue": "6개 감사 범주 기준 충족 및 고급 감사 우선",
+  "ScopeNote": "유효 고급 감사 설정 기준. 조직별 로그 용량·보존 정책 검토 필요."
 }

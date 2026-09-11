@@ -3,7 +3,7 @@
   "Category": "보안 관리",
   "Level": "하",
   "TechType": "Type_Registry",
-  "SecureValue": "보안 경고",
+  "SecureValue": "Warning!",
   "ItemId": "W-57_Caption",
   "Description": "보안 메시지 창 제목 설정",
   "appTarget": "secpol.msc",
@@ -30,7 +30,7 @@
   "RegistryPath": "HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
   "RegistryName": "LegalNoticeCaption",
   "RegistryType": "String",
-  "Comparison": "nonempty",
+  "Comparison": "eq",
   "Impact": "로그온 메시지로 자동 로그인 흐름에 영향 가능",
   "RequiresConfirmation": true,
   "AutoRemediationSupported": true

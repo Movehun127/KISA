@@ -43,7 +43,8 @@ class CaptureFlowTests(unittest.TestCase):
         session.close.side_effect = lambda: events.append('close')
         def screenshot(path, target):
             events.append('capture')
-            Path(path).write_bytes(b'png-test')
+            from PIL import Image
+            Image.new('RGB',(12,10),'white').save(path)
         with ExitStack() as stack:
             for name, value in [('auto',Mock()), ('user32',Mock()), ('pyautogui',Mock())]:
                 stack.enter_context(patch.object(cap,name,value))
@@ -87,6 +88,9 @@ class CaptureFlowTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             self.run_flow(folder,events,action,captureTargets=[['duration'],['reset']])
             self.assertTrue((Path(folder)/'W-08.png').exists())
+            from PIL import Image
+            with Image.open(Path(folder)/'W-08.png') as overview:
+                self.assertEqual(overview.size,(12,20))
         action.assert_called_once()
         self.assertEqual(events.count('capture'),2)
         first_close = events.index('close')

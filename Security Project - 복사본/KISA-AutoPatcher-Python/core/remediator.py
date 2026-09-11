@@ -10,7 +10,7 @@ import winreg
 from pathlib import Path
 from .detector import _parse_reg_path, get_vulnerability_status
 from .execution import run_ps, export_security_policy, apply_security_policy, matches, registry_settings
-from . import native_actions
+from . import native_actions, audit_policy
 
 _LOCK = threading.Lock()
 _TYPES = {'DWord': winreg.REG_DWORD, 'String': winreg.REG_SZ}
@@ -89,6 +89,20 @@ def restore_backup(filename):
         native_actions.write_firewall(data['before'], best_effort=True)
         if native_actions.read_firewall() != data['before']:
             raise RuntimeError('Firewall rollback verification failed')
+    elif data['kind'] == 'audit':
+        errors = []
+        try:
+            audit_policy.write(data['before'])
+            if audit_policy.read() != data['before']:
+                raise RuntimeError('Audit rollback verification failed')
+        except Exception as exc:
+            errors.append(str(exc))
+        try:
+            _restore_registry(audit_policy.OVERRIDE_PATH, audit_policy.OVERRIDE_NAME, data['override'])
+        except Exception as exc:
+            errors.append(str(exc))
+        if errors:
+            raise RuntimeError('; '.join(errors))
     elif data['kind'] == 'secedit':
         apply_security_policy(data['before'])
         current = export_security_policy()
@@ -117,7 +131,7 @@ def invoke_remediation(vulnerability_results, backup_dir, evidence_dir='', log_c
             result['FixStatus'] = '건너뜀'
             if result.get('Status') != '취약':
                 continue
-            if kind not in ('Type_Registry', 'Type_Secedit', 'Type_RegistryGroup', 'Type_SmbSession', 'Type_Firewall'):
+            if kind not in ('Type_Registry', 'Type_Secedit', 'Type_RegistryGroup', 'Type_SmbSession', 'Type_Firewall', 'Type_Audit'):
                 result.update(FixStatus='수동 조치 필요', Note='안전한 백업·복원 구현이 없는 조치는 자동 실행하지 않습니다')
                 log(f'[{iid}] {result["Note"]}', 'warn')
                 continue
@@ -157,6 +171,11 @@ def invoke_remediation(vulnerability_results, backup_dir, evidence_dir='', log_c
                         if setting.get('RequireExistingFile') and not os.path.isfile(setting['SecureValue']):
                             raise RuntimeError('화면 보호기 실행 파일이 존재하지 않습니다.')
                     data = {'kind': 'registry_group', 'path': path, 'before': old}
+                elif kind == 'Type_Audit':
+                    old = audit_policy.read()
+                    wanted = audit_policy.target(old)
+                    data = {'kind': 'audit', 'before': old,
+                            'override': _snapshot(audit_policy.OVERRIDE_PATH, audit_policy.OVERRIDE_NAME)}
                 elif kind == 'Type_SmbSession':
                     old = native_actions.read_smb()
                     wanted = native_actions.smb_target(old)
@@ -199,6 +218,12 @@ def invoke_remediation(vulnerability_results, backup_dir, evidence_dir='', log_c
                     after = {s['RegistryName']: reg_read(path, s['RegistryName']) for s in settings}
                     if any(after[s['RegistryName']] is None or not matches(after[s['RegistryName']], s['SecureValue'], s.get('Comparison', 'eq')) for s in settings):
                         raise RuntimeError('복합 레지스트리 검증 실패')
+                elif kind == 'Type_Audit':
+                    reg_write(audit_policy.OVERRIDE_PATH, audit_policy.OVERRIDE_NAME, 1)
+                    audit_policy.write(wanted)
+                    after = audit_policy.read()
+                    if after != wanted or reg_read(audit_policy.OVERRIDE_PATH, audit_policy.OVERRIDE_NAME) != 1:
+                        raise RuntimeError('유효 감사 정책 재검증 실패')
                 elif kind == 'Type_SmbSession':
                     native_actions.write_smb(wanted)
                     after = native_actions.read_smb()

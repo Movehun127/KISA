@@ -9,5 +9,6 @@
   "appTarget": "taskmgr",
   "Impact": "비정상 등록 시작프로그램 및 의심 서비스 수동 점검",
   "RequiresConfirmation": false,
-  "AutoRemediationSupported": false
+  "AutoRemediationSupported": false,
+  "actionType": "StartupApps"
 }

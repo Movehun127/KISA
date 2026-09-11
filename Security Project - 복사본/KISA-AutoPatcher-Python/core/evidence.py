@@ -47,6 +47,16 @@ def save_record(folder, initial, final, screenshot=None, error=None):
     data['ScreenshotFiles'] = []
     for path in sorted(Path(folder).glob(initial['ItemId'] + '_part*.png')):
         data['ScreenshotFiles'].append({'File': path.name, 'SHA256': hashlib.sha256(path.read_bytes()).hexdigest()})
+    diagnostic = Path(folder) / (initial['ItemId'] + '_diagnostic.json')
+    if diagnostic.is_file():
+        data['DiagnosticFile'] = diagnostic.name
+        data['DiagnosticSHA256'] = hashlib.sha256(diagnostic.read_bytes()).hexdigest()
+    expected = policy.get('ExpectedCaptures', len(policy.get('captureTargets', [])))
+    data['ExpectedComponentCount'] = expected or None
+    data['CollectedComponentCount'] = len(data['ScreenshotFiles'])
+    if expected and len(data['ScreenshotFiles']) != expected:
+        data['ScreenshotStatus'] = '실패(복합 증빙 누락)'
+        data['CaptureError'] = data.get('CaptureError','') + '; 복합 증빙 수량 불일치'
     dest = Path(folder) / (initial['ItemId'] + '.json')
     with dest.open('x', encoding='utf-8') as stream:
         json.dump(data, stream, ensure_ascii=False, indent=2, default=str)

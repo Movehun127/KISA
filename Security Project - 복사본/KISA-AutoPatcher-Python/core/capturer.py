@@ -68,6 +68,8 @@ def _spawn_app(app):
 
 def _app_matches(window, app, item, pid=None):
     title, cls = window.Name or '', window.ClassName or ''
+    if app == 'kisa-evidence':
+        return title == item.get('ViewerTitle') and window.ProcessId == pid
     if app.endswith('.msc'):
         return cls == 'MMCMainFrame' and pid is not None and window.ProcessId == pid
     if app == 'regedit':
@@ -78,7 +80,7 @@ def _app_matches(window, app, item, pid=None):
         return title in ('설정', 'Settings')
     if app.startswith('windowsdefender:'):
         return title in ('Windows 보안', 'Windows Security')
-    return any(target_matches(title, a) or title.startswith(a + ' (') for a in APP_TITLES.get(app, []))
+    return any(target_matches(title, a) or title.startswith(a + ' (') or title.startswith(a + '(') for a in APP_TITLES.get(app, []))
 
 def _wait_app(session, app, item, proc, stop):
     deadline = time.monotonic() + 12
@@ -187,9 +189,8 @@ def _navigate_msc_tree(item, root, stop):
         raise RuntimeError('대상 정책을 찾지 못했습니다: ' + ' / '.join(targets))
     _require_foreground(root)
     _reveal(match)
-    match.Click()
-    _require_foreground(root)
-    match.SendKeys('{ALT}{ENTER}' if item.get('actionType') == 'Properties' else '{ENTER}')
+    # Open the exact revealed row without Alt-menu accelerator side effects.
+    match.DoubleClick()
 
 def _wait_dialog(session, root, aliases, stop):
     deadline = time.monotonic() + 5
@@ -210,24 +211,83 @@ def _wait_dialog(session, root, aliases, stop):
         time.sleep(0.1)
     raise RuntimeError('정확한 정책 속성 창을 찾지 못했습니다.')
 
+def _registry_path(value):
+    value = str(value).strip().replace('/', '\\')
+    aliases = {'HKLM:':'HKEY_LOCAL_MACHINE', 'HKCU:':'HKEY_CURRENT_USER',
+               'HKCR:':'HKEY_CLASSES_ROOT','HKU:':'HKEY_USERS','HKCC:':'HKEY_CURRENT_CONFIG'}
+    for short, full in aliases.items():
+        if value.upper().startswith(short):
+            value = full + value[len(short):]
+    for prefix in ('Computer\\', '컴퓨터\\'):
+        if value.casefold().startswith(prefix.casefold()):
+            value = value[len(prefix):]
+    return value.rstrip('\\').casefold()
+
+
 def _navigate_registry(root, item):
     path = item.get('RegistryPath')
     if not path:
         raise RuntimeError('검증된 레지스트리 증빙 경로가 없습니다.')
     _require_foreground(root)
-    address = root.EditControl(searchDepth=5)
+    # Regedit's address bar is a direct Edit, not an arbitrary descendant editor.
+    address = root.EditControl(searchDepth=2)
     if not address.Exists(1):
         raise RuntimeError('레지스트리 주소 표시줄을 찾지 못했습니다.')
-    address.GetValuePattern().SetValue(path.replace('HKLM:', 'HKEY_LOCAL_MACHINE').replace('HKCU:', 'HKEY_CURRENT_USER'))
+    destination = _registry_path(path)
     address.SetFocus()
+    address.GetValuePattern().SetValue(destination)
+    _require_foreground(root)
     address.SendKeys('{ENTER}')
-    time.sleep(0.5)
+    deadline = time.monotonic()+5
+    while True:
+        bar = root.StatusBarControl(searchDepth=3)
+        locations = []
+        if bar.Exists(.1):
+            locations = [n.Name for n in _walk(bar)]
+        # The address edit can retain typed text after navigation fails.
+        # Only the status bar's actual selected key is accepted.
+        if any(_registry_path(location) == destination for location in locations):
+            break
+        if time.monotonic() > deadline:
+            raise RuntimeError('레지스트리 실제 선택 경로가 요청 경로와 다릅니다: ' + path)
+        time.sleep(.15)
     if item.get('RegistryName'):
-        selected = next((n for n in _walk(root) if target_matches(n.Name or '', item['RegistryName'])), None)
+        listing = root.ListControl(searchDepth=4)
+        if not listing.Exists(1):
+            raise RuntimeError('레지스트리 값 목록을 찾지 못했습니다.')
+        selected = next((n for n in _walk(listing) if target_matches(n.Name or '', item['RegistryName'])), None)
         if selected is None:
             raise RuntimeError('증빙 레지스트리 값을 찾지 못했습니다.')
         _require_foreground(root)
+        _reveal(selected)
         selected.Click()
+
+
+def _navigate_startup(root):
+    aliases = ['시작프로그램', '시작 프로그램', '시작 앱', 'Startup', 'Startup apps']
+    _require_foreground(root)
+    # Older Task Manager first opens a compact process-only window.
+    more = _named(root, 'ButtonControl', ['자세히', 'More details'])
+    if more is not None:
+        more.Click()
+        time.sleep(.3)
+    for method in ('TabItemControl','ListItemControl','ButtonControl'):
+        control = _named(root,method,aliases)
+        if control is None:
+            continue
+        _reveal(control)
+        _require_foreground(root)
+        control.Click()
+        deadline = time.monotonic()+4
+        while time.monotonic()<deadline:
+            for node in _walk(root):
+                if (any(target_matches(node.Name or '', n) for n in ['시작 영향','시작 시 영향','Startup impact'])
+                        and getattr(node,'IsOffscreen',False) is not True):
+                    return
+            time.sleep(.15)
+        break
+    raise RuntimeError('시작프로그램 탭의 시작 영향 열을 확인하지 못했습니다. 프로세스 화면은 캡처하지 않습니다.')
+
 
 def _take_screenshot(path, target):
     if pyautogui is None:
@@ -318,18 +378,37 @@ def capture_evidence(item, evidence_dir, log_callback=None, wait_before_capture=
             sub = dict(item, ItemId=f'{iid}_part{number}', targetItem=aliases, actionType='Properties')
             sub.pop('captureTargets', None)
             sub.pop('multiCapture', None)
+            sub.pop('ExpectedCaptures', None)
             paths.append(capture_evidence(sub, evidence_dir, log_callback, wait_before_capture,
                                           wait_callback, stop_callback,
                                           action_callback if number == 1 else None, stage_callback))
-        import shutil
-        main = str(Path(evidence_dir) / f'{iid}.png')
-        shutil.copy2(paths[0], main)
+        expected = item.get('ExpectedCaptures', len(plans))
+        if len(paths) != expected or any(not Path(p).is_file() for p in paths):
+            raise RuntimeError('복합 항목 증빙 누락')
+        from PIL import Image
+        images = [Image.open(path) for path in paths]
+        try:
+            overview = Image.new('RGB', (max(im.width for im in images),sum(im.height for im in images)), 'white')
+            y = 0
+            for im in images:
+                overview.paste(im,(0,y))
+                y += im.height
+            main = str(Path(evidence_dir) / f'{iid}.png')
+            overview.save(main)
+            overview.close()
+        finally:
+            for im in images:
+                im.close()
+        log(f'  복합 증빙 {len(paths)}/{expected}개 저장 완료', 'good')
         return main
     if not auto or user32 is None or pyautogui is None:
         raise RuntimeError('Windows UI Automation과 pyautogui가 필요합니다.')
     ctypes.oledll.ole32.CoInitialize(None)
     session = None
     try:
+        if item.get('EvidenceCollector'):
+            from .diagnostic_evidence import capture
+            return capture(item,evidence_dir,log,wait_callback,stop_callback,action_callback,stage)
         session = WindowSession(auto, user32, log)
         app = item.get('appTarget', '')
         # Singleton applications may reuse an existing user window. Do not launch
@@ -386,6 +465,8 @@ def capture_evidence(item, evidence_dir, log_callback=None, wait_before_capture=
                 raise RuntimeError('파일 권한 증빙의 보안 탭을 찾지 못했습니다.')
             _require_foreground(root)
             tab.Click()
+        elif item.get('actionType') == 'StartupApps':
+            _navigate_startup(root)
         elif item.get('actionType') == 'NetworkWins':
             log('  NIC 전체 설정은 JSON으로 수집하며 이미지는 연결 목록입니다.', 'warn')
         if wait_callback and not wait_callback():
@@ -397,6 +478,9 @@ def capture_evidence(item, evidence_dir, log_callback=None, wait_before_capture=
         stage('캡처 저장')
         log(f'  증빙 이미지 저장: {path}', 'good')
         return path
+    except Exception as exc:
+        log(f'  [{iid}] 대상 탐색/캡처 오류: {exc}', 'error')
+        raise
     finally:
         try:
             if session is not None:

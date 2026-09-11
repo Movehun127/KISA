@@ -5,15 +5,11 @@
   "TechType": "Type_Skip",
   "SecureValue": "True",
   "ItemId": "W-63",
-  "appTarget": "services.msc",
-  "treePath": [],
-  "targetItem": [
-    "Windows Time",
-    "W32Time"
-  ],
+  "appTarget": "kisa-evidence",
   "Description": "도메인 Kerberos 시계 허용 오차 5분 이하 확인. W32Time 실행 여부와 다른 항목.",
   "captureOnly": true,
   "Impact": "도메인 Kerberos 시계 허용 오차 5분 이하 확인. W32Time 실행 여부와 다른 항목.",
   "RequiresConfirmation": false,
-  "AutoRemediationSupported": false
+  "AutoRemediationSupported": false,
+  "EvidenceCollector": "ntp"
 }

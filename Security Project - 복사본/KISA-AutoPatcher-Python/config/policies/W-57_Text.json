@@ -3,7 +3,7 @@
   "Category": "보안 관리",
   "Level": "하",
   "TechType": "Type_Registry",
-  "SecureValue": "인가된 사용자만 이용할 수 있습니다. 시스템 이용 내역은 보안 정책에 따라 기록될 수 있습니다.",
+  "SecureValue": "관리자외 접근을 허용하지 않습니다.",
   "ItemId": "W-57_Text",
   "Description": "보안 메시지 세부 고지 내용 설정",
   "appTarget": "secpol.msc",
@@ -30,7 +30,7 @@
   "RegistryPath": "HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
   "RegistryName": "LegalNoticeText",
   "RegistryType": "String",
-  "Comparison": "nonempty",
+  "Comparison": "eq",
   "Impact": "기관 승인 문구 확인 및 자동 로그인 영향 검토",
   "RequiresConfirmation": true,
   "AutoRemediationSupported": true

@@ -135,6 +135,13 @@ def get_vulnerability_status(config_path: str) -> list[dict]:
                 status = ('취약' if formats & {'FAT', 'FAT32', 'EXFAT'} else
                           '양호' if formats == {'NTFS'} else '수동 조치(기타 파일 시스템 적용 범위 확인)')
 
+            elif tech_type == "Type_Audit":
+                from . import audit_policy
+                values = audit_policy.read()
+                override = reg_read(audit_policy.OVERRIDE_PATH, audit_policy.OVERRIDE_NAME)
+                current_value = {'policies': values, 'override': override}
+                status = '양호' if audit_policy.compliant(values) and override == 1 else '취약'
+
             elif tech_type == "Type_SmbSession":
                 from .native_actions import read_smb, smb_compliant
                 current_value = read_smb()

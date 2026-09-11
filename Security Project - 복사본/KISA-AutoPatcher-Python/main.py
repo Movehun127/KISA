@@ -757,6 +757,7 @@ class KisaPatcherApp(ctk.CTk):
         self._log("━" * 55, "warn")
         self._log(f"  ⚡ 보안 조치 + 증빙 캡처 시작 ({len(indices)}개 항목)", "warn")
         self._log("━" * 55, "warn")
+        self._log('실행 버전: 20260911-feedback-2 / 최신 정책 내장 빌드', 'info')
         total = len(indices)
 
         for step, idx in enumerate(indices):
@@ -775,7 +776,7 @@ class KisaPatcherApp(ctk.CTk):
 
             # 서비스 미사용 상태에 따른 항목 생략 여부 검증
             skip_by_service = False
-            if services_config.get("iis") == "skip" and item_id in ["W-19", "W-21", "W-22", "W-24", "W-33"]:
+            if services_config.get("iis") == "skip" and item_id in ["W-19", "W-21", "W-22", "W-24", "W-26", "W-33"]:
                 skip_by_service = True
             elif services_config.get("dns") == "skip" and item_id in ["W-25", "W-32"]:
                 skip_by_service = True
