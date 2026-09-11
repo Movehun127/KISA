@@ -119,6 +119,19 @@ def _walk(parent):
         if depth < 12:
             stack.extend((c, depth + 1) for c in reversed(node.GetChildren()))
 
+def _reveal(control):
+    """Realize virtual items and scroll them into view before any click."""
+    try:
+        control.GetVirtualizedItemPattern().Realize()
+    except Exception:
+        pass
+    try:
+        control.GetScrollItemPattern().ScrollIntoView()
+    except Exception:
+        pass
+    if getattr(control, 'IsOffscreen', False) is True:
+        raise RuntimeError('대상 항목을 화면 안으로 스크롤하지 못했습니다.')
+
 def _navigate_msc_tree(item, root, stop):
     tree_path, targets = item.get('treePath', []), item.get('targetItem', [])
     if tree_path:
@@ -132,6 +145,7 @@ def _navigate_msc_tree(item, root, stop):
             node = _named(parent, 'TreeItemControl', aliases)
             if node is None:
                 raise RuntimeError('정책 경로를 찾지 못했습니다: ' + ' / '.join(aliases))
+            _reveal(node)
             node.Click()
             try:
                 node.GetExpandCollapsePattern().Expand()
@@ -157,7 +171,6 @@ def _navigate_msc_tree(item, root, stop):
         _require_foreground(root)
         listing.SetFocus()
         listing.SendKeys('{HOME}')
-        last = None
         for _ in range(300):
             _check_stop(stop)
             _require_foreground(root)
@@ -168,14 +181,12 @@ def _navigate_msc_tree(item, root, stop):
             if any(target_matches(title, alias) for alias in targets):
                 match = focused
                 break
-            if title == last:
-                break
-            last = title
             listing.SendKeys('{DOWN}')
             time.sleep(0.08)
     if match is None:
         raise RuntimeError('대상 정책을 찾지 못했습니다: ' + ' / '.join(targets))
     _require_foreground(root)
+    _reveal(match)
     match.Click()
     _require_foreground(root)
     match.SendKeys('{ALT}{ENTER}' if item.get('actionType') == 'Properties' else '{ENTER}')
@@ -186,7 +197,8 @@ def _wait_dialog(session, root, aliases, stop):
         _check_stop(stop)
         candidates = [w for h, w in session.snapshot().items()
                       if h not in session.before and w.ProcessId == root.ProcessId
-                      and w.ClassName == '#32770'
+                      and w.NativeWindowHandle != root.NativeWindowHandle
+                      and w.ClassName != 'MMCMainFrame'
                       and (session._owner_depth(h) or w.ProcessId in session.launched_pids)
                       and getattr(w, 'Visible', True)
                       and any(target_matches(w.Name or '', a) for a in aliases)]

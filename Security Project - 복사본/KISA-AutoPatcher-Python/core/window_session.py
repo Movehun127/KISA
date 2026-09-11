@@ -38,8 +38,8 @@ def prepare_window(window, api, screen_size, timeout=3):
     rect = wintypes.RECT()
     if not api.GetWindowRect(handle, ctypes.byref(rect)):
         raise RuntimeError('대상 창 좌표 조회 실패')
-    width = min(max(rect.right - rect.left, (right-left)//2), right-left)
-    height = min(max(rect.bottom - rect.top, 500), bottom-top)
+    width = (right-left)//2
+    height = bottom-top
     api.ShowWindow(handle, 9)
     if not api.SetWindowPos(handle, 0, right-width, top, width, height, 0x0040):
         raise RuntimeError('증빙 창 오른쪽 배치 실패')
@@ -158,7 +158,7 @@ class WindowSession:
                     continue
                 dedicated = (window.ProcessId in self.launched_pids
                              and getattr(window, 'Visible', True)
-                             and window.ClassName in ('#32770', 'MMCMainFrame'))
+                             )
                 owned = window.ProcessId in pids and self._owner_depth(handle)
                 if dedicated or owned:
                     self.track(window)
