@@ -803,20 +803,23 @@ class KisaPatcherApp(ctk.CTk):
             iid = str(idx)
             self.after(0, lambda i=iid: (self.tree.selection_set(i), self.tree.see(i)))
 
-            # ── 1. 보안 조치 ─────────────────────────────────────────
-            if "취약" in status and "수동" not in status:
-                self._log(f"  🔧 보안 조치 적용 중...", "warn")
-                self._update_tree_status(idx, fix_status="조치 중...")
-
-                invoke_remediation(
-                    [result], BACKUPS_DIR, EVIDENCE_DIR,
-                    log_callback=self._log, approved_items=self.approved_items
-                )
-                self._update_tree_status(idx, fix_status=result["FixStatus"])
-            else:
-                self._log(f"  → 자동 변경 없음 ({status})", "good" if status == '양호' else 'warn')
-                result["FixStatus"] = status
-                self._update_tree_status(idx, fix_status="대기")
+            # One item transaction: position first, mutate once, capture, close.
+            result['ExecutionStages'] = ['스캔 완료']
+            def apply_action():
+                if self.stop_requested:
+                    raise CaptureCancelled('User Cancelled Execution')
+                if "취약" in status and "수동" not in status:
+                    self._log('  🔧 보안 조치 적용 및 검증 중...', 'warn')
+                    self._update_tree_status(idx, fix_status='조치 중...')
+                    invoke_remediation(
+                        [result], BACKUPS_DIR, EVIDENCE_DIR,
+                        log_callback=self._log, approved_items=self.approved_items
+                    )
+                    self._update_tree_status(idx, fix_status=result['FixStatus'])
+                    return True
+                self._log(f'  → 자동 변경 없음 ({status})', 'good' if status == '양호' else 'warn')
+                result['FixStatus'] = status
+                return False
 
             if self.stop_requested:
                 break
@@ -892,14 +895,16 @@ class KisaPatcherApp(ctk.CTk):
                     str(run_dir),
                     log_callback=self._log,
                     wait_callback=wait_fn,
-                    stop_callback=lambda: self.stop_requested
+                    stop_callback=lambda: self.stop_requested,
+                    action_callback=apply_action,
+                    stage_callback=lambda stage: result['ExecutionStages'].append(stage)
                 )
                 if not evidence_path:
                     result["FixStatus"] += " / 증빙 실패"
                     capture_error = "캡처 파일을 생성하지 못했습니다."
             except Exception as e:
                 capture_error = str(e)
-                self._log(f"  ⚠️ 캡처 중단 또는 오류: {e}", "warn")
+                self._log(f"  ⚠️ 항목 처리 중단 또는 오류: {e}", "warn")
                 if isinstance(e, (WindowCleanupError, CaptureCancelled)):
                     self.stop_requested = True
                     break
@@ -913,10 +918,9 @@ class KisaPatcherApp(ctk.CTk):
                 result['EvidenceStatus'] = '실패' if capture_error else '저장됨(내용 검토 필요)'
                 result['VerifiedStatus'] = final_item['Status']
                 status = final_item['Status']
-
-            # 캡처 완료 후 최종 상태로 원복 갱신
-            self._update_tree_status(idx, scan_status=status, fix_status=result["FixStatus"])
-            self._update_summary()
+                # Also update the row when cancellation/cleanup failure breaks the loop.
+                self._update_tree_status(idx, scan_status=status, fix_status=result['FixStatus'])
+                self._update_summary()
 
         # Preserve partial results even after cancellation/cleanup failure.
         self._log("  📄 실행 결과 보고서 생성 중...", "meta")

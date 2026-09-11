@@ -10,6 +10,19 @@ from core.window_session import target_matches
 
 
 class EvidenceTests(unittest.TestCase):
+    def test_cleanup_failure_keeps_image_hash_and_failed_status(self):
+        with tempfile.TemporaryDirectory() as root:
+            run = create_run(root)
+            (run/'W-08.png').write_bytes(b'captured-before-close-error')
+            initial = {'ItemId':'W-08','Status':'취약','ConfigItem':{},
+                       'ExecutionStages':['스캔 완료','오른쪽 정렬 확인','캡처 저장']}
+            record = save_record(run,initial,{'Status':'양호'},error='창 종료 시간 초과')
+            data = json.loads(record.read_text())
+            self.assertTrue(data['ScreenshotStatus'].startswith('실패'))
+            self.assertEqual(data['Screenshot'],'W-08.png')
+            self.assertEqual(len(data['ScreenshotSHA256']),64)
+            self.assertEqual(data['ExecutionStages'],initial['ExecutionStages'])
+
     def test_frozen_build_uses_bundled_policies_not_old_dist_config(self):
         source = Path(__file__).resolve().parents[1] / 'core' / 'paths.py'
         with patch.object(sys, 'frozen', True, create=True), \

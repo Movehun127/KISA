@@ -1,5 +1,6 @@
 import tempfile
 import unittest
+from contextlib import ExitStack
 from pathlib import Path
 from unittest.mock import Mock, patch
 from types import SimpleNamespace
@@ -7,6 +8,71 @@ from core import capturer as cap
 
 
 class CaptureFlowTests(unittest.TestCase):
+    def run_flow(self, folder, events, action, **kwargs):
+        ctrl = Mock(Name='정책', NativeWindowHandle=10, ProcessId=20)
+        session = Mock()
+        session.before = {}
+        session.close.side_effect = lambda: events.append('close')
+        def screenshot(path, target):
+            events.append('capture')
+            Path(path).write_bytes(b'png-test')
+        with ExitStack() as stack:
+            for name, value in [('auto',Mock()), ('user32',Mock()), ('pyautogui',Mock())]:
+                stack.enter_context(patch.object(cap,name,value))
+            stack.enter_context(patch.object(cap.ctypes,'oledll',Mock(),create=True))
+            stack.enter_context(patch.object(cap,'WindowSession',return_value=session))
+            stack.enter_context(patch.object(cap,'_spawn_app',side_effect=lambda a: events.append('open')))
+            stack.enter_context(patch.object(cap,'_wait_app',return_value=ctrl))
+            stack.enter_context(patch.object(cap,'_wait_dialog',return_value=ctrl))
+            stack.enter_context(patch.object(cap,'prepare_window',side_effect=kwargs.pop('position',lambda *a: events.append('right'))))
+            stack.enter_context(patch.object(cap,'_require_foreground'))
+            stack.enter_context(patch.object(cap,'_navigate_msc_tree',side_effect=lambda *a: events.append('navigate')))
+            stack.enter_context(patch.object(cap,'_take_screenshot',side_effect=screenshot))
+            stack.enter_context(patch.object(cap.time,'sleep'))
+            return cap.capture_evidence(dict(ItemId='W-08',appTarget=kwargs.pop('app','secpol.msc'),**kwargs),folder,
+                                        action_callback=action)
+
+    def test_position_before_action_then_capture_and_close(self):
+        events = []
+        with tempfile.TemporaryDirectory() as folder:
+            self.run_flow(folder, events, lambda: events.append('apply'))
+        self.assertEqual(events,['open','right','apply','right','navigate','capture','close'])
+
+    def test_position_failure_closes_window_without_mutating(self):
+        events, action = [], Mock()
+        with tempfile.TemporaryDirectory() as folder:
+            with self.assertRaisesRegex(RuntimeError,'alignment'):
+                self.run_flow(folder,events,action,position=Mock(side_effect=RuntimeError('alignment')))
+        action.assert_not_called()
+        self.assertEqual(events,['open','close'])
+
+    def test_action_failure_still_closes_window_without_capture(self):
+        events = []
+        with tempfile.TemporaryDirectory() as folder:
+            with self.assertRaisesRegex(RuntimeError,'mutation'):
+                self.run_flow(folder,events,Mock(side_effect=RuntimeError('mutation')))
+        self.assertEqual(events,['open','right','close'])
+
+    def test_multi_capture_applies_once_and_closes_between_parts(self):
+        events = []
+        action = Mock(side_effect=lambda: events.append('apply'))
+        with tempfile.TemporaryDirectory() as folder:
+            self.run_flow(folder,events,action,captureTargets=[['duration'],['reset']])
+            self.assertTrue((Path(folder)/'W-08.png').exists())
+        action.assert_called_once()
+        self.assertEqual(events.count('capture'),2)
+        first_close = events.index('close')
+        self.assertEqual(events[first_close+1],'open')
+
+    def test_cached_control_panel_is_reopened_after_mutation(self):
+        events = []
+        def apply():
+            events.append('apply')
+            return True
+        with tempfile.TemporaryDirectory() as folder:
+            self.run_flow(folder,events,apply,app='firewall.cpl')
+        self.assertEqual(events,['open','right','apply','right','close','open','right','capture','close'])
+
     def test_firewall_cannot_match_old_security_dialog(self):
         wrong = SimpleNamespace(Name='도메인 구성원: 보안 채널 데이터 디지털 서명(가능한 경우) 속성', ClassName='#32770')
         self.assertFalse(cap._app_matches(wrong, 'firewall.cpl', {}))

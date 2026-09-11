@@ -28,6 +28,12 @@ if user32:
     user32.IsWindow.argtypes = [wintypes.HWND]
     user32.GetWindow.argtypes = [wintypes.HWND, wintypes.UINT]
     user32.GetWindow.restype = wintypes.HWND
+    user32.IsWindowVisible.argtypes = [wintypes.HWND]
+    user32.GetWindowThreadProcessId.argtypes = [wintypes.HWND, ctypes.POINTER(wintypes.DWORD)]
+    user32.GetWindowTextW.argtypes = [wintypes.HWND, wintypes.LPWSTR, ctypes.c_int]
+    user32.GetClassNameW.argtypes = [wintypes.HWND, wintypes.LPWSTR, ctypes.c_int]
+    user32.SystemParametersInfoW.argtypes = [wintypes.UINT, wintypes.UINT, ctypes.c_void_p, wintypes.UINT]
+    user32.EnumWindows.argtypes = [ctypes.c_void_p, wintypes.LPARAM]
 
 APP_TITLES = {
     'ncpa.cpl': ['네트워크 연결', 'Network Connections'],
@@ -76,10 +82,11 @@ def _wait_app(session, app, item, proc, stop):
     while time.monotonic() < deadline:
         _check_stop(stop)
         candidates = [w for h, w in session.snapshot().items()
-                      if h not in session.before and _app_matches(w, app, item, getattr(proc, 'pid', None))]
+                      if h not in session.before and getattr(w, 'Visible', True)
+                      and _app_matches(w, app, item, getattr(proc, 'pid', None))]
         if len(candidates) == 1:
             session.track(candidates[0])
-            return candidates[0]
+            return session.control(candidates[0])
         if len(candidates) > 1:
             if proc and app.endswith('.msc'):
                 for w in candidates:
@@ -180,7 +187,7 @@ def _wait_dialog(session, root, aliases, stop):
                       and any(target_matches(w.Name or '', a) for a in aliases)]
         if len(candidates) == 1:
             session.track(candidates[0])
-            return candidates[0]
+            return session.control(candidates[0])
         if len(candidates) > 1:
             raise RuntimeError('동일한 정책 대화상자가 여러 개 열렸습니다.')
         time.sleep(0.1)
@@ -263,11 +270,15 @@ def _show_file_properties(file_path: str):
 
 
 def capture_evidence(item, evidence_dir, log_callback=None, wait_before_capture=0.5,
-                     wait_callback=None, stop_callback=None):
+                     wait_callback=None, stop_callback=None, action_callback=None, stage_callback=None):
     """Failures propagate; owned windows always close before the next item."""
     def log(message, level='info'):
         if log_callback:
             log_callback(message, level)
+    def stage(name):
+        log(f'  [{iid}] 단계: {name}')
+        if stage_callback:
+            stage_callback(name)
     iid = item['ItemId']
     if not re.fullmatch(r'W-\d{2}(?:_[A-Za-z0-9]+)*', iid):
         raise ValueError('Invalid evidence item id')
@@ -291,7 +302,8 @@ def capture_evidence(item, evidence_dir, log_callback=None, wait_before_capture=
             sub.pop('captureTargets', None)
             sub.pop('multiCapture', None)
             paths.append(capture_evidence(sub, evidence_dir, log_callback, wait_before_capture,
-                                          wait_callback, stop_callback))
+                                          wait_callback, stop_callback,
+                                          action_callback if number == 1 else None, stage_callback))
         import shutil
         main = str(Path(evidence_dir) / f'{iid}.png')
         shutil.copy2(paths[0], main)
@@ -303,14 +315,47 @@ def capture_evidence(item, evidence_dir, log_callback=None, wait_before_capture=
     try:
         session = WindowSession(auto, user32, log)
         app = item.get('appTarget', '')
+        # Singleton applications may reuse an existing user window. Do not launch
+        # another untracked window or remediate when ownership cannot be established.
+        if not app.endswith('.msc') and any(_app_matches(w, app, item) for w in session.before.values()):
+            raise RuntimeError('같은 관리 앱이 이미 열려 있습니다. 해당 창을 닫은 뒤 이 항목을 다시 실행하세요.')
+        stage('창 열기')
         if app == 'explorer.exe' and item.get('targetItem'):
             _show_file_properties(item['targetItem'][0])
             proc = None
         else:
             proc = _spawn_app(app)
+        session.register_process(proc, app)
         root = _wait_app(session, app, item, proc, stop_callback)
         log(f'  대상 창 확인: {root.Name} / HWND={root.NativeWindowHandle} / PID={root.ProcessId}')
         prepare_window(root, user32, pyautogui.size())
+        stage('오른쪽 정렬 확인')
+        _check_stop(stop_callback)
+        if action_callback:
+            stage('조치 및 설정 재조회')
+            changed = action_callback()
+            _check_stop(stop_callback)
+            # The native mutation runs before navigating/opening a policy dialog,
+            # so its controls read the new values rather than cached pre-change values.
+            prepare_window(root, user32, pyautogui.size())
+            if app.endswith('.msc') or app == 'regedit':
+                _require_foreground(root)
+                root.SendKeys('{F5}')
+            elif changed:
+                # Control-panel dialogs cache values at creation (screensaver etc.).
+                # Reopen after the native write so the screenshot shows fresh values.
+                stage('변경값 표시 새로고침')
+                session.close()
+                session = WindowSession(auto, user32, log)
+                if app == 'explorer.exe' and item.get('targetItem'):
+                    _show_file_properties(item['targetItem'][0])
+                    proc = None
+                else:
+                    proc = _spawn_app(app)
+                session.register_process(proc, app)
+                root = _wait_app(session, app, item, proc, stop_callback)
+                prepare_window(root, user32, pyautogui.size())
+        stage('증빙 대상 탐색')
         target = root
         if app.endswith('.msc'):
             _navigate_msc_tree(item, root, stop_callback)
@@ -332,11 +377,13 @@ def capture_evidence(item, evidence_dir, log_callback=None, wait_before_capture=
         time.sleep(wait_before_capture)
         path = str(Path(evidence_dir) / f'{iid}.png')
         _take_screenshot(path, target)
+        stage('캡처 저장')
         log(f'  증빙 이미지 저장: {path}', 'good')
         return path
     finally:
         try:
             if session is not None:
                 session.close()
+                stage('창 닫힘 확인')
         finally:
             ctypes.oledll.ole32.CoUninitialize()

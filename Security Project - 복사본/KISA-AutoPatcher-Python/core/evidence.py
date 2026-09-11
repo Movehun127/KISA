@@ -27,14 +27,19 @@ def save_record(folder, initial, final, screenshot=None, error=None):
         'AfterValue': final.get('CurrentValue'), 'FixStatus': initial.get('FixStatus'),
         'BackupFile': initial.get('BackupFile'), 'RollbackStatus': initial.get('RollbackStatus'),
         'Note': initial.get('Note'),
+        'ExecutionStages': initial.get('ExecutionStages', []),
         'ScreenshotIsComplianceProof': False,
     }
     data['ScreenshotStatus'] = '실패' if error else '미수집'
+    if error and not screenshot:
+        candidate = Path(folder) / (initial['ItemId'] + '.png')
+        if candidate.is_file():
+            screenshot = candidate  # Capture may have succeeded before cleanup failed.
     if screenshot:
         path = Path(screenshot).resolve()
         if path.parent != Path(folder).resolve():
             raise ValueError('Screenshot must belong to current run')
-        data.update(Screenshot=path.name, ScreenshotStatus='저장됨(내용 검토 필요)',
+        data.update(Screenshot=path.name, ScreenshotStatus='실패(이미지 저장됨)' if error else '저장됨(내용 검토 필요)',
                     ScreenshotSHA256=hashlib.sha256(path.read_bytes()).hexdigest())
     if error:
         data['CaptureError'] = str(error)

@@ -15,6 +15,19 @@ def window(handle, pid, cls='MMCMainFrame'):
 
 
 class WindowSessionTests(unittest.TestCase):
+    def test_failed_mmc_discovery_still_closes_launched_process_windows(self):
+        ours, other = window(2,20,'#32770'), window(3,30,'#32770')
+        auto, api = Mock(), Mock()
+        auto.GetRootControl.return_value.GetChildren.side_effect = [[],[ours,other]]
+        alive = {2,3}
+        api.IsWindow.side_effect = lambda h: h in alive
+        api.GetWindow.return_value = 0
+        api.PostMessageW.side_effect = lambda h,*a: (alive.remove(h),True)[1]
+        session = WindowSession(auto,api)
+        session.register_process(SimpleNamespace(pid=20),'secpol.msc')
+        session.close()
+        self.assertEqual(alive,{3})
+
     def test_closes_dialog_before_parent_preserves_existing_and_unrelated(self):
         old, parent, dialog, unrelated = (window(1, 10), window(2, 20),
                                         window(3, 20, '#32770'), window(4, 30))
@@ -81,12 +94,53 @@ class WindowSessionTests(unittest.TestCase):
             rect.left, rect.top, rect.right, rect.bottom = coords
             return True
         def set_pos(h, z, x, y, w, height, flags):
+            if flags & 1:
+                w, height = coords[2]-coords[0], coords[3]-coords[1]
             coords[:] = [x, y, x+w, y+height]
             return True
         api.GetWindowRect.side_effect = get_rect
         api.SetWindowPos.side_effect = set_pos
         api.GetForegroundWindow.return_value = 10
-        self.assertEqual(prepare_window(ctrl, api, (1920, 1080)), (0, 0, 800, 600))
+        self.assertEqual(prepare_window(ctrl, api, (1920, 1080)), (960, 0, 960, 600))
+
+    def test_fixed_size_dialog_aligns_actual_width_to_work_area(self):
+        api, ctrl = Mock(), Mock()
+        ctrl.NativeWindowHandle = 10
+        coords = [0, 0, 450, 350]
+        def get_rect(h, ptr):
+            rect = ctypes.cast(ptr, ctypes.POINTER(wintypes.RECT)).contents
+            rect.left, rect.top, rect.right, rect.bottom = coords
+            return True
+        def work_area(action, size, ptr, flags):
+            rect = ctypes.cast(ptr, ctypes.POINTER(wintypes.RECT)).contents
+            rect.left, rect.top, rect.right, rect.bottom = 40, 0, 1920, 1040
+            return True
+        def set_pos(h, z, x, y, w, height, flags):
+            coords[:] = [x, y, x+450, y+350]  # fixed-size window ignores resize
+            return True
+        api.GetWindowRect.side_effect = get_rect
+        api.SystemParametersInfoW.side_effect = work_area
+        api.SetWindowPos.side_effect = set_pos
+        api.GetForegroundWindow.return_value = 10
+        self.assertEqual(prepare_window(ctrl, api, (1920,1080)), (1470,0,450,350))
+
+    def test_parent_close_attempted_even_if_dialog_refuses_close(self):
+        parent, dialog = window(2,20), window(3,20,'#32770')
+        auto, api = Mock(), Mock()
+        auto.GetRootControl.return_value.GetChildren.side_effect = [[],[parent,dialog]]
+        alive = {2,3}
+        api.IsWindow.side_effect = lambda h: h in alive
+        api.GetWindow.side_effect = lambda h, _: 2 if h == 3 else 0
+        def close(h, *args):
+            if h == 3:
+                return False
+            alive.clear()
+            return True
+        api.PostMessageW.side_effect = close
+        session = WindowSession(auto, api)
+        session.track(parent)
+        session.close()
+        self.assertEqual([c.args[0] for c in api.PostMessageW.call_args_list], [3,2])
 
     def test_prepare_rejects_foreground_failure(self):
         api, ctrl = Mock(), Mock()

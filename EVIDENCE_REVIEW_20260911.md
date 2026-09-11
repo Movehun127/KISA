@@ -135,3 +135,8 @@ python -m PyInstaller --clean --noconfirm --onefile --noconsole --name KISA-Auto
 생성물: dist/KISA-AutoPatcher.exe. 새 실행 결과: dist/evidence/날짜-실행ID/ 아래 PNG·JSON·reports.
 
 이번 검증은 Linux에서 자동 테스트 52개 통과, Python 문법 검사 및 git diff --check로 수행했다. 테스트에는 포커스 전환 중 캡처 거부, 항목 간 창 종료 순서, 무관한 창 보존, 부분 변경 실패 시 복원, 방화벽 실효 설정 불일치 시 복원이 포함된다. 실제 Windows GUI, Secedit 적용/복원 및 EXE 빌드는 이 환경에서 실행하지 못했다. 먼저 테스트 장비에서 새 EXE를 실행하여 W-02의 Guest 창, W-08의 두 60분 값, W-12의 사용 안 함, 항목 간 창 종료, JSON 및 보고서의 일치 여부를 확인해야 한다.
+# 후속 수정: 오른쪽 정렬 및 항목 실행 흐름 재구성
+
+사용자 실행 피드백에 따라 앞선 왼쪽 배치 구현을 오른쪽 정렬로 변경했다. 현재 흐름은 스캔 → 대상 창 오른쪽 배치 확인 → 조치·재조회 → 캡처 → 창 종료 확인 → 다음 항목이다. 상세 실행·빌드 방법은 README.md를 따른다.
+
+창 소유권 추적에 네이티브 EnumWindows와 UI Automation을 함께 사용하고, MMC 실행 직후 오류 창도 정리 대상으로 추적한다. 조치 전에 창 배치를 확인하며, 설정 창이 이전 값을 유지하는 경우에는 조치 후 다시 연다. 창 정리 실패 전 PNG가 저장됐으면 파일 해시와 실패 상태를 함께 기록한다. Linux 회귀 테스트 61개를 통과했으며 실제 Windows 동작 확인은 아직 필요하다.
