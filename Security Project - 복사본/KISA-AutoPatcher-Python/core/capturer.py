@@ -34,6 +34,9 @@ if user32:
     user32.GetClassNameW.argtypes = [wintypes.HWND, wintypes.LPWSTR, ctypes.c_int]
     user32.SystemParametersInfoW.argtypes = [wintypes.UINT, wintypes.UINT, ctypes.c_void_p, wintypes.UINT]
     user32.EnumWindows.argtypes = [ctypes.c_void_p, wintypes.LPARAM]
+    user32.GetDlgItem.argtypes = [wintypes.HWND, ctypes.c_int]
+    user32.GetDlgItem.restype = wintypes.HWND
+    user32.IsWindowEnabled.argtypes = [wintypes.HWND]
 
 APP_TITLES = {
     'ncpa.cpl': ['네트워크 연결', 'Network Connections'],
@@ -183,7 +186,9 @@ def _wait_dialog(session, root, aliases, stop):
         _check_stop(stop)
         candidates = [w for h, w in session.snapshot().items()
                       if h not in session.before and w.ProcessId == root.ProcessId
-                      and w.ClassName == '#32770' and session._owner_depth(h)
+                      and w.ClassName == '#32770'
+                      and (session._owner_depth(h) or w.ProcessId in session.launched_pids)
+                      and getattr(w, 'Visible', True)
                       and any(target_matches(w.Name or '', a) for a in aliases)]
         if len(candidates) == 1:
             session.track(candidates[0])

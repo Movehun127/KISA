@@ -148,25 +148,30 @@ class WindowSession:
             raise WindowCleanupError(f'창 종료 확인 실패: {exc}') from exc
 
     def _close_owned(self):
-        current = self.snapshot()
-        # Track even startup/error dialogs when UI navigation or discovery failed.
-        for handle, window in current.items():
-            if handle not in self.before and window.ProcessId in self.launched_pids:
-                self.track(window)
-        pids = {pid for pid, _ in self.targets.values()}
-        # Shared Explorer processes can host unrelated dialogs: require an owner chain.
-        dialogs = {h: (w.ProcessId, w.ClassName) for h, w in current.items()
-                   if h not in self.before and w.ProcessId in pids and self._owner_depth(h)}
-        targets = {**self.targets, **dialogs}
-        targets = sorted(targets.items(), key=lambda pair: self._owner_depth(pair[0]), reverse=True)
-        errors = []
-        for handle, identity in targets:
-            if not self.user32.IsWindow(handle):
-                continue
-            # HWNDs may be reused; check identity before sending WM_CLOSE.
-            live = current.get(handle)
-            if live is None or (live.ProcessId, live.ClassName) != identity:
-                continue
+        # MMC property sheets can be modeless, with no GW_OWNER link to the frame.
+        # Re-enumerate after EVERY close; never close the frame while a sheet remains.
+        for _ in range(64):
+            current = self.snapshot()
+            pids = {pid for pid, _ in self.targets.values()}
+            for handle, window in current.items():
+                if handle in self.before or not self.user32.IsWindow(handle):
+                    continue
+                dedicated = (window.ProcessId in self.launched_pids
+                             and getattr(window, 'Visible', True)
+                             and window.ClassName in ('#32770', 'MMCMainFrame'))
+                owned = window.ProcessId in pids and self._owner_depth(handle)
+                if dedicated or owned:
+                    self.track(window)
+            pending = [(h, identity) for h, identity in self.targets.items()
+                       if h in current and self.user32.IsWindow(h)
+                       and (current[h].ProcessId, current[h].ClassName) == identity]
+            if not pending:
+                if self.log and self.targets:
+                    self.log('  증빙 창 닫기 완료 → 다음 항목 진행', 'info')
+                return
+            pending.sort(key=lambda pair: (pair[1][1] != 'MMCMainFrame',
+                                            self._owner_depth(pair[0])), reverse=True)
+            handle, identity = pending[0]
             if isinstance(self.user32, ctypes.CDLL):
                 pid, cls = wintypes.DWORD(), ctypes.create_unicode_buffer(256)
                 self.user32.GetWindowThreadProcessId(handle, ctypes.byref(pid))
@@ -174,18 +179,21 @@ class WindowSession:
                 if (pid.value, cls.value) != identity:
                     continue
             if not self.user32.PostMessageW(handle, 0x0010, 0, 0):
-                errors.append(f'HWND={handle}: 창 닫기 요청 거부')
-                continue
+                raise WindowCleanupError(f'HWND={handle}: 창 닫기 요청 거부. 본창 종료를 시도하지 않습니다.')
             deadline = time.monotonic() + 3
             while self.user32.IsWindow(handle):
                 if time.monotonic() >= deadline:
-                    errors.append(f'HWND={handle}: 창 종료 시간 초과')
                     break
                 time.sleep(0.1)
-        # A parent close may also destroy a dialog that initially refused WM_CLOSE.
-        remaining = [h for h, identity in targets if self.user32.IsWindow(h)
-                     and h in current and (current[h].ProcessId, current[h].ClassName) == identity]
-        if remaining:
-            raise WindowCleanupError('증빙 창을 닫지 못해 진행 중단: ' + ', '.join(map(str, remaining)) + '; ' + '; '.join(errors))
-        if self.log and targets:
-            self.log('  증빙 창 닫기 완료 → 다음 항목 진행', 'info')
+            if self.user32.IsWindow(handle) and identity[1] == '#32770':
+                # Modeless property sheets may require their Cancel command.
+                # Never press OK/Apply: cleanup must not commit an unsaved edit.
+                button = self.user32.GetDlgItem(handle, 2)  # IDCANCEL
+                if isinstance(button, int) and button and self.user32.IsWindowEnabled(button):
+                    if self.user32.PostMessageW(handle, 0x0111, 2, button):  # WM_COMMAND / BN_CLICKED
+                        deadline = time.monotonic() + 3
+                        while self.user32.IsWindow(handle) and time.monotonic() < deadline:
+                            time.sleep(0.1)
+            if self.user32.IsWindow(handle):
+                raise WindowCleanupError(f'HWND={handle}: 속성/관리 창 종료 시간 초과. 본창 종료와 다음 항목을 중단합니다.')
+        raise WindowCleanupError('새 대화상자가 반복 생성되어 창 정리를 중단합니다.')

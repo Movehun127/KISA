@@ -8,6 +8,18 @@ from core import capturer as cap
 
 
 class CaptureFlowTests(unittest.TestCase):
+    def test_modeless_policy_dialog_matches_by_dedicated_pid_and_exact_title(self):
+        sheet = SimpleNamespace(Name='계정: Administrator 계정 이름 바꾸기 속성',
+                                ClassName='#32770', ProcessId=20, NativeWindowHandle=3)
+        session = Mock(before={}, launched_pids={20})
+        session.snapshot.return_value = {3:sheet}
+        session._owner_depth.return_value = 0
+        session.control.side_effect = lambda w:w
+        found = cap._wait_dialog(session,SimpleNamespace(ProcessId=20),
+                                 ['계정: Administrator 계정 이름 바꾸기'],None)
+        self.assertIs(found,sheet)
+        session.track.assert_called_once_with(sheet)
+
     def run_flow(self, folder, events, action, **kwargs):
         ctrl = Mock(Name='정책', NativeWindowHandle=10, ProcessId=20)
         session = Mock()
