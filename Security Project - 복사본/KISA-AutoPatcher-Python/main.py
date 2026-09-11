@@ -21,12 +21,13 @@ if getattr(sys, 'frozen', False):
 else:
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-POLICY_DIR   = os.path.join(BASE_DIR, "config", "policies")
+from core.paths import RESOURCE_DIR
+POLICY_DIR   = os.path.join(RESOURCE_DIR, "config", "policies")
 EVIDENCE_DIR = os.path.join(BASE_DIR, "evidence")
 REPORTS_DIR  = os.path.join(BASE_DIR, "reports")
 BACKUPS_DIR  = os.path.join(BASE_DIR, "backups")
 LOGS_DIR     = os.path.join(BASE_DIR, "logs")
-MODEL_GUIDES_PATH = os.path.join(BASE_DIR, "config", "model_guides.json")
+MODEL_GUIDES_PATH = os.path.join(RESOURCE_DIR, "config", "model_guides.json")
 
 os.makedirs(LOGS_DIR, exist_ok=True)
 
@@ -39,6 +40,8 @@ from core.detector   import get_vulnerability_status
 from core.remediator import invoke_remediation
 from core.reporter   import invoke_reporting
 from core.capturer   import capture_evidence
+from core.window_session import WindowCleanupError, CaptureCancelled
+from core.evidence import create_run, save_record
 
 # ── 디자인 시스템 핵심 컬러 스키마 (gui_design_guide.md 준수) ───────
 BG_DARK   = "#141622"  # 전체 윈도우 배경
@@ -88,7 +91,7 @@ class KisaPatcherApp(ctk.CTk):
         self.model_guides    = {}
         self.is_running      = False
         self.stop_requested  = False
-        self.last_exec_mode = "manual_pause"
+        self.last_exec_mode = "auto"
         self.last_services_config = {"iis": "proceed", "dns": "proceed", "snmp": "proceed", "telnet": "proceed"}
 
         # 캡처 버튼 이벤트를 위한 동기화 객체 선언
@@ -411,20 +414,22 @@ class KisaPatcherApp(ctk.CTk):
                 self._log(f"⚠️ Model 가이드 로드 실패: {e}", "warn")
 
     def _log(self, msg, level="info"):
+        # Bind item/time now; queued UI callbacks may run after the next item starts.
+        ts = datetime.now().strftime("%H:%M:%S")
+        item_id = getattr(self, 'current_item_id', None) or 'run'
+        folder = getattr(self, 'run_log_dir', LOGS_DIR)
+        try:
+            os.makedirs(folder, exist_ok=True)
+            with open(os.path.join(folder, f'{item_id}.log'), 'a', encoding='utf-8') as stream:
+                stream.write(f'[{ts}] {msg}\n')
+        except OSError:
+            pass
         def _ap():
             self.log_area.configure(state="normal")
-            ts = datetime.now().strftime("%H:%M:%S")
             self.log_area.insert("end", f"[{ts}] {msg}\n", level)
             self.log_area.see("end")
             self.log_area.configure(state="disabled")
 
-            if hasattr(self, "current_item_id") and self.current_item_id:
-                try:
-                    log_file = os.path.join(LOGS_DIR, f"{self.current_item_id}.log")
-                    with open(log_file, "a", encoding="utf-8") as lf:
-                        lf.write(f"[{ts}] {msg}\n")
-                except Exception:
-                    pass
         self.after(0, _ap)
 
     def _set_progress(self, cur, total):
@@ -461,9 +466,10 @@ class KisaPatcherApp(ctk.CTk):
 
     def _update_summary(self):
         def _up():
-            vuln = sum(1 for r in self.vuln_results if "취약" in r.get("Status","") and "수동" not in r.get("Status",""))
-            good = sum(1 for r in self.vuln_results if "양호" in r.get("Status",""))
-            manu = sum(1 for r in self.vuln_results if "수동" in r.get("Status",""))
+            statuses = [r.get('VerifiedStatus', r.get('Status', '')) for r in self.vuln_results]
+            vuln = sum('취약' in st and '수동' not in st for st in statuses)
+            good = sum('양호' in st for st in statuses)
+            manu = sum('수동' in st for st in statuses)
             fixd = sum(1 for r in self.vuln_results if r.get("FixStatus","") == "완료")
             self.card_vuln.configure(text=str(vuln))
             self.card_good.configure(text=str(good))
@@ -624,6 +630,8 @@ class KisaPatcherApp(ctk.CTk):
         threading.Thread(target=self._do_scan, daemon=True).start()
 
     def _do_scan(self):
+        self.current_item_id = None
+        scan_ok = False
         self._log("━" * 55, "meta")
         self._log("  🔍 전체 취약점 스캔 시작...", "meta")
         self._log("━" * 55, "meta")
@@ -645,14 +653,19 @@ class KisaPatcherApp(ctk.CTk):
             v = sum(1 for r in self.vuln_results if "취약" in r.get("Status","") and "수동" not in r.get("Status",""))
             self._log(f"\n✅ 스캔 완료 – 취약: {v}개 / 전체: {len(self.vuln_results)}개", "good")
             self.after(0, lambda: (self._select_all(), self.tree.see("0")))
+            scan_ok = True
         except Exception as e:
             self._log(f"❌ 스캔 오류: {e}", "error")
         finally:
             self.is_running = False
             self.after(0, self._set_buttons_idle)
+            pending = getattr(self, '_run_after_scan', False)
+            self._run_after_scan = False
+            if pending and scan_ok and not self.stop_requested:
+                self.after(0, self._on_run)
 
     def _detect_service_status(self):
-        status_map = {"iis": "미사용", "dns": "미사용", "snmp": "미사용", "telnet": "미사용"}
+        status_map = {"iis": "확인 필요", "dns": "확인 필요", "snmp": "확인 필요", "telnet": "확인 필요"}
         # self.vuln_results에서 각 항목 코드를 검색하여 상태 대조
         for r in self.vuln_results:
             item_id = r.get("ItemId")
@@ -672,7 +685,8 @@ class KisaPatcherApp(ctk.CTk):
         if self.is_running:
             return
         if not self.vuln_results:
-            messagebox.showinfo("알림", "먼저 전체 스캔을 실행해주세요.")
+            self._run_after_scan = True
+            self._on_scan()
             return
         idxs = self._get_selected_indices()
 
@@ -688,12 +702,16 @@ class KisaPatcherApp(ctk.CTk):
 
         mode, services_config = dialog.result
         approved = set()
+        risky = []
         for idx in idxs:
             result = self.vuln_results[idx]
             item = result.get("ConfigItem", {})
             if result.get("Status") == "취약" and item.get("RequiresConfirmation"):
-                if messagebox.askyesno("운영 영향 확인", f"{result['ItemId']} {result['Title']}\n\n{item.get('Impact', '')}\n\n복구 경로와 업무 영향을 확인했으며 이 항목을 적용하시겠습니까?"):
-                    approved.add(result['ItemId'])
+                risky.append((result['ItemId'], result['Title'], item.get('Impact', '')))
+        if risky:
+            detail = '\n\n'.join(f'{iid} {title}\n{impact}' for iid, title, impact in risky)
+            if messagebox.askyesno('운영 영향 일괄 확인', detail + '\n\n위 항목을 이번 실행에 적용하시겠습니까?'):
+                approved.update(iid for iid, _, _ in risky)
         self.approved_items = approved
         self.last_exec_mode = mode
         self.last_services_config = services_config
@@ -728,6 +746,14 @@ class KisaPatcherApp(ctk.CTk):
             self.after(0, self._set_buttons_idle)
 
     def _do_run_items(self, indices: list[int], mode: str, services_config: dict):
+        run_dir = create_run(EVIDENCE_DIR)
+        self.run_log_dir = str(run_dir / 'logs')
+        self.current_item_id = None
+        for previous in self.vuln_results:
+            for key in ('EvidenceFile', 'EvidenceStatus', 'VerifiedStatus', 'BackupFile', 'RollbackStatus', 'Note', 'AfterValue'):
+                previous.pop(key, None)
+            previous['FixStatus'] = '미실행'
+        self._log(f"이번 실행 증빙: {run_dir}", "info")
         self._log("━" * 55, "warn")
         self._log(f"  ⚡ 보안 조치 + 증빙 캡처 시작 ({len(indices)}개 항목)", "warn")
         self._log("━" * 55, "warn")
@@ -742,6 +768,9 @@ class KisaPatcherApp(ctk.CTk):
 
             result  = self.vuln_results[idx]
             item_id = result["ItemId"]
+            self.current_item_id = item_id
+            # A previous scan/run may be stale; base mutations on a fresh read.
+            result.update(get_vulnerability_status(os.path.join(POLICY_DIR, item_id + '.json'))[0])
             status  = result["Status"]
 
             # 서비스 미사용 상태에 따른 항목 생략 여부 검증
@@ -759,16 +788,13 @@ class KisaPatcherApp(ctk.CTk):
                 self._log(f"\n🔷 [{item_id}]  {result['Title']}", "meta")
                 self._log(f"  → 서비스 미사용 설정(IIS/DNS/SNMP/Telnet)에 의해 보안 조치 및 증빙 수집 생략", "good")
                 result["FixStatus"] = "생략"
+                result['EvidenceStatus'] = '사용자 설정으로 생략'
+                result['Note'] = '사용자가 서비스 항목 생략을 선택했습니다. 미설치/미사용을 검증한 판정이 아닙니다.'
+                result['EvidenceFile'] = str(save_record(run_dir, result, result))
                 self._update_tree_status(idx, scan_status=status, fix_status="생략")
                 continue
 
             self.current_item_id = item_id
-            try:
-                log_file = os.path.join(LOGS_DIR, f"{item_id}.log")
-                if os.path.exists(log_file):
-                    os.remove(log_file)
-            except Exception:
-                pass
 
             self._set_progress(step + 1, total)
             self._log(f"\n🔷 [{item_id}]  {result['Title']}", "meta")
@@ -788,7 +814,7 @@ class KisaPatcherApp(ctk.CTk):
                 )
                 self._update_tree_status(idx, fix_status=result["FixStatus"])
             else:
-                self._log(f"  → 조치 불필요 ({status})", "good")
+                self._log(f"  → 자동 변경 없음 ({status})", "good" if status == '양호' else 'warn')
                 result["FixStatus"] = status
                 self._update_tree_status(idx, fix_status="대기")
 
@@ -799,6 +825,9 @@ class KisaPatcherApp(ctk.CTk):
             self._log(f"  📷 증빙 화면 캡처 대기 중...", "meta")
             self._update_tree_status(idx, fix_status="캡처 대기...")
 
+            should_wait = False
+            evidence_path = None
+            capture_error = None
             try:
                 config_item = result["ConfigItem"].copy()
                 config_item["Status"] = status
@@ -856,41 +885,50 @@ class KisaPatcherApp(ctk.CTk):
                         if guide_dlg and guide_dlg.winfo_exists():
                             guide_dlg.after(0, guide_dlg.destroy)
                         self.next_clicked.clear()
-                        return True
+                        return not self.stop_requested
 
-                capture_evidence(
+                evidence_path = capture_evidence(
                     config_item,
-                    EVIDENCE_DIR,
+                    str(run_dir),
                     log_callback=self._log,
-                    wait_callback=wait_fn
+                    wait_callback=wait_fn,
+                    stop_callback=lambda: self.stop_requested
                 )
+                if not evidence_path:
+                    result["FixStatus"] += " / 증빙 실패"
+                    capture_error = "캡처 파일을 생성하지 못했습니다."
             except Exception as e:
+                capture_error = str(e)
                 self._log(f"  ⚠️ 캡처 중단 또는 오류: {e}", "warn")
+                if isinstance(e, (WindowCleanupError, CaptureCancelled)):
+                    self.stop_requested = True
+                    break
                 if should_wait and "User Cancelled" in str(e):
+                    self.stop_requested = True
                     self._log("⏹ 사용자가 중단을 선택했습니다.", "warn")
                     break
+            finally:
+                final_item = get_vulnerability_status(os.path.join(POLICY_DIR, item_id + ".json"))[0]
+                result['EvidenceFile'] = str(save_record(run_dir, result, final_item, evidence_path, capture_error))
+                result['EvidenceStatus'] = '실패' if capture_error else '저장됨(내용 검토 필요)'
+                result['VerifiedStatus'] = final_item['Status']
+                status = final_item['Status']
 
             # 캡처 완료 후 최종 상태로 원복 갱신
             self._update_tree_status(idx, scan_status=status, fix_status=result["FixStatus"])
             self._update_summary()
 
-        if not self.stop_requested:
-            self._log("\n━" * 55, "meta")
-            self._log("  📄 최종 보고서 생성 중...", "meta")
-            try:
-                final = get_vulnerability_status(POLICY_DIR)
-                invoke_reporting(
-                    self.vuln_results, final,
-                    REPORTS_DIR, EVIDENCE_DIR,
-                    log_callback=self._log
-                )
-                self._log("━" * 55, "good")
-                self._log("  ✅ 모든 작업 완료!", "good")
-                self._log(f"  📁 보고서: {REPORTS_DIR}", "good")
-                self.after(0, lambda: messagebox.showinfo(
-                    "완료", "보안 조치 및 증빙 수집이 완료되었습니다.\n보고서를 확인해주세요."))
-            except Exception as e:
-                self._log(f"❌ 보고서 오류: {e}", "error")
+        # Preserve partial results even after cancellation/cleanup failure.
+        self._log("  📄 실행 결과 보고서 생성 중...", "meta")
+        try:
+            final = get_vulnerability_status(POLICY_DIR)
+            invoke_reporting(self.vuln_results, final, str(run_dir / 'reports'),
+                             str(run_dir), log_callback=self._log)
+            self._log(f"  📁 보고서: {run_dir / 'reports'}", "good")
+            self.after(0, lambda: messagebox.showinfo(
+                "결과 저장", "실행 결과를 저장했습니다.\n미조치·오류·증빙 실패 항목을 보고서에서 확인해주세요."))
+        except Exception as e:
+            self._log(f"❌ 보고서 오류: {e}", "error")
 
         # ── 추가: 프로세스 완료 시 윈도우 중앙 위치 복구 ──
         try:
@@ -927,24 +965,32 @@ class KisaPatcherApp(ctk.CTk):
             self.after(0, self._set_buttons_idle)
 
     def _do_capture_items(self, indices):
+        run_dir = create_run(EVIDENCE_DIR)
+        self.run_log_dir = str(run_dir / 'logs')
         for idx in indices:
             if self.stop_requested or idx >= len(self.vuln_results):
                 break
             r = self.vuln_results[idx]
 
             self.current_item_id = r["ItemId"]
-            try:
-                log_file = os.path.join(LOGS_DIR, f"{r['ItemId']}.log")
-                if os.path.exists(log_file):
-                    os.remove(log_file)
-            except Exception:
-                pass
 
             self._log(f"  📷 [{r['ItemId']}] 캡처 중...", "meta")
+            evidence_path = None
+            capture_error = None
             try:
-                capture_evidence(r["ConfigItem"], EVIDENCE_DIR, log_callback=self._log)
+                evidence_path = capture_evidence(r["ConfigItem"], str(run_dir), log_callback=self._log,
+                                                stop_callback=lambda: self.stop_requested)
+                if not evidence_path:
+                    capture_error = '캡처 파일을 생성하지 못했습니다.'
             except Exception as e:
+                capture_error = str(e)
                 self._log(f"  ⚠️ [{r['ItemId']}] 캡처 오류: {e}", "warn")
+                if isinstance(e, (WindowCleanupError, CaptureCancelled)):
+                    self.stop_requested = True
+                    break
+            finally:
+                final = get_vulnerability_status(os.path.join(POLICY_DIR, r['ItemId'] + '.json'))[0]
+                save_record(run_dir, r, final, evidence_path, capture_error)
 
     def _on_stop(self):
         self.stop_requested = True
@@ -1114,7 +1160,7 @@ class RunOptionDialog(ctk.CTkToplevel):
         # 1. 진행 모드 선택 (통합 3가지 모드)
         ctk.CTkLabel(frame, text="1. 진행 모드 선택", font=("Segoe UI", 11, "bold"), text_color=TEXT_MAIN).pack(anchor="w", padx=15, pady=(10, 4))
 
-        current_m = getattr(parent, "last_exec_mode", "manual_pause")
+        current_m = getattr(parent, "last_exec_mode", "auto")
         self.exec_mode_var = tk.StringVar(value=current_m)
 
         r1 = ctk.CTkRadioButton(frame, text="전체 자동 조치 및 캡처 (대기 없이 원스톱 진행)",

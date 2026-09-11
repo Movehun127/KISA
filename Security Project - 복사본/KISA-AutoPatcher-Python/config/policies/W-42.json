@@ -20,5 +20,6 @@
   ],
   "Impact": "이벤트 로그 크기 및 덮어쓰기 정책 수동 점검",
   "RequiresConfirmation": false,
-  "AutoRemediationSupported": false
+  "AutoRemediationSupported": false,
+  "CheckCommand": "@(Get-WinEvent -ListLog Application,System,Security | Select-Object LogName,MaximumSizeInBytes,LogMode,IsEnabled,RecordCount) | ConvertTo-Json -Compress"
 }

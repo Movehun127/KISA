@@ -21,7 +21,9 @@
     ]
   ],
   "targetItem": [
+    "대화형 로그온: 마지막 로그온 사용자 이름 표시 안 함",
     "대화형 로그온: 마지막 로그인 사용자 이름 표시 안 함",
+    "Interactive logon: Don't display last signed-in",
     "Interactive logon: Do not display last user name"
   ],
   "RegistryPath": "HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",

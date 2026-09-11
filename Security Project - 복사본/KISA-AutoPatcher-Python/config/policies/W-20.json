@@ -3,6 +3,7 @@
   "Category": "서비스 관리",
   "Level": "상",
   "TechType": "Type_Skip",
+  "CheckCommand": "@(Get-CimInstance Win32_NetworkAdapterConfiguration | Select-Object Index,Description,SettingID,IPEnabled,TcpipNetbiosOptions) | ConvertTo-Json -Depth 4 -Compress",
   "SecureValue": "0",
   "appTarget": "ncpa.cpl",
   "actionType": "NetworkWins",

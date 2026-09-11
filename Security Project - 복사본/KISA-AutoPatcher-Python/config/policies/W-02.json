@@ -2,10 +2,9 @@
   "Title": "Guest 계정 비활성화",
   "Category": "계정 관리",
   "Level": "상",
-  "TechType": "Type_Powershell",
-  "CheckCommand": "$u = @(Get-LocalUser | Where-Object { $_.SID.Value -match '-501$' }); if ($u.Count -ne 1) { throw 'Guest RID 501 not found' }; $u[0].Enabled.ToString()",
-  "RemediationCommand": "Disable-LocalUser -Name 'Guest' -ErrorAction SilentlyContinue",
-  "SecureValue": "False",
+  "TechType": "Type_Secedit",
+  "SeceditKey": "EnableGuestAccount",
+  "SecureValue": 0,
   "ItemId": "W-02",
   "appTarget": "secpol.msc",
   "treePath": [
@@ -28,5 +27,5 @@
   ],
   "Impact": "설정 적용 범위 및 업무 영향 확인",
   "RequiresConfirmation": false,
-  "AutoRemediationSupported": false
+  "AutoRemediationSupported": true
 }

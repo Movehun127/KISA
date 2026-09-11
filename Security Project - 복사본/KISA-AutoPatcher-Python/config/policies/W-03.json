@@ -3,6 +3,7 @@
   "Category": "계정 관리",
   "Level": "상",
   "TechType": "Type_Skip",
+  "CheckCommand": "@(Get-LocalUser | Select-Object Name,SID,Enabled,LastLogon) | ConvertTo-Json -Depth 4 -Compress",
   "Description": "기본 계정 이외의 비활성 사용자 계정 수동 진단 및 삭제",
   "captureOnly": true,
   "ItemId": "W-03",
