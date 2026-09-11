@@ -1,11 +1,14 @@
 {
-    "Title": "주기적 보안 패치 및 벤더 권고사항 적용",
-    "Category": "서비스 관리",
-    "Level": "중",
-    "TechType": "Type_Powershell",
-    "CheckCommand": "((Get-HotFix -ErrorAction SilentlyContinue).Count -gt 0).ToString()",
-    "RemediationCommand": "Write-Host '  -> [주의] 보안 패치를 정기적으로 자동 확인하고 설치하십시오.'",
-    "SecureValue": "True",
-    "ItemId": "W-38",
-    "appTarget": "ms-settings:windowsupdate"
+  "Title": "주기적 보안 패치 및 벤더 권고사항 적용",
+  "Category": "패치 관리",
+  "Level": "상",
+  "TechType": "Type_Skip",
+  "SecureValue": "True",
+  "ItemId": "W-38",
+  "appTarget": "ms-settings:windowsupdate",
+  "Description": "패치 존재 여부만으로 최신성 판정 불가. 패치 주기·절차·설치 목록 검토.",
+  "captureOnly": true,
+  "Impact": "패치 존재 여부만으로 최신성 판정 불가. 패치 주기·절차·설치 목록 검토.",
+  "RequiresConfirmation": false,
+  "AutoRemediationSupported": false
 }

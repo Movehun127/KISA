@@ -1,8 +1,9 @@
-[14:50:57] 
+[17:48:53] 
 🔷 [W-47]  화면보호기 설정
-[14:50:57]   → 조치 불필요 (양호)
-[14:50:57]   📷 증빙 화면 캡처 대기 중...
-[14:50:57]   [실행] control desk.cpl,screensaver,@screensaver 프로그램 로드 시도 중...
-[14:50:59]     -> 제어판/다이얼로그 창 감지 성공 (Name: 화면 보호기 설정). 우측 정렬 수행.
-[14:51:01]   [캡처] 활성화된 속성 다이얼로그(화면 보호기 설정) 영역 캡처 진행.
-[14:51:01]   📷 증빙 캡처 완료: C:\Users\new-s\Desktop\Security Project\KISA-AutoPatcher-Python\dist\evidence\W-47.png
+[17:48:53]   → 조치 불필요 (양호)
+[17:48:53]   📷 증빙 화면 캡처 대기 중...
+[17:48:53]   [실행] control desk.cpl,screensaver,@screensaver 프로그램 로드 시도 중...
+[17:48:55]     -> 제어판/다이얼로그 창 감지 성공 (Name: 화면 보호기 설정). 우측 정렬 수행.
+[17:48:57]   [캡처] 활성화된 속성 다이얼로그(화면 보호기 설정) 영역 캡처 진행.
+[17:48:57]   📷 증빙 캡처 완료: C:\Users\new-s\Desktop\KISA-main\Security Project - 복사본\KISA-AutoPatcher-Python\dist\evidence\W-47.png
+[17:48:57] 증빙 확인 후 열린 관리 창을 직접 닫아주세요.

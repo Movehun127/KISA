@@ -1,29 +1,36 @@
 {
-    "Title": "계정 잠금 임계값 설정",
-    "Category": "계정 관리",
-    "Level": "상",
-    "TechType": "Type_Powershell",
-    "CheckCommand": "$val = (net accounts | Select-String '잠금 임계값' -ErrorAction SilentlyContinue); if ($val -match '\\d+') { [int]$matches[0] -le 5 -and [int]$matches[0] -ne 0 } else { $true }",
-    "RemediationCommand": "net accounts /lockoutthreshold:5",
-    "SecureValue": "True",
-    "ItemId": "W-04",
-    "appTarget": "secpol.msc",
-    "treePath": [
-        [
-            "보안 설정",
-            "Security Settings"
-        ],
-        [
-            "계정 정책",
-            "Account Policies"
-        ],
-        [
-            "계정 잠금 정책",
-            "Account Lockout Policy"
-        ]
+  "Title": "계정 잠금 임계값 설정",
+  "Category": "계정 관리",
+  "Level": "상",
+  "TechType": "Type_Secedit",
+  "SecureValue": "LockoutBadCount=5",
+  "ItemId": "W-04",
+  "appTarget": "secpol.msc",
+  "treePath": [
+    [
+      "보안 설정",
+      "Security Settings"
     ],
-    "targetItem": [
-        "계정 잠금 임계값",
-        "Account lockout threshold"
+    [
+      "계정 정책",
+      "Account Policies"
+    ],
+    [
+      "계정 잠금 정책",
+      "Account Lockout Policy"
     ]
+  ],
+  "targetItem": [
+    "계정 잠금 임계값",
+    "Account lockout threshold"
+  ],
+  "SeceditValues": {
+    "LockoutBadCount": 5
+  },
+  "Comparisons": {
+    "LockoutBadCount": "positive_le"
+  },
+  "Impact": "계정 잠금으로 서비스·예약 작업 인증 실패 가능",
+  "RequiresConfirmation": true,
+  "AutoRemediationSupported": true
 }

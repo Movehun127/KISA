@@ -1,15 +1,18 @@
 {
-    "Title": "SAM 파일 접근 통제 설정",
-    "Category": "보안 관리",
-    "Level": "상",
-    "TechType": "Type_Powershell",
-    "CheckCommand": "(Get-ItemProperty -Path 'HKLM:\\System\\CurrentControlSet\\Control\\Lsa' -Name NoLMHash -ErrorAction SilentlyContinue).NoLMHash.ToString()",
-    "RemediationCommand": "Set-ItemProperty -Path 'HKLM:\\System\\CurrentControlSet\\Control\\Lsa' -Name NoLMHash -Value 1",
-    "SecureValue": "1",
-    "ItemId": "W-46",
-    "appTarget": "explorer.exe",
-    "actionType": "FileProperties",
-    "targetItem": [
-        "C:\\Windows\\System32\\config\\SAM"
-    ]
+  "Title": "SAM 파일 접근 통제 설정",
+  "Category": "보안 관리",
+  "Level": "상",
+  "TechType": "Type_Skip",
+  "SecureValue": "1",
+  "ItemId": "W-46",
+  "appTarget": "explorer.exe",
+  "actionType": "FileProperties",
+  "targetItem": [
+    "C:\\Windows\\System32\\config\\SAM"
+  ],
+  "Description": "SAM 파일 ACL의 Administrators/SYSTEM 권한 확인. NoLMHash와 다른 항목.",
+  "captureOnly": true,
+  "Impact": "SAM 파일 ACL의 Administrators/SYSTEM 권한 확인. NoLMHash와 다른 항목.",
+  "RequiresConfirmation": false,
+  "AutoRemediationSupported": false
 }

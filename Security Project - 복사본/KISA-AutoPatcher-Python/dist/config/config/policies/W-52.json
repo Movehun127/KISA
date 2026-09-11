@@ -1,12 +1,15 @@
 {
-    "Title": "Autologon 기능 제어",
-    "Category": "보안 관리",
-    "Level": "상",
-    "TechType": "Type_Powershell",
-    "CheckCommand": "(Get-ItemProperty -Path 'HKLM:\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon' -Name AutoAdminLogon -ErrorAction SilentlyContinue).AutoAdminLogon.ToString()",
-    "RemediationCommand": "Set-ItemProperty -Path 'HKLM:\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon' -Name AutoAdminLogon -Value 0",
-    "SecureValue": "0",
-    "ItemId": "W-52",
-    "appTarget": "regedit",
-    "RegistryPath": "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon"
+  "Title": "Autologon 기능 제어",
+  "Category": "보안 관리",
+  "Level": "상",
+  "TechType": "Type_Registry",
+  "SecureValue": "0",
+  "ItemId": "W-52",
+  "appTarget": "regedit",
+  "RegistryPath": "HKLM:\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon",
+  "RegistryName": "AutoAdminLogon",
+  "RegistryType": "String",
+  "Impact": "자동 로그온 기반 관제·키오스크 재기동 영향",
+  "RequiresConfirmation": true,
+  "AutoRemediationSupported": true
 }

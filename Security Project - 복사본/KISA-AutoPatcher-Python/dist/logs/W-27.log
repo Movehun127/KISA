@@ -1,9 +1,9 @@
-[16:36:43] 
+[17:47:01] 
 🔷 [W-27]  최신 Windows OS Build 버전 적용
-[16:36:43]   → 조치 불필요 (양호)
-[16:36:43]   📷 증빙 화면 캡처 대기 중...
-[16:36:43]   [실행] winver 프로그램 로드 시도 중...
-[16:36:44]     -> GUI 설정/정보 창 감지 성공 (Name: Windows 정보). 우측 정렬 수행.
-[16:36:47]   ⏳ 설정 대화상자 조작 대기 (사용자 캡처 확인 대기 중)...
-[16:36:57]   [캡처] 활성화된 속성 다이얼로그(Windows 정보) 영역 캡처 진행.
-[16:36:57]   📷 증빙 캡처 완료: C:\Users\new-s\Desktop\Security Project\KISA-AutoPatcher-Python\dist\evidence\W-27.png
+[17:47:01]   → 조치 불필요 (양호)
+[17:47:01]   📷 증빙 화면 캡처 대기 중...
+[17:47:01]   [실행] winver 프로그램 로드 시도 중...
+[17:47:03]     -> GUI 설정/정보 창 감지 성공 (Name: Windows 정보). 우측 정렬 수행.
+[17:47:05]   [캡처] 활성화된 속성 다이얼로그(Windows 정보) 영역 캡처 진행.
+[17:47:05]   📷 증빙 캡처 완료: C:\Users\new-s\Desktop\KISA-main\Security Project - 복사본\KISA-AutoPatcher-Python\dist\evidence\W-27.png
+[17:47:05] 증빙 확인 후 열린 관리 창을 직접 닫아주세요.

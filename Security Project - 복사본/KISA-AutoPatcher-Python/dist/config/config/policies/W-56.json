@@ -1,29 +1,32 @@
 {
-    "Title": "SMB 세션 중단 관리 설정",
-    "Category": "보안 관리",
-    "Level": "중",
-    "TechType": "Type_Powershell",
-    "CheckCommand": "(Get-ItemProperty -Path 'HKLM:\\System\\CurrentControlSet\\Services\\LanmanServer\\Parameters' -Name Autodisconnect -ErrorAction SilentlyContinue).Autodisconnect.ToString()",
-    "RemediationCommand": "Set-ItemProperty -Path 'HKLM:\\System\\CurrentControlSet\\Services\\LanmanServer\\Parameters' -Name Autodisconnect -Value 15",
-    "SecureValue": "15",
-    "ItemId": "W-56",
-    "appTarget": "secpol.msc",
-    "treePath": [
-        [
-            "보안 설정",
-            "Security Settings"
-        ],
-        [
-            "로컬 정책",
-            "Local Policies"
-        ],
-        [
-            "보안 옵션",
-            "Security Options"
-        ]
+  "Title": "SMB 세션 중단 관리 설정",
+  "Category": "보안 관리",
+  "Level": "중",
+  "TechType": "Type_Skip",
+  "SecureValue": "15",
+  "ItemId": "W-56",
+  "appTarget": "secpol.msc",
+  "treePath": [
+    [
+      "보안 설정",
+      "Security Settings"
     ],
-    "targetItem": [
-        "Microsoft 네트워크 서버: 로그온 시간이 만료되면 클라이언트 연결 끊기",
-        "Microsoft 네트워크 서버: 세션 연결을 중단하기 전에 필요한 유휴 시간"
+    [
+      "로컬 정책",
+      "Local Policies"
+    ],
+    [
+      "보안 옵션",
+      "Security Options"
     ]
+  ],
+  "targetItem": [
+    "Microsoft 네트워크 서버: 로그온 시간이 만료되면 클라이언트 연결 끊기",
+    "Microsoft 네트워크 서버: 세션 연결을 중단하기 전에 필요한 유휴 시간"
+  ],
+  "Description": "유휴 시간 15분 이하와 로그온 시간 만료 시 연결 끊기 두 정책 모두 확인.",
+  "captureOnly": true,
+  "Impact": "유휴 시간 15분 이하와 로그온 시간 만료 시 연결 끊기 두 정책 모두 확인.",
+  "RequiresConfirmation": false,
+  "AutoRemediationSupported": false
 }

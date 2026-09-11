@@ -1,16 +1,19 @@
 {
-    "Title": "DNS Zone Transfer 설정",
-    "Category": "서비스 관리",
-    "Level": "상",
-    "TechType": "Type_Powershell",
-    "CheckCommand": "$s = Get-Service -Name DNS -ErrorAction SilentlyContinue; if ($s -eq $null -or $s.Status -ne 'Running') { 'True' } else { 'False' }",
-    "RemediationCommand": "Write-Host '  -> [주의] DNS 영역 전송 기능을 특정 IP 대역으로만 제한 설정하십시오.'",
-    "SecureValue": "True",
-    "ItemId": "W-25",
-    "appTarget": "services.msc",
-    "treePath": [],
-    "targetItem": [
-        "DNS Server",
-        "DNS"
-    ]
+  "Title": "DNS Zone Transfer 설정",
+  "Category": "서비스 관리",
+  "Level": "상",
+  "TechType": "Type_Skip",
+  "SecureValue": "True",
+  "ItemId": "W-25",
+  "appTarget": "services.msc",
+  "treePath": [],
+  "targetItem": [
+    "DNS Server",
+    "DNS"
+  ],
+  "Description": "DNS 영역별 전송 허용 서버 확인.",
+  "captureOnly": true,
+  "Impact": "DNS 영역별 전송 허용 서버 확인.",
+  "RequiresConfirmation": false,
+  "AutoRemediationSupported": false
 }

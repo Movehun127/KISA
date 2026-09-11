@@ -1,21 +1,24 @@
 {
-    "Title": "사용자별 홈 디렉터리 권한 설정",
-    "Category": "보안 관리",
-    "Level": "상",
-    "TechType": "Type_Skip",
-    "Description": "사용자 홈 디렉터리의 쓰기/수정 권한 제한 상태 수동 진단",
-    "captureOnly": true,
-    "ItemId": "W-58",
-    "appTarget": "lusrmgr.msc",
-    "treePath": [
-        [
-            "로컬 사용자 및 그룹(로컬)",
-            "Local Users and Groups (Local)"
-        ],
-        [
-            "사용자",
-            "Users"
-        ]
+  "Title": "사용자별 홈 디렉터리 권한 설정",
+  "Category": "보안 관리",
+  "Level": "중",
+  "TechType": "Type_Skip",
+  "Description": "사용자 홈 디렉터리의 쓰기/수정 권한 제한 상태 수동 진단",
+  "captureOnly": true,
+  "ItemId": "W-58",
+  "appTarget": "lusrmgr.msc",
+  "treePath": [
+    [
+      "로컬 사용자 및 그룹(로컬)",
+      "Local Users and Groups (Local)"
     ],
-    "targetItem": []
+    [
+      "사용자",
+      "Users"
+    ]
+  ],
+  "targetItem": [],
+  "Impact": "사용자 홈 디렉터리의 쓰기/수정 권한 제한 상태 수동 진단",
+  "RequiresConfirmation": false,
+  "AutoRemediationSupported": false
 }

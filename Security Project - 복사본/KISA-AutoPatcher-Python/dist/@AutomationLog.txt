@@ -50,3 +50,7 @@
 2026-09-09 16:37:09.092 capturer.py[836] _navigate_msc_tree -> Can not move cursor. TreeItemControl's BoundingRectangle is (0,0,0,0)[0x0]. SearchProperties: {Name: '보안', ControlType: TreeItemControl}
 2026-09-09 16:38:58.997 capturer.py[836] _navigate_msc_tree -> Can not move cursor. TreeItemControl's BoundingRectangle is (0,0,0,0)[0x0]. SearchProperties: {Name: '터미널 서비스', ControlType: TreeItemControl}
 2026-09-09 16:39:01.182 capturer.py[836] _navigate_msc_tree -> Can not move cursor. TreeItemControl's BoundingRectangle is (0,0,0,0)[0x0]. SearchProperties: {Name: '세션 시간 제한', ControlType: TreeItemControl}
+2026-09-10 17:47:13.955 capturer.py[794] _navigate_msc_tree -> Can not move cursor. TreeItemControl's BoundingRectangle is (0,0,0,0)[0x0]. SearchProperties: {Name: '터미널 서비스', ControlType: TreeItemControl}
+2026-09-10 17:47:16.152 capturer.py[794] _navigate_msc_tree -> Can not move cursor. TreeItemControl's BoundingRectangle is (0,0,0,0)[0x0]. SearchProperties: {Name: '보안', ControlType: TreeItemControl}
+2026-09-10 17:47:39.102 capturer.py[794] _navigate_msc_tree -> Can not move cursor. TreeItemControl's BoundingRectangle is (0,0,0,0)[0x0]. SearchProperties: {Name: '터미널 서비스', ControlType: TreeItemControl}
+2026-09-10 17:47:41.271 capturer.py[794] _navigate_msc_tree -> Can not move cursor. TreeItemControl's BoundingRectangle is (0,0,0,0)[0x0]. SearchProperties: {Name: '세션 시간 제한', ControlType: TreeItemControl}
