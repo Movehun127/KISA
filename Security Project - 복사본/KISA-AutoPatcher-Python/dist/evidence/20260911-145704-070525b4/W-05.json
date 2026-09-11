@@ -1,0 +1,68 @@
+{
+  "ItemId": "W-05",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T05:58:04.503037+00:00",
+  "PolicySHA256": "96d227d72fdd3f3ff75c119d66204d807573d130e46e85025bec3f25312243af",
+  "Policy": {
+    "Title": "해독 가능한 암호화를 사용하여 암호 저장 해제",
+    "Category": "계정 관리",
+    "Level": "상",
+    "TechType": "Type_Secedit",
+    "SecureValue": "ClearTextPassword=0",
+    "ItemId": "W-05",
+    "appTarget": "secpol.msc",
+    "treePath": [
+      [
+        "보안 설정",
+        "Security Settings"
+      ],
+      [
+        "계정 정책",
+        "Account Policies"
+      ],
+      [
+        "암호 정책",
+        "Password Policy"
+      ]
+    ],
+    "targetItem": [
+      "해독 가능한 암호화를 사용하여 암호 저장",
+      "Store passwords using reversible encryption"
+    ],
+    "SeceditValues": {
+      "ClearTextPassword": 0
+    },
+    "Comparisons": {},
+    "Impact": "설정 적용 범위 및 업무 영향 확인",
+    "RequiresConfirmation": false,
+    "AutoRemediationSupported": true
+  },
+  "BeforeStatus": "양호",
+  "BeforeValue": {
+    "ClearTextPassword": "0"
+  },
+  "AfterStatus": "양호",
+  "AfterValue": {
+    "ClearTextPassword": "0"
+  },
+  "FixStatus": "양호",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": null,
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "저장됨(내용 검토 필요)",
+  "Screenshot": "W-05.png",
+  "ScreenshotSHA256": "8dc7aeeba180f732e9cf9707fa518de0c7d0321f7f3a07e7aff8472774fd95bb",
+  "ScreenshotFiles": []
+}

@@ -1,0 +1,75 @@
+{
+  "ItemId": "W-28",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T06:03:33.443049+00:00",
+  "PolicySHA256": "f20f16a5a404380822164fd4087aef95aa621bb2cc6d75ee456cdeaf02629401",
+  "Policy": {
+    "Title": "터미널 서비스 암호화 수준 설정",
+    "Category": "서비스 관리",
+    "Level": "중",
+    "TechType": "Type_Registry",
+    "SecureValue": 2,
+    "ItemId": "W-28",
+    "appTarget": "gpedit.msc",
+    "treePath": [
+      [
+        "컴퓨터 구성",
+        "Computer Configuration"
+      ],
+      [
+        "관리 템플릿",
+        "Administrative Templates"
+      ],
+      [
+        "Windows 구성 요소",
+        "Windows Components"
+      ],
+      [
+        "원격 데스크톱 서비스",
+        "터미널 서비스",
+        "Remote Desktop Services",
+        "Terminal Services"
+      ],
+      [
+        "원격 데스크톱 세션 호스트",
+        "Remote Desktop Session Host"
+      ],
+      [
+        "보안",
+        "Security"
+      ]
+    ],
+    "targetItem": [
+      "클라이언트 연결 암호화 수준 설정",
+      "Set client connection encryption level"
+    ],
+    "Impact": "RDP 암호화 설정 변경으로 구형 클라이언트 접속 영향. 유효 GPO 및 원격 서비스 사용 여부 별도 확인",
+    "RequiresConfirmation": true,
+    "RegistryPath": "HKLM:\\System\\CurrentControlSet\\Control\\Terminal Server\\WinStations\\RDP-Tcp",
+    "RegistryName": "MinEncryptionLevel",
+    "RegistryType": "DWord",
+    "Comparison": "rdp_encryption",
+    "AutoRemediationSupported": true
+  },
+  "BeforeStatus": "양호",
+  "BeforeValue": 3,
+  "AfterStatus": "양호",
+  "AfterValue": 3,
+  "FixStatus": "양호",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": null,
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "증빙 대상 탐색"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "실패",
+  "CaptureError": "HWND=4524094: 속성/관리 창 종료 시간 초과. 본창 종료와 다음 항목을 중단합니다.",
+  "ScreenshotFiles": []
+}

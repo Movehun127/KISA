@@ -1,0 +1,65 @@
+{
+  "ItemId": "W-02",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T05:57:30.360782+00:00",
+  "PolicySHA256": "5fe4ab2cbc3ad6b88179c17a352320b4b8149342e31fe8be63485ec95cddeb42",
+  "Policy": {
+    "Title": "Guest 계정 비활성화",
+    "Category": "계정 관리",
+    "Level": "상",
+    "TechType": "Type_Secedit",
+    "SeceditKey": "EnableGuestAccount",
+    "SecureValue": 0,
+    "ItemId": "W-02",
+    "appTarget": "secpol.msc",
+    "treePath": [
+      [
+        "보안 설정",
+        "Security Settings"
+      ],
+      [
+        "로컬 정책",
+        "Local Policies"
+      ],
+      [
+        "보안 옵션",
+        "Security Options"
+      ]
+    ],
+    "targetItem": [
+      "계정: Guest 계정 상태",
+      "Accounts: Guest account status"
+    ],
+    "Impact": "설정 적용 범위 및 업무 영향 확인",
+    "RequiresConfirmation": false,
+    "AutoRemediationSupported": true
+  },
+  "BeforeStatus": "양호",
+  "BeforeValue": {
+    "EnableGuestAccount": "0"
+  },
+  "AfterStatus": "양호",
+  "AfterValue": {
+    "EnableGuestAccount": "0"
+  },
+  "FixStatus": "양호",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": null,
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "저장됨(내용 검토 필요)",
+  "Screenshot": "W-02.png",
+  "ScreenshotSHA256": "1ea96b8602a7c45156d55e20e00f270bef7da1347a3ab03cadbc68776e130589",
+  "ScreenshotFiles": []
+}

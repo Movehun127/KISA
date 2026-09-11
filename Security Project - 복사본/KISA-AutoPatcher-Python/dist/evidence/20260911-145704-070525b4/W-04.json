@@ -1,0 +1,70 @@
+{
+  "ItemId": "W-04",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T05:57:52.085120+00:00",
+  "PolicySHA256": "b05eba08cbdcfc5294910fa375aef70623d5298c470165f198390f6b48b7d892",
+  "Policy": {
+    "Title": "계정 잠금 임계값 설정",
+    "Category": "계정 관리",
+    "Level": "상",
+    "TechType": "Type_Secedit",
+    "SecureValue": "LockoutBadCount=5",
+    "ItemId": "W-04",
+    "appTarget": "secpol.msc",
+    "treePath": [
+      [
+        "보안 설정",
+        "Security Settings"
+      ],
+      [
+        "계정 정책",
+        "Account Policies"
+      ],
+      [
+        "계정 잠금 정책",
+        "Account Lockout Policy"
+      ]
+    ],
+    "targetItem": [
+      "계정 잠금 임계값",
+      "Account lockout threshold"
+    ],
+    "SeceditValues": {
+      "LockoutBadCount": 5
+    },
+    "Comparisons": {
+      "LockoutBadCount": "positive_le"
+    },
+    "Impact": "계정 잠금으로 서비스·예약 작업 인증 실패 가능",
+    "RequiresConfirmation": true,
+    "AutoRemediationSupported": true
+  },
+  "BeforeStatus": "취약",
+  "BeforeValue": {
+    "LockoutBadCount": "10"
+  },
+  "AfterStatus": "양호",
+  "AfterValue": {
+    "LockoutBadCount": "5"
+  },
+  "FixStatus": "완료",
+  "BackupFile": "C:\\Users\\new-s\\Desktop\\KISA-fix-evidence-verification\\KISA-fix-evidence-verification\\Security Project - 복사본\\KISA-AutoPatcher-Python\\dist\\backups\\W-04_59f341e6e75948e9abf86ecb562cb1bd.json",
+  "RollbackStatus": null,
+  "Note": "변경값 재조회 검증 완료. 업무 기능 검증은 별도 필요. ",
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "저장됨(내용 검토 필요)",
+  "Screenshot": "W-04.png",
+  "ScreenshotSHA256": "5726b631521757442a46711ebbe00a8da670e1ae31f2ccb147dd94d6663f8c18",
+  "ScreenshotFiles": []
+}

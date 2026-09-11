@@ -1,0 +1,43 @@
+{
+  "ItemId": "W-17",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T06:00:46.027530+00:00",
+  "PolicySHA256": "1aaad85cd137880c2c2e41638427af2f28c0d28c71ed29ffc12913c0fe37782c",
+  "Policy": {
+    "Title": "하드디스크 기본 공유 제거",
+    "Category": "서비스 관리",
+    "Level": "상",
+    "TechType": "Type_Skip",
+    "SecureValue": "0",
+    "ItemId": "W-17",
+    "appTarget": "regedit",
+    "RegistryPath": "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters",
+    "Description": "AutoShareServer/AutoShareWks 및 실제 기본 공유를 함께 확인. AD·백업·배포 도구 영향 검토.",
+    "captureOnly": true,
+    "Impact": "AutoShareServer/AutoShareWks 및 실제 기본 공유를 함께 확인. AD·백업·배포 도구 영향 검토.",
+    "RequiresConfirmation": false,
+    "AutoRemediationSupported": false
+  },
+  "BeforeStatus": "수동 조치(AutoShareServer/AutoShareWks 및 실제 기본 공유를 함께 확인. AD·백업·배포 도구 영향 검토.)",
+  "BeforeValue": "N/A",
+  "AfterStatus": "수동 조치(AutoShareServer/AutoShareWks 및 실제 기본 공유를 함께 확인. AD·백업·배포 도구 영향 검토.)",
+  "AfterValue": "N/A",
+  "FixStatus": "수동 조치(AutoShareServer/AutoShareWks 및 실제 기본 공유를 함께 확인. AD·백업·배포 도구 영향 검토.)",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": null,
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "증빙 대상 탐색",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "실패",
+  "CaptureError": "'NoneType' object has no attribute 'SetValue'",
+  "ScreenshotFiles": []
+}

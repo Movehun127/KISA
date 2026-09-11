@@ -54,3 +54,11 @@
 2026-09-10 17:47:16.152 capturer.py[794] _navigate_msc_tree -> Can not move cursor. TreeItemControl's BoundingRectangle is (0,0,0,0)[0x0]. SearchProperties: {Name: '보안', ControlType: TreeItemControl}
 2026-09-10 17:47:39.102 capturer.py[794] _navigate_msc_tree -> Can not move cursor. TreeItemControl's BoundingRectangle is (0,0,0,0)[0x0]. SearchProperties: {Name: '터미널 서비스', ControlType: TreeItemControl}
 2026-09-10 17:47:41.271 capturer.py[794] _navigate_msc_tree -> Can not move cursor. TreeItemControl's BoundingRectangle is (0,0,0,0)[0x0]. SearchProperties: {Name: '세션 시간 제한', ControlType: TreeItemControl}
+2026-09-11 14:58:23.298 capturer.py[179] _navigate_msc_tree -> Can not move cursor. ListItemControl's BoundingRectangle is (0,0,0,0)[0x0]. SearchProperties: {ControlType: ListItemControl}
+2026-09-11 14:59:21.375 capturer.py[179] _navigate_msc_tree -> Can not move cursor. ListItemControl's BoundingRectangle is (0,0,0,0)[0x0]. SearchProperties: {ControlType: ListItemControl}
+2026-09-11 14:59:48.456 capturer.py[179] _navigate_msc_tree -> Can not move cursor. ListItemControl's BoundingRectangle is (0,0,0,0)[0x0]. SearchProperties: {ControlType: ListItemControl}
+2026-09-11 15:00:26.853 capturer.py[179] _navigate_msc_tree -> Can not move cursor. ListItemControl's BoundingRectangle is (0,0,0,0)[0x0]. SearchProperties: {ControlType: ListItemControl}
+2026-09-11 15:00:54.504 capturer.py[179] _navigate_msc_tree -> Can not move cursor. ListItemControl's BoundingRectangle is (0,0,0,0)[0x0]. SearchProperties: {ControlType: ListItemControl}
+2026-09-11 15:01:15.042 capturer.py[179] _navigate_msc_tree -> Can not move cursor. ListItemControl's BoundingRectangle is (0,0,0,0)[0x0]. SearchProperties: {ControlType: ListItemControl}
+2026-09-11 15:03:20.866 capturer.py[135] _navigate_msc_tree -> Can not move cursor. TreeItemControl's BoundingRectangle is (0,0,0,0)[0x0]. SearchProperties: {Name: '터미널 서비스', ControlType: TreeItemControl}
+2026-09-11 15:03:23.014 capturer.py[135] _navigate_msc_tree -> Can not move cursor. TreeItemControl's BoundingRectangle is (0,0,0,0)[0x0]. SearchProperties: {Name: '보안', ControlType: TreeItemControl}

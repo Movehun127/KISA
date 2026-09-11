@@ -34,5 +34,15 @@
   },
   "Impact": "계정 잠금 지속 시간 증가로 업무 복구 지연 가능",
   "RequiresConfirmation": true,
-  "AutoRemediationSupported": true
+  "AutoRemediationSupported": true,
+  "captureTargets": [
+    [
+      "계정 잠금 기간",
+      "Account lockout duration"
+    ],
+    [
+      "다음 시간 후 계정 잠금 수를 원래대로 설정",
+      "Reset account lockout counter after"
+    ]
+  ]
 }

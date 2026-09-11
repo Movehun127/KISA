@@ -1,0 +1,62 @@
+{
+  "ItemId": "W-01",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T05:57:17.777593+00:00",
+  "PolicySHA256": "fcd0e9e895d4ca9df3178bf6ecf56a59aaad0bb2eab507f4c901d8bd74a6be2d",
+  "Policy": {
+    "Title": "Administrator 계정 이름 변경 등 보안성 강화",
+    "Category": "계정 관리",
+    "Level": "상",
+    "TechType": "Type_Skip",
+    "SecureValue": "True",
+    "ItemId": "W-01",
+    "appTarget": "secpol.msc",
+    "treePath": [
+      [
+        "보안 설정",
+        "Security Settings"
+      ],
+      [
+        "로컬 정책",
+        "Local Policies"
+      ],
+      [
+        "보안 옵션",
+        "Security Options"
+      ]
+    ],
+    "targetItem": [
+      "계정: Administrator 계정 이름 바꾸기",
+      "Accounts: Rename administrator account"
+    ],
+    "Description": "기본 이름 변경 또는 강력한 암호 중 하나로 충족 가능. 계정 의존 서비스 확인 후 수동 판단.",
+    "captureOnly": true,
+    "Impact": "기본 이름 변경 또는 강력한 암호 중 하나로 충족 가능. 계정 의존 서비스 확인 후 수동 판단.",
+    "RequiresConfirmation": false,
+    "AutoRemediationSupported": false
+  },
+  "BeforeStatus": "수동 조치(기본 이름 변경 또는 강력한 암호 중 하나로 충족 가능. 계정 의존 서비스 확인 후 수동 판단.)",
+  "BeforeValue": "N/A",
+  "AfterStatus": "수동 조치(기본 이름 변경 또는 강력한 암호 중 하나로 충족 가능. 계정 의존 서비스 확인 후 수동 판단.)",
+  "AfterValue": "N/A",
+  "FixStatus": "수동 조치(기본 이름 변경 또는 강력한 암호 중 하나로 충족 가능. 계정 의존 서비스 확인 후 수동 판단.)",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": null,
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "저장됨(내용 검토 필요)",
+  "Screenshot": "W-01.png",
+  "ScreenshotSHA256": "c37b0fc248274bbc28d75e6366874adaf0ffa0ff83e51cc243a9b0cb15870af7",
+  "ScreenshotFiles": []
+}

@@ -1,0 +1,39 @@
+{
+  "ItemId": "W-24",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T06:01:21.829766+00:00",
+  "PolicySHA256": "8570e5a90de806bb44bb2b60c3fd896e33f1862cf49ef29665d211c17ca58cf4",
+  "Policy": {
+    "Title": "FTP 접근 제어 설정",
+    "Category": "서비스 관리",
+    "Level": "상",
+    "TechType": "Type_Skip",
+    "SecureValue": "True",
+    "ItemId": "W-24",
+    "appTarget": "services.msc",
+    "treePath": [],
+    "targetItem": [
+      "Microsoft FTP Service",
+      "MSFTPSVC"
+    ],
+    "Description": "FTP 접근 IP 및 사용자 접근 제어 확인.",
+    "captureOnly": true,
+    "Impact": "FTP 접근 IP 및 사용자 접근 제어 확인.",
+    "RequiresConfirmation": false,
+    "AutoRemediationSupported": false
+  },
+  "BeforeStatus": "수동 조치(FTP 접근 IP 및 사용자 접근 제어 확인.)",
+  "BeforeValue": "N/A",
+  "AfterStatus": "수동 조치(FTP 접근 IP 및 사용자 접근 제어 확인.)",
+  "AfterValue": "N/A",
+  "FixStatus": "생략",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": "사용자가 서비스 항목 생략을 선택했습니다. 미설치/미사용을 검증한 판정이 아닙니다.",
+  "ExecutionStages": [],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "미수집",
+  "ScreenshotFiles": []
+}

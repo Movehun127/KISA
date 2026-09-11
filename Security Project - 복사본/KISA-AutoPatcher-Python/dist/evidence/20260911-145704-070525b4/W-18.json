@@ -1,0 +1,61 @@
+{
+  "ItemId": "W-18",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T06:01:01.172157+00:00",
+  "PolicySHA256": "891562e90715076690038d759a8b8e9198c15883d1d7d8f63bc3a017a0334cf5",
+  "Policy": {
+    "Title": "불필요한 서비스 제거",
+    "Category": "서비스 관리",
+    "Level": "상",
+    "TechType": "Type_Skip",
+    "Description": "불필요하거나 보안위협이 있는 기본 백그라운드 서비스 동작 수동 검증",
+    "captureOnly": true,
+    "multiCapture": true,
+    "ItemId": "W-18",
+    "appTarget": "services.msc",
+    "treePath": [],
+    "targetServices": [
+      {
+        "name": "TrkWks",
+        "displayName": "Distributed Link Tracking Client"
+      },
+      {
+        "name": "Spooler",
+        "displayName": "Print Spooler"
+      },
+      {
+        "name": "RemoteRegistry",
+        "displayName": "Remote Registry"
+      },
+      {
+        "name": "CryptSvc",
+        "displayName": "Cryptographic Services"
+      }
+    ],
+    "Impact": "불필요하거나 보안위협이 있는 기본 백그라운드 서비스 동작 수동 검증",
+    "RequiresConfirmation": false,
+    "AutoRemediationSupported": false
+  },
+  "BeforeStatus": "수동 조치(불필요하거나 보안위협이 있는 기본 백그라운드 서비스 동작 수동 검증)",
+  "BeforeValue": "N/A",
+  "AfterStatus": "수동 조치(불필요하거나 보안위협이 있는 기본 백그라운드 서비스 동작 수동 검증)",
+  "AfterValue": "N/A",
+  "FixStatus": "수동 조치(불필요하거나 보안위협이 있는 기본 백그라운드 서비스 동작 수동 검증)",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": null,
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "증빙 대상 탐색",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "실패",
+  "CaptureError": "정확한 정책 속성 창을 찾지 못했습니다.",
+  "ScreenshotFiles": []
+}

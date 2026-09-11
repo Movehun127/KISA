@@ -1,0 +1,54 @@
+{
+  "ItemId": "W-03",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T05:57:38.955192+00:00",
+  "PolicySHA256": "88f03e388130a5fa6853dbb62996d4c4c24cf46cf188c21a663dc744103a8cec",
+  "Policy": {
+    "Title": "불필요한 계정 제거",
+    "Category": "계정 관리",
+    "Level": "상",
+    "TechType": "Type_Skip",
+    "CheckCommand": "@(Get-LocalUser | Select-Object Name,SID,Enabled,LastLogon) | ConvertTo-Json -Depth 4 -Compress",
+    "Description": "기본 계정 이외의 비활성 사용자 계정 수동 진단 및 삭제",
+    "captureOnly": true,
+    "ItemId": "W-03",
+    "appTarget": "lusrmgr.msc",
+    "treePath": [
+      [
+        "로컬 사용자 및 그룹(로컬)",
+        "Local Users and Groups (Local)"
+      ],
+      [
+        "사용자",
+        "Users"
+      ]
+    ],
+    "Impact": "기본 계정 이외의 비활성 사용자 계정 수동 진단 및 삭제",
+    "RequiresConfirmation": false,
+    "AutoRemediationSupported": false
+  },
+  "BeforeStatus": "수동 조치(기본 계정 이외의 비활성 사용자 계정 수동 진단 및 삭제)",
+  "BeforeValue": "[{\"Name\":\"Admin_Secure\",\"SID\":{\"BinaryLength\":28,\"AccountDomainSid\":{\"BinaryLength\":24,\"AccountDomainSid\":{\"BinaryLength\":24,\"AccountDomainSid\":\"S-1-5-21-4125068256-1586722983-2106393764\",\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764\"},\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764\"},\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764-500\"},\"Enabled\":false,\"LastLogon\":null},{\"Name\":\"DefaultAccount\",\"SID\":{\"BinaryLength\":28,\"AccountDomainSid\":{\"BinaryLength\":24,\"AccountDomainSid\":{\"BinaryLength\":24,\"AccountDomainSid\":\"S-1-5-21-4125068256-1586722983-2106393764\",\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764\"},\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764\"},\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764-503\"},\"Enabled\":false,\"LastLogon\":null},{\"Name\":\"Guest\",\"SID\":{\"BinaryLength\":28,\"AccountDomainSid\":{\"BinaryLength\":24,\"AccountDomainSid\":{\"BinaryLength\":24,\"AccountDomainSid\":\"S-1-5-21-4125068256-1586722983-2106393764\",\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764\"},\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764\"},\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764-501\"},\"Enabled\":false,\"LastLogon\":null},{\"Name\":\"new-s\",\"SID\":{\"BinaryLength\":28,\"AccountDomainSid\":{\"BinaryLength\":24,\"AccountDomainSid\":{\"BinaryLength\":24,\"AccountDomainSid\":\"S-1-5-21-4125068256-1586722983-2106393764\",\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764\"},\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764\"},\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764-1001\"},\"Enabled\":true,\"LastLogon\":null},{\"Name\":\"WDAGUtilityAccount\",\"SID\":{\"BinaryLength\":28,\"AccountDomainSid\":{\"BinaryLength\":24,\"AccountDomainSid\":{\"BinaryLength\":24,\"AccountDomainSid\":\"S-1-5-21-4125068256-1586722983-2106393764\",\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764\"},\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764\"},\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764-504\"},\"Enabled\":false,\"LastLogon\":null}]",
+  "AfterStatus": "수동 조치(기본 계정 이외의 비활성 사용자 계정 수동 진단 및 삭제)",
+  "AfterValue": "[{\"Name\":\"Admin_Secure\",\"SID\":{\"BinaryLength\":28,\"AccountDomainSid\":{\"BinaryLength\":24,\"AccountDomainSid\":{\"BinaryLength\":24,\"AccountDomainSid\":\"S-1-5-21-4125068256-1586722983-2106393764\",\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764\"},\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764\"},\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764-500\"},\"Enabled\":false,\"LastLogon\":null},{\"Name\":\"DefaultAccount\",\"SID\":{\"BinaryLength\":28,\"AccountDomainSid\":{\"BinaryLength\":24,\"AccountDomainSid\":{\"BinaryLength\":24,\"AccountDomainSid\":\"S-1-5-21-4125068256-1586722983-2106393764\",\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764\"},\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764\"},\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764-503\"},\"Enabled\":false,\"LastLogon\":null},{\"Name\":\"Guest\",\"SID\":{\"BinaryLength\":28,\"AccountDomainSid\":{\"BinaryLength\":24,\"AccountDomainSid\":{\"BinaryLength\":24,\"AccountDomainSid\":\"S-1-5-21-4125068256-1586722983-2106393764\",\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764\"},\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764\"},\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764-501\"},\"Enabled\":false,\"LastLogon\":null},{\"Name\":\"new-s\",\"SID\":{\"BinaryLength\":28,\"AccountDomainSid\":{\"BinaryLength\":24,\"AccountDomainSid\":{\"BinaryLength\":24,\"AccountDomainSid\":\"S-1-5-21-4125068256-1586722983-2106393764\",\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764\"},\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764\"},\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764-1001\"},\"Enabled\":true,\"LastLogon\":null},{\"Name\":\"WDAGUtilityAccount\",\"SID\":{\"BinaryLength\":28,\"AccountDomainSid\":{\"BinaryLength\":24,\"AccountDomainSid\":{\"BinaryLength\":24,\"AccountDomainSid\":\"S-1-5-21-4125068256-1586722983-2106393764\",\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764\"},\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764\"},\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764-504\"},\"Enabled\":false,\"LastLogon\":null}]",
+  "FixStatus": "수동 조치(기본 계정 이외의 비활성 사용자 계정 수동 진단 및 삭제)",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": null,
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "저장됨(내용 검토 필요)",
+  "Screenshot": "W-03.png",
+  "ScreenshotSHA256": "b498cd962fb11461adaf18f635ae36814e7600804a6b54df0f91b505a3e70aaa",
+  "ScreenshotFiles": []
+}

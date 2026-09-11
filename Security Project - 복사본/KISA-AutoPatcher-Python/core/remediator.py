@@ -9,7 +9,8 @@ import uuid
 import winreg
 from pathlib import Path
 from .detector import _parse_reg_path, get_vulnerability_status
-from .execution import run_ps, export_security_policy, apply_security_policy, matches
+from .execution import run_ps, export_security_policy, apply_security_policy, matches, registry_settings
+from . import native_actions
 
 _LOCK = threading.Lock()
 _TYPES = {'DWord': winreg.REG_DWORD, 'String': winreg.REG_SZ}
@@ -71,6 +72,23 @@ def restore_backup(filename):
     data = json.loads(Path(filename).read_text(encoding='utf-8'), object_hook=_decode)
     if data['kind'] == 'registry':
         _restore_registry(data['path'], data['name'], data['before'])
+    elif data['kind'] == 'registry_group':
+        failures = []
+        for name, state in data['before'].items():
+            try:
+                _restore_registry(data['path'], name, state)
+            except Exception as exc:
+                failures.append(f'{name}: {exc}')
+        if failures:
+            raise RuntimeError('; '.join(failures))
+    elif data['kind'] == 'smb_session':
+        native_actions.write_smb(data['before'])
+        if native_actions.read_smb() != data['before']:
+            raise RuntimeError('SMB rollback verification failed')
+    elif data['kind'] == 'firewall':
+        native_actions.write_firewall(data['before'], best_effort=True)
+        if native_actions.read_firewall() != data['before']:
+            raise RuntimeError('Firewall rollback verification failed')
     elif data['kind'] == 'secedit':
         apply_security_policy(data['before'])
         current = export_security_policy()
@@ -99,7 +117,7 @@ def invoke_remediation(vulnerability_results, backup_dir, evidence_dir='', log_c
             result['FixStatus'] = '건너뜀'
             if result.get('Status') != '취약':
                 continue
-            if kind not in ('Type_Registry', 'Type_Secedit'):
+            if kind not in ('Type_Registry', 'Type_Secedit', 'Type_RegistryGroup', 'Type_SmbSession', 'Type_Firewall'):
                 result.update(FixStatus='수동 조치 필요', Note='안전한 백업·복원 구현이 없는 조치는 자동 실행하지 않습니다')
                 log(f'[{iid}] {result["Note"]}', 'warn')
                 continue
@@ -124,6 +142,29 @@ def invoke_remediation(vulnerability_results, backup_dir, evidence_dir='', log_c
                     path, name = item['RegistryPath'], item['RegistryName']
                     old = _snapshot(path, name)
                     data = {'kind': 'registry', 'path': path, 'name': name, 'before': old}
+                elif kind == 'Type_RegistryGroup':
+                    path = item['RegistryPath']
+                    settings = registry_settings(item)
+                    old = {s['RegistryName']: _snapshot(path, s['RegistryName']) for s in settings}
+                    for setting in settings:
+                        effective = old[setting['RegistryName']].get('value')
+                        if effective is None and item.get('FallbackRegistryPath'):
+                            effective = reg_read(item['FallbackRegistryPath'], setting['RegistryName'])
+                        if effective is not None and matches(effective, setting['SecureValue'], setting.get('Comparison', 'eq')):
+                            setting['SecureValue'] = effective
+                        if setting.get('RequireExistingFile'):
+                            setting['SecureValue'] = os.path.expandvars(setting['SecureValue'])
+                        if setting.get('RequireExistingFile') and not os.path.isfile(setting['SecureValue']):
+                            raise RuntimeError('화면 보호기 실행 파일이 존재하지 않습니다.')
+                    data = {'kind': 'registry_group', 'path': path, 'before': old}
+                elif kind == 'Type_SmbSession':
+                    old = native_actions.read_smb()
+                    wanted = native_actions.smb_target(old)
+                    data = {'kind': 'smb_session', 'before': old}
+                elif kind == 'Type_Firewall':
+                    old = native_actions.read_firewall()
+                    wanted = {name: 'True' for name in old}
+                    data = {'kind': 'firewall', 'before': old}
                 else:
                     wanted = item.get('SeceditValues', {item.get('SeceditKey'): item.get('SecureValue')})
                     current = export_security_policy()
@@ -147,12 +188,33 @@ def invoke_remediation(vulnerability_results, backup_dir, evidence_dir='', log_c
                     after = _snapshot(path, name)
                     if not after['exists'] or not matches(after['value'], item['SecureValue'], item.get('Comparison', 'eq')):
                         raise RuntimeError('조치 후 레지스트리 검증 실패')
+                elif kind == 'Type_RegistryGroup':
+                    for setting in settings:
+                        name = setting['RegistryName']
+                        value = old[name].get('value')
+                        desired = setting['SecureValue']
+                        if value is not None and matches(value, desired, setting.get('Comparison', 'eq')):
+                            continue
+                        reg_write(path, name, desired, setting.get('RegistryType', 'String'))
+                    after = {s['RegistryName']: reg_read(path, s['RegistryName']) for s in settings}
+                    if any(after[s['RegistryName']] is None or not matches(after[s['RegistryName']], s['SecureValue'], s.get('Comparison', 'eq')) for s in settings):
+                        raise RuntimeError('복합 레지스트리 검증 실패')
+                elif kind == 'Type_SmbSession':
+                    native_actions.write_smb(wanted)
+                    after = native_actions.read_smb()
+                    if after != wanted or not native_actions.smb_compliant(after):
+                        raise RuntimeError('SMB 설정 검증 실패')
+                elif kind == 'Type_Firewall':
+                    native_actions.write_firewall(wanted)
+                    after = native_actions.read_firewall('ActiveStore')
+                    if native_actions.read_firewall() != wanted or after != wanted:
+                        raise RuntimeError('방화벽 유효 정책 검증 실패')
                 else:
                     apply_security_policy(wanted)
                     after = export_security_policy()
                     if any(str(after.get(k)) != str(v) for k, v in wanted.items()):
                         raise RuntimeError('조치 후 보안 정책 검증 실패')
-                result.update(FixStatus='완료', AfterValue=after, Note='변경값 재조회 검증 완료. 업무 기능 검증은 별도 필요')
+                result.update(FixStatus='완료', AfterValue=after, Note='변경값 재조회 검증 완료. 업무 기능 검증은 별도 필요. ' + item.get('ScopeNote', ''))
                 log(f'[{iid}] 설정 검증 완료 / 백업: {backup}', 'good')
             except Exception as exc:
                 result.update(FixStatus='실패', Note=str(exc))

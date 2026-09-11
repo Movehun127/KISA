@@ -39,5 +39,27 @@
   },
   "Impact": "암호 만료 및 변경 정책이 서비스 계정에 영향",
   "RequiresConfirmation": true,
-  "AutoRemediationSupported": true
+  "AutoRemediationSupported": true,
+  "captureTargets": [
+    [
+      "암호는 복잡성 요구 사항을 만족해야 함",
+      "Password must meet complexity requirements"
+    ],
+    [
+      "최근 암호 기억",
+      "Enforce password history"
+    ],
+    [
+      "최대 암호 사용 기간",
+      "Maximum password age"
+    ],
+    [
+      "최소 암호 길이",
+      "Minimum password length"
+    ],
+    [
+      "최소 암호 사용 기간",
+      "Minimum password age"
+    ]
+  ]
 }

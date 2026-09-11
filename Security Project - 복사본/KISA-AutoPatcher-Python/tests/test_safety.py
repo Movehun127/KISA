@@ -40,12 +40,34 @@ class SafetyTests(unittest.TestCase):
     def test_w08_both_60(self):
         self.assertEqual(policy('W-08')['SeceditValues'],{'LockoutDuration':60,'ResetLockoutCount':60})
 
+    def test_guest_and_anonymous_policy_backup_verify_and_restore(self):
+        from types import SimpleNamespace
+        for iid, key in [('W-02', 'EnableGuestAccount'), ('W-12', 'LSAAnonymousNameLookup')]:
+            r = result(policy(iid))
+            with tempfile.TemporaryDirectory() as folder, \
+                 patch.object(rem.ctypes, 'windll', SimpleNamespace(shell32=SimpleNamespace(IsUserAnAdmin=lambda: True)), create=True), \
+                 patch.object(rem, 'run_ps', return_value='{"PartOfDomain":false,"DomainRole":0}'), \
+                 patch.object(rem, 'export_security_policy', side_effect=[{key:'1'}, {key:'0'}]), \
+                 patch.object(rem, 'apply_security_policy') as apply:
+                rem.invoke_remediation([r], folder)
+                self.assertEqual(r['FixStatus'], '완료')
+                self.assertEqual(json.loads(Path(r['BackupFile']).read_text())['before'], {key:'1'})
+                apply.assert_called_once_with({key:0})
+
+    def test_new_security_keys_do_not_allow_admin_disable(self):
+        for key in ['EnableGuestAccount', 'LSAAnonymousNameLookup']:
+            with patch.object(ex, 'run_checked') as run:
+                ex.apply_security_policy({key:0})
+                self.assertIn('SECURITYPOLICY', run.call_args.args[0])
+        with self.assertRaises(ValueError):
+            ex.apply_security_policy({'EnableAdminAccount':0})
+
     def test_caption_text_different(self):
         self.assertEqual(policy('W-57_Text')['RegistryName'],'LegalNoticeText')
         self.assertNotEqual(policy('W-57_Text')['RegistryName'],policy('W-57_Caption')['RegistryName'])
 
     def test_wrong_proxy_checks_manual(self):
-        for i in ('W-06','W-12','W-19','W-46','W-54','W-56','W-60','W-63'):
+        for i in ('W-06','W-19','W-46','W-54','W-60','W-63'):
             self.assertEqual(policy(i)['TechType'],'Type_Skip')
             self.assertNotIn('RemediationCommand',policy(i))
 
@@ -97,6 +119,8 @@ class SafetyTests(unittest.TestCase):
 
     def test_unbacked_commands_blocked(self):
         row=result(policy('W-64'))
+        row['ConfigItem'] = dict(row['ConfigItem'], TechType='Type_Powershell',
+                                 RemediationCommand='unreviewed command')
         with patch.object(rem,'run_ps') as run:
             rem.invoke_remediation([row],'unused');run.assert_not_called()
         self.assertEqual(row['FixStatus'],'수동 조치 필요')

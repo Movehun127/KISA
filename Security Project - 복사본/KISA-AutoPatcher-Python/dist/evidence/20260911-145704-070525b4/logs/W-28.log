@@ -1,0 +1,14 @@
+[15:03:12] 
+🔷 [W-28]  터미널 서비스 암호화 수준 설정
+[15:03:12]   📷 증빙 화면 캡처 대기 중...
+[15:03:13]   [W-28] 단계: 창 열기
+[15:03:14]   대상 창 확인: 로컬 그룹 정책 편집기 / HWND=4524094 / PID=14016
+[15:03:15]   [W-28] 단계: 오른쪽 정렬 확인
+[15:03:15]   [W-28] 단계: 조치 및 설정 재조회
+[15:03:15]   → 자동 변경 없음 (양호)
+[15:03:16]   [W-28] 단계: 증빙 대상 탐색
+[15:03:33]   ⚠️ 항목 처리 중단 또는 오류: HWND=4524094: 속성/관리 창 종료 시간 초과. 본창 종료와 다음 항목을 중단합니다.
+[15:03:33]   📄 실행 결과 보고서 생성 중...
+[15:03:37] ✅ 마크다운 보고서 생성: C:\Users\new-s\Desktop\KISA-fix-evidence-verification\KISA-fix-evidence-verification\Security Project - 복사본\KISA-AutoPatcher-Python\dist\evidence\20260911-145704-070525b4\reports\Security_Patch_Report.md
+[15:03:37] ✅ 엑셀 보고서 생성: C:\Users\new-s\Desktop\KISA-fix-evidence-verification\KISA-fix-evidence-verification\Security Project - 복사본\KISA-AutoPatcher-Python\dist\evidence\20260911-145704-070525b4\reports\Security_Patch_Report.xlsx
+[15:03:37]   📁 보고서: C:\Users\new-s\Desktop\KISA-fix-evidence-verification\KISA-fix-evidence-verification\Security Project - 복사본\KISA-AutoPatcher-Python\dist\evidence\20260911-145704-070525b4\reports

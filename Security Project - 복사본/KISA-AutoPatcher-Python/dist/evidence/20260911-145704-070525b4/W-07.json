@@ -1,0 +1,61 @@
+{
+  "ItemId": "W-07",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T05:58:29.922582+00:00",
+  "PolicySHA256": "0a23e07b364bac644b38239550e956d1d44741cfaf146303673a6b5a9ffdceb5",
+  "Policy": {
+    "Title": "Everyone 사용 권한을 익명 사용자에게 적용",
+    "Category": "계정 관리",
+    "Level": "중",
+    "TechType": "Type_Registry",
+    "SecureValue": 0,
+    "ItemId": "W-07",
+    "appTarget": "secpol.msc",
+    "treePath": [
+      [
+        "보안 설정",
+        "Security Settings"
+      ],
+      [
+        "로컬 정책",
+        "Local Policies"
+      ],
+      [
+        "보안 옵션",
+        "Security Options"
+      ]
+    ],
+    "targetItem": [
+      "네트워크 액세스: Everyone 사용 권한을 익명 사용자에게 적용",
+      "Network access: Let Everyone permissions apply to anonymous users"
+    ],
+    "RegistryPath": "HKLM:\\System\\CurrentControlSet\\Control\\Lsa",
+    "RegistryName": "EveryoneIncludesAnonymous",
+    "RegistryType": "DWord",
+    "Impact": "익명 공유를 사용하는 레거시 앱·백업 영향",
+    "RequiresConfirmation": true,
+    "AutoRemediationSupported": true
+  },
+  "BeforeStatus": "양호",
+  "BeforeValue": 0,
+  "AfterStatus": "양호",
+  "AfterValue": 0,
+  "FixStatus": "양호",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": null,
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "증빙 대상 탐색",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "실패",
+  "CaptureError": "정확한 정책 속성 창을 찾지 못했습니다.",
+  "ScreenshotFiles": []
+}

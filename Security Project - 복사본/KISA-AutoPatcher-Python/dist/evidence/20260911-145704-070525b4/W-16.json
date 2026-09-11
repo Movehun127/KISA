@@ -1,0 +1,53 @@
+{
+  "ItemId": "W-16",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T06:00:41.482977+00:00",
+  "PolicySHA256": "6b21487932c38500de0697dcbaf68fa1e0cf657ca46f2cc70574f8897ebdcaf8",
+  "Policy": {
+    "Title": "공유 권한 및 사용자 그룹 설정",
+    "Category": "서비스 관리",
+    "Level": "상",
+    "TechType": "Type_Skip",
+    "Description": "Everyone 권한으로 개방된 중요 공유 디렉터리 접근 수동 제한",
+    "captureOnly": true,
+    "ItemId": "W-16",
+    "appTarget": "fsmgmt.msc",
+    "treePath": [
+      [
+        "공유 폴더(로컬)",
+        "Shared Folders (Local)"
+      ],
+      [
+        "공유",
+        "Shares"
+      ]
+    ],
+    "Impact": "Everyone 권한으로 개방된 중요 공유 디렉터리 접근 수동 제한",
+    "RequiresConfirmation": false,
+    "AutoRemediationSupported": false
+  },
+  "BeforeStatus": "수동 조치(Everyone 권한으로 개방된 중요 공유 디렉터리 접근 수동 제한)",
+  "BeforeValue": "N/A",
+  "AfterStatus": "수동 조치(Everyone 권한으로 개방된 중요 공유 디렉터리 접근 수동 제한)",
+  "AfterValue": "N/A",
+  "FixStatus": "수동 조치(Everyone 권한으로 개방된 중요 공유 디렉터리 접근 수동 제한)",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": null,
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "저장됨(내용 검토 필요)",
+  "Screenshot": "W-16.png",
+  "ScreenshotSHA256": "0c8f8279422ca376de74b82f846fbb47ea3b83348c19f7f5194ec576879fae79",
+  "ScreenshotFiles": []
+}

@@ -1,0 +1,63 @@
+{
+  "ItemId": "W-10",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T05:59:28.116785+00:00",
+  "PolicySHA256": "996ce68a74d564a27275b6cc08c89b009e4cd27a35f10d912a38a9c2196d9e89",
+  "Policy": {
+    "Title": "마지막 사용자 이름 표시 안 함",
+    "Category": "계정 관리",
+    "Level": "중",
+    "TechType": "Type_Registry",
+    "SecureValue": 1,
+    "ItemId": "W-10",
+    "appTarget": "secpol.msc",
+    "treePath": [
+      [
+        "보안 설정",
+        "Security Settings"
+      ],
+      [
+        "로컬 정책",
+        "Local Policies"
+      ],
+      [
+        "보안 옵션",
+        "Security Options"
+      ]
+    ],
+    "targetItem": [
+      "대화형 로그온: 마지막 로그온 사용자 이름 표시 안 함",
+      "대화형 로그온: 마지막 로그인 사용자 이름 표시 안 함",
+      "Interactive logon: Don't display last signed-in",
+      "Interactive logon: Do not display last user name"
+    ],
+    "RegistryPath": "HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
+    "RegistryName": "DontDisplayLastUserName",
+    "RegistryType": "DWord",
+    "Impact": "설정 적용 범위 및 업무 영향 확인",
+    "RequiresConfirmation": false,
+    "AutoRemediationSupported": true
+  },
+  "BeforeStatus": "취약",
+  "BeforeValue": 0,
+  "AfterStatus": "양호",
+  "AfterValue": 1,
+  "FixStatus": "완료",
+  "BackupFile": "C:\\Users\\new-s\\Desktop\\KISA-fix-evidence-verification\\KISA-fix-evidence-verification\\Security Project - 복사본\\KISA-AutoPatcher-Python\\dist\\backups\\W-10_5bc2e4e7d94546c499801f7e55b56b74.json",
+  "RollbackStatus": null,
+  "Note": "변경값 재조회 검증 완료. 업무 기능 검증은 별도 필요. ",
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "증빙 대상 탐색",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "실패",
+  "CaptureError": "정확한 정책 속성 창을 찾지 못했습니다.",
+  "ScreenshotFiles": []
+}

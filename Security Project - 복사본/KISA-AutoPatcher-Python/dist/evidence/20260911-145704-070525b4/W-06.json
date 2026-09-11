@@ -1,0 +1,59 @@
+{
+  "ItemId": "W-06",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T05:58:15.457063+00:00",
+  "PolicySHA256": "bca3bf3177310b65aefcd5e2a64c896d2f80d0861d4d436f8a87b26a9ad5ba11",
+  "Policy": {
+    "Title": "관리자 그룹에 최소한의 사용자 포함",
+    "Category": "계정 관리",
+    "Level": "상",
+    "TechType": "Type_Skip",
+    "CheckCommand": "@(Get-LocalGroupMember -SID 'S-1-5-32-544' | Select-Object Name,SID,ObjectClass,PrincipalSource) | ConvertTo-Json -Depth 4 -Compress",
+    "SecureValue": "True",
+    "ItemId": "W-06",
+    "appTarget": "lusrmgr.msc",
+    "treePath": [
+      [
+        "로컬 사용자 및 그룹(로컬)",
+        "Local Users and Groups (Local)"
+      ],
+      [
+        "그룹",
+        "Groups"
+      ]
+    ],
+    "targetItem": [
+      "Administrators"
+    ],
+    "actionType": "Properties",
+    "Description": "관리자 수만으로 불필요한 계정 여부를 판단할 수 없음. 계정별 업무 필요성 확인.",
+    "captureOnly": true,
+    "Impact": "관리자 수만으로 불필요한 계정 여부를 판단할 수 없음. 계정별 업무 필요성 확인.",
+    "RequiresConfirmation": false,
+    "AutoRemediationSupported": false
+  },
+  "BeforeStatus": "수동 조치(관리자 수만으로 불필요한 계정 여부를 판단할 수 없음. 계정별 업무 필요성 확인.)",
+  "BeforeValue": "[{\"Name\":\"DESKTOP-BKBAM6H\\\\Admin_Secure\",\"SID\":{\"BinaryLength\":28,\"AccountDomainSid\":{\"BinaryLength\":24,\"AccountDomainSid\":{\"BinaryLength\":24,\"AccountDomainSid\":\"S-1-5-21-4125068256-1586722983-2106393764\",\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764\"},\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764\"},\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764-500\"},\"ObjectClass\":\"사용자\",\"PrincipalSource\":1},{\"Name\":\"DESKTOP-BKBAM6H\\\\new-s\",\"SID\":{\"BinaryLength\":28,\"AccountDomainSid\":{\"BinaryLength\":24,\"AccountDomainSid\":{\"BinaryLength\":24,\"AccountDomainSid\":\"S-1-5-21-4125068256-1586722983-2106393764\",\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764\"},\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764\"},\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764-1001\"},\"ObjectClass\":\"사용자\",\"PrincipalSource\":4}]",
+  "AfterStatus": "수동 조치(관리자 수만으로 불필요한 계정 여부를 판단할 수 없음. 계정별 업무 필요성 확인.)",
+  "AfterValue": "[{\"Name\":\"DESKTOP-BKBAM6H\\\\Admin_Secure\",\"SID\":{\"BinaryLength\":28,\"AccountDomainSid\":{\"BinaryLength\":24,\"AccountDomainSid\":{\"BinaryLength\":24,\"AccountDomainSid\":\"S-1-5-21-4125068256-1586722983-2106393764\",\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764\"},\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764\"},\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764-500\"},\"ObjectClass\":\"사용자\",\"PrincipalSource\":1},{\"Name\":\"DESKTOP-BKBAM6H\\\\new-s\",\"SID\":{\"BinaryLength\":28,\"AccountDomainSid\":{\"BinaryLength\":24,\"AccountDomainSid\":{\"BinaryLength\":24,\"AccountDomainSid\":\"S-1-5-21-4125068256-1586722983-2106393764\",\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764\"},\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764\"},\"Value\":\"S-1-5-21-4125068256-1586722983-2106393764-1001\"},\"ObjectClass\":\"사용자\",\"PrincipalSource\":4}]",
+  "FixStatus": "수동 조치(관리자 수만으로 불필요한 계정 여부를 판단할 수 없음. 계정별 업무 필요성 확인.)",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": null,
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "저장됨(내용 검토 필요)",
+  "Screenshot": "W-06.png",
+  "ScreenshotSHA256": "4511ae3f96e5dfaa7c2fa03a6372f9dc7d5068bafff610cfd079777275b3376d",
+  "ScreenshotFiles": []
+}

@@ -21,6 +21,7 @@
     ]
   ],
   "targetItem": [
+    "시스템 종료: 로그온하지 않고 시스템 종료 허용",
     "로그온하지 않고 시스템 종료 허용",
     "Shutdown: Allow system to be shut down without having to log on"
   ],

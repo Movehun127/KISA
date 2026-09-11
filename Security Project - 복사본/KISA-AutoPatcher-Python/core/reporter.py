@@ -17,7 +17,8 @@ if getattr(sys, 'frozen', False):
 else:
     _base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-EXCEL_TEMPLATE = os.path.join(_base_dir, "config", "Model2.xlsx")
+from .paths import RESOURCE_DIR
+EXCEL_TEMPLATE = os.path.join(RESOURCE_DIR, "config", "Model2.xlsx")
 
 
 def invoke_reporting(
@@ -43,8 +44,8 @@ def invoke_reporting(
         f"**생성 일시:** {timestamp}",
         f"**대상 PC:** {pc_name}",
         "",
-        "| 항목 코드 | 항목명 | 중요도 | 조치 전 상태 | 조치 후 상태 | 결과 |",
-        "|---|---|---|---|---|---|",
+        "| 항목 코드 | 항목명 | 중요도 | 조치 전 상태 | 조치 후 상태 | 조치 결과 | 증빙 |",
+        "|---|---|---|---|---|---|---|",
     ]
 
     final_map = {r["ItemId"]: r for r in final_results}
@@ -58,7 +59,9 @@ def invoke_reporting(
         init_str = f"{init['Status']} ({init.get('CurrentValue', '')})"
         final_str = f"{final['Status']} ({final.get('CurrentValue', '')})"
 
-        lines.append(f"| {iid} | {init['Title']} | {init['Level']} | {init_str} | {final_str} | {icon} {final['Status']} |")
+        cells = [iid, init['Title'], init['Level'], init_str, final_str,
+                 init.get('FixStatus', '미실행'), init.get('EvidenceStatus', '미수집')]
+        lines.append('| ' + ' | '.join(str(c).replace('|', '\\|').replace('\r', '').replace('\n', '<br>') for c in cells) + ' |')
 
     lines.append("")
     with open(md_path, "w", encoding="utf-8") as f:
@@ -115,6 +118,15 @@ def invoke_reporting(
             row[4].value = "X" if has_vuln else ("확인 필요" if has_manual else "O")   # 조치 여부
             row[5].value = ", ".join(val_strs) if val_strs else ""  # 비고
 
+        if '실행 증빙' in wb.sheetnames:
+            del wb['실행 증빙']
+        evidence_sheet = wb.create_sheet('실행 증빙')
+        evidence_sheet.append(['항목', '조치 결과', '재점검 결과', '화면 캡처', '증빙 JSON', '비고'])
+        for init in initial_results:
+            evidence_sheet.append([init['ItemId'], init.get('FixStatus', '미실행'),
+                final_map.get(init['ItemId'], {}).get('Status', '확인 불가'),
+                init.get('EvidenceStatus', '미수집'), init.get('EvidenceFile', ''),
+                init.get('Note', '')])
         wb.save(excel_path)
         log(f"✅ 엑셀 보고서 생성: {excel_path}", "good")
 

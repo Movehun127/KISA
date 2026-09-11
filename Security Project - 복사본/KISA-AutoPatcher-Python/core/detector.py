@@ -125,6 +125,38 @@ def get_vulnerability_status(config_path: str) -> list[dict]:
                 if current_value != secure_val:
                     status = "취약"
 
+            elif tech_type == "Type_NtfsVolumes":
+                current_value = json.loads(_run_ps("@(Get-CimInstance Win32_LogicalDisk -Filter 'DriveType=3' | Select-Object DeviceID,FileSystem) | ConvertTo-Json -Compress"))
+                if isinstance(current_value, dict):
+                    current_value = [current_value]
+                if not current_value or any(not r.get('FileSystem') for r in current_value):
+                    raise ValueError('고정 디스크 파일 시스템을 조회하지 못했습니다.')
+                formats = {r['FileSystem'].upper() for r in current_value}
+                status = ('취약' if formats & {'FAT', 'FAT32', 'EXFAT'} else
+                          '양호' if formats == {'NTFS'} else '수동 조치(기타 파일 시스템 적용 범위 확인)')
+
+            elif tech_type == "Type_SmbSession":
+                from .native_actions import read_smb, smb_compliant
+                current_value = read_smb()
+                status = '양호' if smb_compliant(current_value) else '취약'
+
+            elif tech_type == "Type_Firewall":
+                from .native_actions import read_firewall
+                current_value = read_firewall('ActiveStore')
+                status = '양호' if all(v == 'True' for v in current_value.values()) else '취약'
+
+            elif tech_type == "Type_RegistryGroup":
+                from .execution import registry_settings, matches
+                current_value = {}
+                for setting in registry_settings(item):
+                    name = setting['RegistryName']
+                    value = reg_read(item['RegistryPath'], name)
+                    if value is None and item.get('FallbackRegistryPath'):
+                        value = reg_read(item['FallbackRegistryPath'], name)
+                    current_value[name] = value
+                    if value is None or not matches(value, setting['SecureValue'], setting.get('Comparison', 'eq')):
+                        status = '취약'
+
             elif tech_type == "Type_Registry":
                 reg_path = item.get("RegistryPath", "")
                 reg_name = item.get("RegistryName", "")
