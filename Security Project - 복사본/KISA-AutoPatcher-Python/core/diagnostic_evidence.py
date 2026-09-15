@@ -38,11 +38,44 @@ def collect_ntp():
                       NtpResponseObserved=probe['ExitCode']==0 and bool(offsets))
     else:
         result.update(NtpResponseObserved=False, ProbeNote='네트워크 NTP 원본 미확인: 로컬 시계·가상화 공급자·조회 실패 여부 확인')
+    result['Summary'] = ('NTP 서버 응답 확인; 실제 최근 동기화 성공 상태는 원문 확인'
+                         if result.get('NtpResponseObserved') else
+                         'NTP 연동 미확인: 실제 원본=' + source + '. 승인된 서버 주소와 연결 상태 확인 필요')
     return result
 
-def collect(kind):
+def collect(kind, item=None):
     if kind == 'ntp':
         data = collect_ntp()
+    elif kind == 'password_policy':
+        from .execution import export_security_policy, matches
+        item = item or {}
+        wanted = item.get('SeceditValues',{})
+        if len(wanted) != 5:
+            raise RuntimeError('암호 정책 5개 설정 정의가 필요합니다.')
+        current = export_security_policy()
+        if any(k not in current for k in wanted):
+            raise RuntimeError('암호 정책 조회 결과 누락')
+        data = {'Source':'secedit /export /areas SECURITYPOLICY',
+                'Sections':[{'Setting':k, 'Actual':current[k], 'Required':v,
+                  'Comparison':item.get('Comparisons',{}).get(k,'eq'),
+                  'Compliant':matches(current[k],v,item.get('Comparisons',{}).get(k,'eq'))}
+                   for k,v in wanted.items()]}
+    elif kind == 'smb':
+        from .native_actions import read_smb, SMB_LIMITS
+        values = read_smb()
+        data = {'Source':'Get-SmbServerConfiguration',
+                'Sections':[{'Setting':'로그온 시간이 만료되면 클라이언트 연결 끊기',
+                             'EnableForcedLogoff':values['EnableForcedLogoff'],'Required':True},
+                            {'Setting':'세션 연결을 중단하기 전에 필요한 유휴 시간',
+                             'Values':{k:v for k,v in values.items() if k in SMB_LIMITS},
+                             'Limits':{k:SMB_LIMITS[k] for k in values if k in SMB_LIMITS},
+                             'Units':'AutoDisconnectTimeout/MinutesV1=분, SecondsV2=초'}]}
+    elif kind == 'startup':
+        from .startup_inventory import collect as startup
+        data = startup()
+    elif kind == 'netbios':
+        data = {'Adapters':json.loads(run_ps("@(Get-CimInstance Win32_NetworkAdapterConfiguration | Select-Object Index,Description,SettingID,IPEnabled,TcpipNetbiosOptions) | ConvertTo-Json -Depth 4 -Compress")),
+                'Meaning':'0=DHCP 설정 사용, 1=사용, 2=사용 안 함. 어댑터별 업무 필요성 검토.'}
     elif kind == 'audit':
         from . import audit_policy
         from .detector import reg_read
@@ -145,9 +178,21 @@ def capture(item, folder, log, wait, stop, action, stage):
             stage('조치 및 설정 재조회')
             action()
         cap._check_stop(stop)
-        data = collect(item['EvidenceCollector'])
+        data = collect(item['EvidenceCollector'],item)
+        sections = data.get('Data',{}).get('Sections')
+        required = item.get('ExpectedSections')
+        if required and (not sections or len(sections) != required):
+            raise RuntimeError('복합 설정 조회 결과 누락')
+        data['CaptureComplete'] = False
         (folder/(iid+'_diagnostic.json')).write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8')
-        content = pages(data)
+        if sections:
+            content = []
+            for index, section in enumerate(sections,1):
+                content.extend(pages(dict(Host=data['Host'],CollectedAt=data['CollectedAt'],
+                                          Source=data['Data']['Source'],
+                                          Section=f'{index}/{len(sections)}',Values=section)))
+        else:
+            content = pages({k:v for k,v in data.items() if k != 'CaptureComplete'})
         for number, page in enumerate(content,1):
             cap._check_stop(stop)
             text = f'{iid} 실제 조회 결과 / {number}/{len(content)}\r\n'+page
@@ -164,8 +209,24 @@ def capture(item, folder, log, wait, stop, action, stage):
             if wait and not wait():
                 raise cap.CaptureCancelled('User Cancelled Execution')
             cap._take_screenshot(str(folder/f'{iid}_part{number}.png'),root)
-        import shutil
-        shutil.copy2(folder/f'{iid}_part1.png',folder/f'{iid}.png')
+        if sections:
+            from PIL import Image
+            images=[Image.open(folder/f'{iid}_part{n}.png') for n in range(1,len(content)+1)]
+            try:
+                overview=Image.new('RGB',(max(im.width for im in images),sum(im.height for im in images)),'white')
+                y=0
+                for im in images:
+                    overview.paste(im,(0,y)); y+=im.height
+                overview.save(folder/f'{iid}.png')
+                overview.close()
+            finally:
+                for im in images:
+                    im.close()
+        else:
+            import shutil
+            shutil.copy2(folder/f'{iid}_part1.png',folder/f'{iid}.png')
+        data.update(CaptureComplete=True,PageCount=len(content),SectionCount=len(sections or []))
+        (folder/(iid+'_diagnostic.json')).write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8')
         stage('캡처 저장')
         return str(folder/f'{iid}.png')
     finally:

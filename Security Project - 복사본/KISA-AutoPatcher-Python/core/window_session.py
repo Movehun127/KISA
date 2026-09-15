@@ -1,5 +1,6 @@
 """Close newly opened evidence windows without terminating shared processes."""
 import time
+import re
 import ctypes
 from ctypes import wintypes
 from types import SimpleNamespace
@@ -8,6 +9,8 @@ from types import SimpleNamespace
 def target_matches(label, expected):
     def normalize(value):
         value = ' '.join(str(value).casefold().split())
+        # Services append the computer scope AFTER 'Properties'.
+        value = re.sub(r'\s*\((?:로컬 컴퓨터|local computer)\)$', '', value).rstrip()
         for suffix in (' 속성', ' properties'):
             if value.endswith(suffix):
                 value = value[:-len(suffix)]

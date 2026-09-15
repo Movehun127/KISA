@@ -5,15 +5,11 @@
   "TechType": "Type_Skip",
   "SecureValue": "True",
   "ItemId": "W-41",
-  "appTarget": "timedate.cpl",
-  "treePath": [],
-  "targetItem": [
-    "Windows Time",
-    "W32Time"
-  ],
+  "appTarget": "kisa-evidence",
   "Description": "서비스 실행뿐 아니라 실제 시간 원본 및 동기화 성공 여부 확인.",
   "captureOnly": true,
   "Impact": "서비스 실행뿐 아니라 실제 시간 원본 및 동기화 성공 여부 확인.",
   "RequiresConfirmation": false,
-  "AutoRemediationSupported": false
+  "AutoRemediationSupported": false,
+  "EvidenceCollector": "ntp"
 }

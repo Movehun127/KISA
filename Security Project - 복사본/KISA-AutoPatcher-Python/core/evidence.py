@@ -49,8 +49,18 @@ def save_record(folder, initial, final, screenshot=None, error=None):
         data['ScreenshotFiles'].append({'File': path.name, 'SHA256': hashlib.sha256(path.read_bytes()).hexdigest()})
     diagnostic = Path(folder) / (initial['ItemId'] + '_diagnostic.json')
     if diagnostic.is_file():
+        diagnostic_data = json.loads(diagnostic.read_text(encoding='utf-8'))
         data['DiagnosticFile'] = diagnostic.name
+        data['Observation'] = diagnostic_data.get('Data',{}).get('Summary')
+        if diagnostic_data.get('CaptureComplete') is not True:
+            data['ScreenshotStatus'] = '실패(조회 결과의 전체 페이지 캡처 미완료)'
+        expected_sections = policy.get('ExpectedSections')
+        if expected_sections and diagnostic_data.get('SectionCount') != expected_sections:
+            data['ScreenshotStatus'] = '실패(복합 설정 증빙 누락)'
         data['DiagnosticSHA256'] = hashlib.sha256(diagnostic.read_bytes()).hexdigest()
+    if policy.get('ExpectedSections') and not diagnostic.is_file():
+        data['ScreenshotStatus'] = '실패(복합 설정 조회 원본 누락)'
+    data['ExpectedSectionCount'] = policy.get('ExpectedSections')
     expected = policy.get('ExpectedCaptures', len(policy.get('captureTargets', [])))
     data['ExpectedComponentCount'] = expected or None
     data['CollectedComponentCount'] = len(data['ScreenshotFiles'])

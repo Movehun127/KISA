@@ -224,6 +224,38 @@ def _registry_path(value):
     return value.rstrip('\\').casefold()
 
 
+def _selected_registry_path(root):
+    """Reconstruct the selected registry key from its actual tree ancestry."""
+    try:
+        tree = root.TreeControl(searchDepth=4)
+        selected = tree.GetSelectionPattern().GetSelection()
+        if len(selected) != 1:
+            return None
+        node, names = selected[0], []
+        for _ in range(64):
+            if node is None:
+                break
+            if node.ControlTypeName != 'TreeItemControl':
+                break
+            names.append(node.Name)
+            node = node.GetParentControl()
+        if not names:
+            return None
+        return _registry_path('\\'.join(reversed(names)))
+    except Exception:
+        return None
+
+
+def _registry_location_matches(root, destination):
+    bar = root.StatusBarControl(searchDepth=3)
+    try:
+        if bar.Exists(.1) and any(_registry_path(n.Name) == destination for n in _walk(bar)):
+            return True
+    except Exception:
+        pass
+    return _selected_registry_path(root) == destination
+
+
 def _navigate_registry(root, item):
     path = item.get('RegistryPath')
     if not path:
@@ -237,19 +269,35 @@ def _navigate_registry(root, item):
     address.SetFocus()
     address.GetValuePattern().SetValue(destination)
     _require_foreground(root)
+    address.SetFocus()
     address.SendKeys('{ENTER}')
     deadline = time.monotonic()+5
     while True:
-        bar = root.StatusBarControl(searchDepth=3)
-        locations = []
-        if bar.Exists(.1):
-            locations = [n.Name for n in _walk(bar)]
-        # The address edit can retain typed text after navigation fails.
-        # Only the status bar's actual selected key is accepted.
-        if any(_registry_path(location) == destination for location in locations):
+        # Typed text alone never proves navigation; selected tree also works
+        # when Windows hides or omits the status bar from UI Automation.
+        if _registry_location_matches(root,destination):
             break
         if time.monotonic() > deadline:
-            raise RuntimeError('레지스트리 실제 선택 경로가 요청 경로와 다릅니다: ' + path)
+            tree = root.TreeControl(searchDepth=4)
+            parent = tree
+            for index, segment in enumerate(destination.split('\\')):
+                _require_foreground(root)
+                candidates = _walk(parent) if index == 0 else parent.GetChildren()
+                found = next((n for n in candidates
+                              if getattr(n,'ControlTypeName','') == 'TreeItemControl'
+                              and (n.Name or '').casefold() == segment),None)
+                if found is None:
+                    raise RuntimeError('레지스트리 실제 선택 경로 탐색 실패: '+segment)
+                found.GetSelectionItemPattern().Select()
+                try:
+                    found.GetExpandCollapsePattern().Expand()
+                    time.sleep(.15)
+                except Exception:
+                    pass
+                parent = found
+            if not _registry_location_matches(root,destination):
+                raise RuntimeError('레지스트리 실제 선택 경로가 요청 경로와 다릅니다: ' + path)
+            break
         time.sleep(.15)
     if item.get('RegistryName'):
         listing = root.ListControl(searchDepth=4)

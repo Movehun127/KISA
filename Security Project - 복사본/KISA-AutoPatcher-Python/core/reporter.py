@@ -7,6 +7,7 @@ Markdown + Excel(openpyxl) 리포트를 생성합니다.
 import os
 import sys
 import shutil
+import json
 from pathlib import Path
 from datetime import datetime
 import openpyxl
@@ -50,6 +51,15 @@ def invoke_reporting(
     ]
 
     final_map = {r["ItemId"]: r for r in final_results}
+    for init in initial_results:
+        diag = Path(evidence_dir)/(init['ItemId']+'_diagnostic.json')
+        if diag.is_file():
+            try:
+                observation=json.loads(diag.read_text(encoding='utf-8')).get('Data',{}).get('Summary','')
+                if observation:
+                    init['Note'] = str(init.get('Note') or '') + ' ' + observation
+            except (OSError,ValueError):
+                pass
 
     for init in initial_results:
         iid    = init["ItemId"]
@@ -61,7 +71,7 @@ def invoke_reporting(
         final_str = f"{final['Status']} ({final.get('CurrentValue', '')})"
 
         cells = [iid, init['Title'], init['Level'], init_str, final_str,
-                 init.get('FixStatus', '미실행'), init.get('EvidenceStatus', '미수집')]
+                 init.get('FixStatus', '미실행'), init.get('EvidenceStatus', '미수집') + ' ' + str(init.get('Note') or '')]
         lines.append('| ' + ' | '.join(str(c).replace('|', '\\|').replace('\r', '').replace('\n', '<br>') for c in cells) + ' |')
 
     lines.extend(['', '### 항목별 증빙 파일'])

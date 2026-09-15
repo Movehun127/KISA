@@ -757,7 +757,7 @@ class KisaPatcherApp(ctk.CTk):
         self._log("━" * 55, "warn")
         self._log(f"  ⚡ 보안 조치 + 증빙 캡처 시작 ({len(indices)}개 항목)", "warn")
         self._log("━" * 55, "warn")
-        self._log('실행 버전: 20260911-feedback-2 / 최신 정책 내장 빌드', 'info')
+        self._log('실행 버전: 20260915-evidence-3 / 최신 정책 내장 빌드', 'info')
         total = len(indices)
 
         for step, idx in enumerate(indices):

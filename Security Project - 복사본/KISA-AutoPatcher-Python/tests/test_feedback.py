@@ -55,6 +55,7 @@ class FeedbackTests(unittest.TestCase):
     def test_registry_typed_address_is_not_navigation_proof(self):
         root = Mock(NativeWindowHandle=5)
         root.StatusBarControl.return_value.Exists.return_value=False
+        root.TreeControl.return_value.GetChildren.return_value=[]
         with patch.object(cap,'_require_foreground'), patch.object(cap.time,'monotonic',side_effect=[0,6]):
             with self.assertRaisesRegex(RuntimeError,'실제 선택 경로'):
                 cap._navigate_registry(root,{'RegistryPath':r'HKLM:\Software\Target'})
@@ -96,7 +97,7 @@ class FeedbackTests(unittest.TestCase):
             (Path(folder)/'W-56_part1.png').write_bytes(b'one')
             initial={'ItemId':'W-56','Status':'양호','ConfigItem':policy('W-56')}
             data=json.loads(save_record(folder,initial,initial).read_text())
-            self.assertEqual(data['ExpectedComponentCount'],2)
+            self.assertEqual(data['ExpectedSectionCount'],2)
             self.assertIn('실패',data['ScreenshotStatus'])
 
     def test_processes_page_never_used_for_startup(self):
