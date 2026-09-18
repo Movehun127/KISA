@@ -670,6 +670,7 @@ imported by:
  &#8226;   <a href="#PIL._version">PIL._version</a>
  &#8226;   <a href="#PIL._webp">PIL._webp</a>
  &#8226;   <a href="#PIL.features">PIL.features</a>
+ &#8226;   <a href="#core.capturer">core.capturer</a>
  &#8226;   <a href="#customtkinter.windows.widgets.image.ctk_image">customtkinter.windows.widgets.image.ctk_image</a>
  &#8226;   <a href="#mouseinfo">mouseinfo</a>
  &#8226;   <a href="#openpyxl.drawing.image">openpyxl.drawing.image</a>
@@ -1363,6 +1364,7 @@ imported by:
  &#8226;   <a href="#PIL.XbmImagePlugin">PIL.XbmImagePlugin</a>
  &#8226;   <a href="#PIL.XpmImagePlugin">PIL.XpmImagePlugin</a>
  &#8226;   <a href="#PIL.features">PIL.features</a>
+ &#8226;   <a href="#core.capturer">core.capturer</a>
  &#8226;   <a href="#customtkinter.windows.widgets.image.ctk_image">customtkinter.windows.widgets.image.ctk_image</a>
  &#8226;   <a href="#mouseinfo">mouseinfo</a>
  &#8226;   <a href="#openpyxl.drawing.image">openpyxl.drawing.image</a>
@@ -5644,6 +5646,7 @@ imports:
   <div class="import">
 imported by:
     <a href="#PIL.ImageFont">PIL.ImageFont</a>
+ &#8226;   <a href="#core.diagnostic_evidence">core.diagnostic_evidence</a>
  &#8226;   <a href="#core.execution">core.execution</a>
  &#8226;   <a href="#core.native_actions">core.native_actions</a>
  &#8226;   <a href="#core.remediator">core.remediator</a>
@@ -8066,6 +8069,7 @@ imported by:
  &#8226;   <a href="#asyncio.staggered">asyncio.staggered</a>
  &#8226;   <a href="#bdb">bdb</a>
  &#8226;   <a href="#comtypes.tools.codegenerator.codegenerator">comtypes.tools.codegenerator.codegenerator</a>
+ &#8226;   <a href="#core.audit_policy">core.audit_policy</a>
  &#8226;   <a href="#et_xmlfile.incremental_tree">et_xmlfile.incremental_tree</a>
  &#8226;   <a href="#et_xmlfile.xmlfile">et_xmlfile.xmlfile</a>
  &#8226;   <a href="#getpass">getpass</a>
@@ -8205,13 +8209,17 @@ imported by:
 <span class="moduletype">Package</span>  <div class="import">
 imports:
     <a href="#core">core</a>
+ &#8226;   <a href="#core.audit_policy">core.audit_policy</a>
+ &#8226;   <a href="#core.capturer">core.capturer</a>
 
   </div>
   <div class="import">
 imported by:
     <a href="#core">core</a>
+ &#8226;   <a href="#core.audit_policy">core.audit_policy</a>
  &#8226;   <a href="#core.capturer">core.capturer</a>
  &#8226;   <a href="#core.detector">core.detector</a>
+ &#8226;   <a href="#core.diagnostic_evidence">core.diagnostic_evidence</a>
  &#8226;   <a href="#core.evidence">core.evidence</a>
  &#8226;   <a href="#core.execution">core.execution</a>
  &#8226;   <a href="#core.native_actions">core.native_actions</a>
@@ -8225,12 +8233,37 @@ imported by:
 </div>
 
 <div class="node">
+  <a name="core.audit_policy"></a>
+  <a target="code" href="///C:/Users/new-s/Desktop/KISA-fix-evidence-verification/KISA-fix-evidence-verification/Security%20Project%20-%20%EB%B3%B5%EC%82%AC%EB%B3%B8/KISA-AutoPatcher-Python/core/audit_policy.py" type="text/plain"><tt>core.audit_policy</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#contextlib">contextlib</a>
+ &#8226;   <a href="#core">core</a>
+ &#8226;   <a href="#ctypes">ctypes</a>
+ &#8226;   <a href="#uuid">uuid</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#core">core</a>
+ &#8226;   <a href="#core.detector">core.detector</a>
+ &#8226;   <a href="#core.diagnostic_evidence">core.diagnostic_evidence</a>
+ &#8226;   <a href="#core.remediator">core.remediator</a>
+
+  </div>
+
+</div>
+
+<div class="node">
   <a name="core.capturer"></a>
   <a target="code" href="///C:/Users/new-s/Desktop/KISA-fix-evidence-verification/KISA-fix-evidence-verification/Security%20Project%20-%20%EB%B3%B5%EC%82%AC%EB%B3%B8/KISA-AutoPatcher-Python/core/capturer.py" type="text/plain"><tt>core.capturer</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
-    <a href="#PIL.PngImagePlugin">PIL.PngImagePlugin</a>
+    <a href="#PIL">PIL</a>
+ &#8226;   <a href="#PIL.Image">PIL.Image</a>
+ &#8226;   <a href="#PIL.PngImagePlugin">PIL.PngImagePlugin</a>
  &#8226;   <a href="#core">core</a>
+ &#8226;   <a href="#core.diagnostic_evidence">core.diagnostic_evidence</a>
  &#8226;   <a href="#core.execution">core.execution</a>
  &#8226;   <a href="#core.window_session">core.window_session</a>
  &#8226;   <a href="#ctypes">ctypes</a>
@@ -8241,7 +8274,6 @@ imports:
  &#8226;   <a href="#pathlib">pathlib</a>
  &#8226;   <a href="#pyautogui">pyautogui</a>
  &#8226;   <a href="#re">re</a>
- &#8226;   <a href="#shutil">shutil</a>
  &#8226;   <a href="#subprocess">subprocess</a>
  &#8226;   <a href="#time">time</a>
  &#8226;   <a href="#uiautomation">uiautomation</a>
@@ -8249,7 +8281,9 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#main.py">main.py</a>
+    <a href="#core">core</a>
+ &#8226;   <a href="#core.diagnostic_evidence">core.diagnostic_evidence</a>
+ &#8226;   <a href="#main.py">main.py</a>
 
   </div>
 
@@ -8261,6 +8295,7 @@ imported by:
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#core">core</a>
+ &#8226;   <a href="#core.audit_policy">core.audit_policy</a>
  &#8226;   <a href="#core.execution">core.execution</a>
  &#8226;   <a href="#core.native_actions">core.native_actions</a>
  &#8226;   <a href="#datetime">datetime</a>
@@ -8276,8 +8311,42 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#core.remediator">core.remediator</a>
+    <a href="#core.diagnostic_evidence">core.diagnostic_evidence</a>
+ &#8226;   <a href="#core.remediator">core.remediator</a>
  &#8226;   <a href="#main.py">main.py</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="core.diagnostic_evidence"></a>
+  <a target="code" href="///C:/Users/new-s/Desktop/KISA-fix-evidence-verification/KISA-fix-evidence-verification/Security%20Project%20-%20%EB%B3%B5%EC%82%AC%EB%B3%B8/KISA-AutoPatcher-Python/core/diagnostic_evidence.py" type="text/plain"><tt>core.diagnostic_evidence</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#base64">base64</a>
+ &#8226;   <a href="#core">core</a>
+ &#8226;   <a href="#core.audit_policy">core.audit_policy</a>
+ &#8226;   <a href="#core.capturer">core.capturer</a>
+ &#8226;   <a href="#core.detector">core.detector</a>
+ &#8226;   <a href="#core.execution">core.execution</a>
+ &#8226;   <a href="#core.window_session">core.window_session</a>
+ &#8226;   <a href="#ctypes">ctypes</a>
+ &#8226;   <a href="#datetime">datetime</a>
+ &#8226;   <a href="#json">json</a>
+ &#8226;   <a href="#pathlib">pathlib</a>
+ &#8226;   <a href="#re">re</a>
+ &#8226;   <a href="#shutil">shutil</a>
+ &#8226;   <a href="#socket">socket</a>
+ &#8226;   <a href="#subprocess">subprocess</a>
+ &#8226;   <a href="#tempfile">tempfile</a>
+ &#8226;   <a href="#textwrap">textwrap</a>
+ &#8226;   <a href="#time">time</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#core.capturer">core.capturer</a>
 
   </div>
 
@@ -8324,6 +8393,7 @@ imports:
 imported by:
     <a href="#core.capturer">core.capturer</a>
  &#8226;   <a href="#core.detector">core.detector</a>
+ &#8226;   <a href="#core.diagnostic_evidence">core.diagnostic_evidence</a>
  &#8226;   <a href="#core.native_actions">core.native_actions</a>
  &#8226;   <a href="#core.remediator">core.remediator</a>
 
@@ -8377,6 +8447,7 @@ imported by:
 imports:
     <a href="#base64">base64</a>
  &#8226;   <a href="#core">core</a>
+ &#8226;   <a href="#core.audit_policy">core.audit_policy</a>
  &#8226;   <a href="#core.detector">core.detector</a>
  &#8226;   <a href="#core.execution">core.execution</a>
  &#8226;   <a href="#core.native_actions">core.native_actions</a>
@@ -8408,6 +8479,7 @@ imports:
  &#8226;   <a href="#datetime">datetime</a>
  &#8226;   <a href="#openpyxl">openpyxl</a>
  &#8226;   <a href="#os">os</a>
+ &#8226;   <a href="#pathlib">pathlib</a>
  &#8226;   <a href="#shutil">shutil</a>
  &#8226;   <a href="#sys">sys</a>
 
@@ -8435,6 +8507,7 @@ imports:
   <div class="import">
 imported by:
     <a href="#core.capturer">core.capturer</a>
+ &#8226;   <a href="#core.diagnostic_evidence">core.diagnostic_evidence</a>
  &#8226;   <a href="#main.py">main.py</a>
 
   </div>
@@ -8512,7 +8585,9 @@ imported by:
  &#8226;   <a href="#comtypes.tools.tlbparser">comtypes.tools.tlbparser</a>
  &#8226;   <a href="#comtypes.tools.typedesc">comtypes.tools.typedesc</a>
  &#8226;   <a href="#comtypes.typeinfo">comtypes.typeinfo</a>
+ &#8226;   <a href="#core.audit_policy">core.audit_policy</a>
  &#8226;   <a href="#core.capturer">core.capturer</a>
+ &#8226;   <a href="#core.diagnostic_evidence">core.diagnostic_evidence</a>
  &#8226;   <a href="#core.remediator">core.remediator</a>
  &#8226;   <a href="#core.window_session">core.window_session</a>
  &#8226;   <a href="#ctypes._aix">ctypes._aix</a>
@@ -10102,6 +10177,7 @@ imported by:
  &#8226;   <a href="#comtypes.automation">comtypes.automation</a>
  &#8226;   <a href="#core.capturer">core.capturer</a>
  &#8226;   <a href="#core.detector">core.detector</a>
+ &#8226;   <a href="#core.diagnostic_evidence">core.diagnostic_evidence</a>
  &#8226;   <a href="#core.evidence">core.evidence</a>
  &#8226;   <a href="#core.reporter">core.reporter</a>
  &#8226;   <a href="#email.utils">email.utils</a>
@@ -14831,6 +14907,7 @@ imported by:
     <a href="#charset_normalizer.models">charset_normalizer.models</a>
  &#8226;   <a href="#core.capturer">core.capturer</a>
  &#8226;   <a href="#core.detector">core.detector</a>
+ &#8226;   <a href="#core.diagnostic_evidence">core.diagnostic_evidence</a>
  &#8226;   <a href="#core.evidence">core.evidence</a>
  &#8226;   <a href="#core.native_actions">core.native_actions</a>
  &#8226;   <a href="#core.remediator">core.remediator</a>
@@ -27882,10 +27959,12 @@ imports:
   <div class="import">
 imported by:
     <a href="#core.capturer">core.capturer</a>
+ &#8226;   <a href="#core.diagnostic_evidence">core.diagnostic_evidence</a>
  &#8226;   <a href="#core.evidence">core.evidence</a>
  &#8226;   <a href="#core.execution">core.execution</a>
  &#8226;   <a href="#core.paths">core.paths</a>
  &#8226;   <a href="#core.remediator">core.remediator</a>
+ &#8226;   <a href="#core.reporter">core.reporter</a>
  &#8226;   <a href="#customtkinter.windows.widgets.theme.theme_manager">customtkinter.windows.widgets.theme.theme_manager</a>
  &#8226;   <a href="#darkdetect._mac_detect">darkdetect._mac_detect</a>
  &#8226;   <a href="#importlib.metadata">importlib.metadata</a>
@@ -28787,6 +28866,7 @@ imported by:
  &#8226;   <a href="#charset_normalizer.utils">charset_normalizer.utils</a>
  &#8226;   <a href="#core.capturer">core.capturer</a>
  &#8226;   <a href="#core.detector">core.detector</a>
+ &#8226;   <a href="#core.diagnostic_evidence">core.diagnostic_evidence</a>
  &#8226;   <a href="#core.remediator">core.remediator</a>
  &#8226;   <a href="#csv">csv</a>
  &#8226;   <a href="#ctypes._aix">ctypes._aix</a>
@@ -29203,8 +29283,8 @@ imported by:
  &#8226;   <a href="#PIL.ImageGrab">PIL.ImageGrab</a>
  &#8226;   <a href="#PIL.ImageShow">PIL.ImageShow</a>
  &#8226;   <a href="#argparse">argparse</a>
- &#8226;   <a href="#core.capturer">core.capturer</a>
  &#8226;   <a href="#core.detector">core.detector</a>
+ &#8226;   <a href="#core.diagnostic_evidence">core.diagnostic_evidence</a>
  &#8226;   <a href="#core.reporter">core.reporter</a>
  &#8226;   <a href="#ctypes.util">ctypes.util</a>
  &#8226;   <a href="#customtkinter.windows.widgets.font.font_manager">customtkinter.windows.widgets.font.font_manager</a>
@@ -29284,6 +29364,7 @@ imported by:
  &#8226;   <a href="#asyncio.trsock">asyncio.trsock</a>
  &#8226;   <a href="#asyncio.unix_events">asyncio.unix_events</a>
  &#8226;   <a href="#asyncio.windows_events">asyncio.windows_events</a>
+ &#8226;   <a href="#core.diagnostic_evidence">core.diagnostic_evidence</a>
  &#8226;   <a href="#core.evidence">core.evidence</a>
  &#8226;   <a href="#email.utils">email.utils</a>
  &#8226;   <a href="#ftplib">ftplib</a>
@@ -29605,6 +29686,7 @@ imported by:
  &#8226;   <a href="#asyncio.windows_utils">asyncio.windows_utils</a>
  &#8226;   <a href="#core.capturer">core.capturer</a>
  &#8226;   <a href="#core.detector">core.detector</a>
+ &#8226;   <a href="#core.diagnostic_evidence">core.diagnostic_evidence</a>
  &#8226;   <a href="#core.execution">core.execution</a>
  &#8226;   <a href="#ctypes._aix">ctypes._aix</a>
  &#8226;   <a href="#ctypes.util">ctypes.util</a>
@@ -29972,6 +30054,7 @@ imported by:
  &#8226;   <a href="#_pyrepl.pager">_pyrepl.pager</a>
  &#8226;   <a href="#comtypes.client._code_cache">comtypes.client._code_cache</a>
  &#8226;   <a href="#core.detector">core.detector</a>
+ &#8226;   <a href="#core.diagnostic_evidence">core.diagnostic_evidence</a>
  &#8226;   <a href="#core.execution">core.execution</a>
  &#8226;   <a href="#ctypes.util">ctypes.util</a>
  &#8226;   <a href="#importlib.resources._common">importlib.resources._common</a>
@@ -30018,6 +30101,7 @@ imported by:
     <a href="#argparse">argparse</a>
  &#8226;   <a href="#comtypes.tools.codegenerator.codegenerator">comtypes.tools.codegenerator.codegenerator</a>
  &#8226;   <a href="#comtypes.tools.codegenerator.namespaces">comtypes.tools.codegenerator.namespaces</a>
+ &#8226;   <a href="#core.diagnostic_evidence">core.diagnostic_evidence</a>
  &#8226;   <a href="#importlib.metadata">importlib.metadata</a>
  &#8226;   <a href="#importlib.metadata._adapters">importlib.metadata._adapters</a>
  &#8226;   <a href="#numpy._core._add_newdocs">numpy._core._add_newdocs</a>
@@ -30131,6 +30215,7 @@ imported by:
  &#8226;   <a href="#concurrent.futures._base">concurrent.futures._base</a>
  &#8226;   <a href="#concurrent.interpreters._queues">concurrent.interpreters._queues</a>
  &#8226;   <a href="#core.capturer">core.capturer</a>
+ &#8226;   <a href="#core.diagnostic_evidence">core.diagnostic_evidence</a>
  &#8226;   <a href="#core.window_session">core.window_session</a>
  &#8226;   <a href="#datetime">datetime</a>
  &#8226;   <a href="#email._parseaddr">email._parseaddr</a>
@@ -31366,7 +31451,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#core.evidence">core.evidence</a>
+    <a href="#core.audit_policy">core.audit_policy</a>
+ &#8226;   <a href="#core.evidence">core.evidence</a>
  &#8226;   <a href="#core.remediator">core.remediator</a>
 
   </div>

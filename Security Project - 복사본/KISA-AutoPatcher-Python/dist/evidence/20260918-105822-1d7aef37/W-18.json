@@ -1,0 +1,97 @@
+{
+  "ItemId": "W-18",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-18T02:12:49.813746+00:00",
+  "PolicySHA256": "891562e90715076690038d759a8b8e9198c15883d1d7d8f63bc3a017a0334cf5",
+  "Policy": {
+    "Title": "불필요한 서비스 제거",
+    "Category": "서비스 관리",
+    "Level": "상",
+    "TechType": "Type_Skip",
+    "Description": "불필요하거나 보안위협이 있는 기본 백그라운드 서비스 동작 수동 검증",
+    "captureOnly": true,
+    "multiCapture": true,
+    "ItemId": "W-18",
+    "appTarget": "services.msc",
+    "treePath": [],
+    "targetServices": [
+      {
+        "name": "TrkWks",
+        "displayName": "Distributed Link Tracking Client"
+      },
+      {
+        "name": "Spooler",
+        "displayName": "Print Spooler"
+      },
+      {
+        "name": "RemoteRegistry",
+        "displayName": "Remote Registry"
+      },
+      {
+        "name": "CryptSvc",
+        "displayName": "Cryptographic Services"
+      }
+    ],
+    "Impact": "불필요하거나 보안위협이 있는 기본 백그라운드 서비스 동작 수동 검증",
+    "RequiresConfirmation": false,
+    "AutoRemediationSupported": false
+  },
+  "BeforeStatus": "수동 조치(불필요하거나 보안위협이 있는 기본 백그라운드 서비스 동작 수동 검증)",
+  "BeforeValue": "N/A",
+  "AfterStatus": "수동 조치(불필요하거나 보안위협이 있는 기본 백그라운드 서비스 동작 수동 검증)",
+  "AfterValue": "N/A",
+  "FixStatus": "수동 조치(불필요하거나 보안위협이 있는 기본 백그라운드 서비스 동작 수동 검증)",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": null,
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "저장됨(내용 검토 필요)",
+  "Screenshot": "W-18.png",
+  "ScreenshotSHA256": "b0bc0af874f600cceae0e98440e57201a9e80c5a8f7018d945a5fb89068523a4",
+  "ScreenshotFiles": [
+    {
+      "File": "W-18_part1.png",
+      "SHA256": "ed745e3feb593af4e02bd7e83bd33fee9f18b8506dbd979956b0c75b4a9a6abd"
+    },
+    {
+      "File": "W-18_part2.png",
+      "SHA256": "8ebcb52c5ac6a2b557aaf8a2b0ae71c7a030e390f633757aa1ad07c62ea842ab"
+    },
+    {
+      "File": "W-18_part3.png",
+      "SHA256": "a30127f41b688fce27c6a0f6653ab7b582401f1f24b5d0642b7ada5f87bbe16c"
+    },
+    {
+      "File": "W-18_part4.png",
+      "SHA256": "754c47427fc677d865e9cfce59ff1cbad97919155b1f8118c2f5373b9bb51cdb"
+    }
+  ],
+  "ExpectedComponentCount": null,
+  "CollectedComponentCount": 4
+}

@@ -1,0 +1,30 @@
+[11:59:20] 
+🔷 [W-60]  보안 채널 데이터 디지털 암호화 또는 서명
+[11:59:20]   📷 증빙 화면 캡처 대기 중...
+[11:59:21]   [W-60_part1] 단계: 창 열기
+[11:59:22]   대상 창 확인: 로컬 보안 정책 / HWND=5572552 / PID=15400
+[11:59:22]   [W-60_part1] 단계: 오른쪽 정렬 확인
+[11:59:22]   [W-60_part1] 단계: 조치 및 설정 재조회
+[11:59:22]   → 자동 변경 없음 (수동 조치(도메인 구성원 여부 및 보안 채널 암호화·서명 3개 정책 모두 확인.))
+[11:59:23]   [W-60_part1] 단계: 증빙 대상 탐색
+[11:59:32]   [W-60_part1] 단계: 캡처 저장
+[11:59:32]   증빙 이미지 저장: C:\Users\new-s\Desktop\KISA-fix-evidence-verification\KISA-fix-evidence-verification\Security Project - 복사본\KISA-AutoPatcher-Python\dist\evidence\20260918-114713-0833d989\W-60_part1.png
+[11:59:34]   증빙 창 닫기 완료 → 다음 항목 진행
+[11:59:34]   [W-60_part1] 단계: 창 닫힘 확인
+[11:59:34]   [W-60_part2] 단계: 창 열기
+[11:59:35]   대상 창 확인: 로컬 보안 정책 / HWND=2427286 / PID=18024
+[11:59:35]   [W-60_part2] 단계: 오른쪽 정렬 확인
+[11:59:35]   [W-60_part2] 단계: 증빙 대상 탐색
+[11:59:45]   [W-60_part2] 단계: 캡처 저장
+[11:59:45]   증빙 이미지 저장: C:\Users\new-s\Desktop\KISA-fix-evidence-verification\KISA-fix-evidence-verification\Security Project - 복사본\KISA-AutoPatcher-Python\dist\evidence\20260918-114713-0833d989\W-60_part2.png
+[11:59:47]   증빙 창 닫기 완료 → 다음 항목 진행
+[11:59:47]   [W-60_part2] 단계: 창 닫힘 확인
+[11:59:47]   [W-60_part3] 단계: 창 열기
+[11:59:48]   대상 창 확인: 로컬 보안 정책 / HWND=4196416 / PID=9472
+[11:59:48]   [W-60_part3] 단계: 오른쪽 정렬 확인
+[11:59:48]   [W-60_part3] 단계: 증빙 대상 탐색
+[11:59:58]   [W-60_part3] 단계: 캡처 저장
+[11:59:58]   증빙 이미지 저장: C:\Users\new-s\Desktop\KISA-fix-evidence-verification\KISA-fix-evidence-verification\Security Project - 복사본\KISA-AutoPatcher-Python\dist\evidence\20260918-114713-0833d989\W-60_part3.png
+[11:59:59]   증빙 창 닫기 완료 → 다음 항목 진행
+[11:59:59]   [W-60_part3] 단계: 창 닫힘 확인
+[11:59:59]   복합 증빙 3/3개 저장 완료

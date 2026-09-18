@@ -1,0 +1,47 @@
+[11:49:04] 
+🔷 [W-09]  비밀번호 관리정책 설정
+[11:49:04]   📷 증빙 화면 캡처 대기 중...
+[11:49:05]   [W-09_part1] 단계: 창 열기
+[11:49:06]   대상 창 확인: 로컬 보안 정책 / HWND=1313090 / PID=5088
+[11:49:06]   [W-09_part1] 단계: 오른쪽 정렬 확인
+[11:49:06]   [W-09_part1] 단계: 조치 및 설정 재조회
+[11:49:06]   🔧 보안 조치 적용 및 검증 중...
+[11:49:07] [W-09] 설정 검증 완료 / 백업: C:\Users\new-s\Desktop\KISA-fix-evidence-verification\KISA-fix-evidence-verification\Security Project - 복사본\KISA-AutoPatcher-Python\dist\backups\W-09_0209bace80ba4910a6fae116cd1da6b1.json
+[11:49:07]   [W-09_part1] 단계: 증빙 대상 탐색
+[11:50:24]   [W-09_part1] 단계: 캡처 저장
+[11:50:25]   증빙 이미지 저장: C:\Users\new-s\Desktop\KISA-fix-evidence-verification\KISA-fix-evidence-verification\Security Project - 복사본\KISA-AutoPatcher-Python\dist\evidence\20260918-114713-0833d989\W-09_part1.png
+[11:50:26]   증빙 창 닫기 완료 → 다음 항목 진행
+[11:50:26]   [W-09_part1] 단계: 창 닫힘 확인
+[11:50:27]   [W-09_part2] 단계: 창 열기
+[11:50:28]   대상 창 확인: 로컬 보안 정책 / HWND=4524274 / PID=9988
+[11:50:28]   [W-09_part2] 단계: 오른쪽 정렬 확인
+[11:50:28]   [W-09_part2] 단계: 증빙 대상 탐색
+[11:50:36]   [W-09_part2] 단계: 캡처 저장
+[11:50:36]   증빙 이미지 저장: C:\Users\new-s\Desktop\KISA-fix-evidence-verification\KISA-fix-evidence-verification\Security Project - 복사본\KISA-AutoPatcher-Python\dist\evidence\20260918-114713-0833d989\W-09_part2.png
+[11:50:38]   증빙 창 닫기 완료 → 다음 항목 진행
+[11:50:38]   [W-09_part2] 단계: 창 닫힘 확인
+[11:50:38]   [W-09_part3] 단계: 창 열기
+[11:50:40]   대상 창 확인: 로컬 보안 정책 / HWND=3147862 / PID=9144
+[11:50:40]   [W-09_part3] 단계: 오른쪽 정렬 확인
+[11:50:40]   [W-09_part3] 단계: 증빙 대상 탐색
+[11:50:48]   [W-09_part3] 단계: 캡처 저장
+[11:50:48]   증빙 이미지 저장: C:\Users\new-s\Desktop\KISA-fix-evidence-verification\KISA-fix-evidence-verification\Security Project - 복사본\KISA-AutoPatcher-Python\dist\evidence\20260918-114713-0833d989\W-09_part3.png
+[11:50:50]   증빙 창 닫기 완료 → 다음 항목 진행
+[11:50:50]   [W-09_part3] 단계: 창 닫힘 확인
+[11:50:50]   [W-09_part4] 단계: 창 열기
+[11:50:51]   대상 창 확인: 로컬 보안 정책 / HWND=4327498 / PID=5284
+[11:50:52]   [W-09_part4] 단계: 오른쪽 정렬 확인
+[11:50:52]   [W-09_part4] 단계: 증빙 대상 탐색
+[11:51:00]   [W-09_part4] 단계: 캡처 저장
+[11:51:00]   증빙 이미지 저장: C:\Users\new-s\Desktop\KISA-fix-evidence-verification\KISA-fix-evidence-verification\Security Project - 복사본\KISA-AutoPatcher-Python\dist\evidence\20260918-114713-0833d989\W-09_part4.png
+[11:51:02]   증빙 창 닫기 완료 → 다음 항목 진행
+[11:51:02]   [W-09_part4] 단계: 창 닫힘 확인
+[11:51:02]   [W-09_part5] 단계: 창 열기
+[11:51:03]   대상 창 확인: 로컬 보안 정책 / HWND=5310400 / PID=10472
+[11:51:03]   [W-09_part5] 단계: 오른쪽 정렬 확인
+[11:51:03]   [W-09_part5] 단계: 증빙 대상 탐색
+[11:51:12]   [W-09_part5] 단계: 캡처 저장
+[11:51:12]   증빙 이미지 저장: C:\Users\new-s\Desktop\KISA-fix-evidence-verification\KISA-fix-evidence-verification\Security Project - 복사본\KISA-AutoPatcher-Python\dist\evidence\20260918-114713-0833d989\W-09_part5.png
+[11:51:14]   증빙 창 닫기 완료 → 다음 항목 진행
+[11:51:14]   [W-09_part5] 단계: 창 닫힘 확인
+[11:51:14]   복합 증빙 5/5개 저장 완료

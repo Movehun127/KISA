@@ -1,0 +1,65 @@
+{
+  "ItemId": "W-50",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T07:35:19.950849+00:00",
+  "PolicySHA256": "961e6525ccaa548868c1476200a33cec7cfceb4fd5bfdc2617f962d7f21713d3",
+  "Policy": {
+    "Title": "보안 감사를 로그할 수 없는 경우 즉시 시스템 종료",
+    "Category": "보안 관리",
+    "Level": "상",
+    "TechType": "Type_Registry",
+    "SecureValue": 0,
+    "ItemId": "W-50",
+    "appTarget": "secpol.msc",
+    "treePath": [
+      [
+        "보안 설정",
+        "Security Settings"
+      ],
+      [
+        "로컬 정책",
+        "Local Policies"
+      ],
+      [
+        "보안 옵션",
+        "Security Options"
+      ]
+    ],
+    "targetItem": [
+      "감사: 보안 감사를 로그할 수 없는 경우 즉시 시스템 종료",
+      "Audit: Shut down system immediately if unable to log security audits"
+    ],
+    "RegistryPath": "HKLM:\\System\\CurrentControlSet\\Control\\Lsa",
+    "RegistryName": "CrashOnAuditFail",
+    "RegistryType": "DWord",
+    "Impact": "설정 적용 범위 및 업무 영향 확인",
+    "RequiresConfirmation": false,
+    "AutoRemediationSupported": true
+  },
+  "BeforeStatus": "양호",
+  "BeforeValue": 0,
+  "AfterStatus": "양호",
+  "AfterValue": 0,
+  "FixStatus": "양호",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": null,
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "저장됨(내용 검토 필요)",
+  "Screenshot": "W-50.png",
+  "ScreenshotSHA256": "de57feaa12931436f6d749a0a41471725f507569058e7412e0d0195abedcbc5c",
+  "ScreenshotFiles": [],
+  "ExpectedComponentCount": null,
+  "CollectedComponentCount": 0
+}

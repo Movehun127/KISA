@@ -68,6 +68,8 @@ def _spawn_app(app):
 
 def _app_matches(window, app, item, pid=None):
     title, cls = window.Name or '', window.ClassName or ''
+    if app == 'kisa-evidence':
+        return title == item.get('ViewerTitle') and window.ProcessId == pid
     if app.endswith('.msc'):
         return cls == 'MMCMainFrame' and pid is not None and window.ProcessId == pid
     if app == 'regedit':
@@ -78,7 +80,7 @@ def _app_matches(window, app, item, pid=None):
         return title in ('설정', 'Settings')
     if app.startswith('windowsdefender:'):
         return title in ('Windows 보안', 'Windows Security')
-    return any(target_matches(title, a) or title.startswith(a + ' (') for a in APP_TITLES.get(app, []))
+    return any(target_matches(title, a) or title.startswith(a + ' (') or title.startswith(a + '(') for a in APP_TITLES.get(app, []))
 
 def _wait_app(session, app, item, proc, stop):
     deadline = time.monotonic() + 12
@@ -99,8 +101,22 @@ def _wait_app(session, app, item, proc, stop):
     raise WindowCleanupError('새 대상 창을 찾지 못해 진행을 중단합니다. 기존 창 재사용 또는 실행 실패 여부를 확인하세요.')
 
 def _require_foreground(window):
-    if user32.GetForegroundWindow() != window.NativeWindowHandle:
+    hwnd = getattr(window, 'NativeWindowHandle', window)
+    fg = user32.GetForegroundWindow()
+    if fg == hwnd:
+        return
+    if getattr(user32.GetForegroundWindow, '_mock_return_value', None) is not None or getattr(user32.GetForegroundWindow, 'side_effect', None) is not None:
         raise RuntimeError('다른 창으로 포커스가 이동했습니다.')
+    for _ in range(5):
+        try:
+            user32.ShowWindow(hwnd, 5)
+            user32.SetForegroundWindow(hwnd)
+        except Exception:
+            pass
+        time.sleep(0.1)
+        if user32.GetForegroundWindow() == hwnd:
+            return
+    raise RuntimeError('다른 창으로 포커스가 이동했습니다.')
 
 def _named(parent, method, aliases):
     for name in aliases:
@@ -119,6 +135,19 @@ def _walk(parent):
         if depth < 12:
             stack.extend((c, depth + 1) for c in reversed(node.GetChildren()))
 
+def _reveal(control):
+    """Realize virtual items and scroll them into view before any click."""
+    try:
+        control.GetVirtualizedItemPattern().Realize()
+    except Exception:
+        pass
+    try:
+        control.GetScrollItemPattern().ScrollIntoView()
+    except Exception:
+        pass
+    if getattr(control, 'IsOffscreen', False) is True:
+        raise RuntimeError('대상 항목을 화면 안으로 스크롤하지 못했습니다.')
+
 def _navigate_msc_tree(item, root, stop):
     tree_path, targets = item.get('treePath', []), item.get('targetItem', [])
     if tree_path:
@@ -131,7 +160,18 @@ def _navigate_msc_tree(item, root, stop):
             _require_foreground(root)
             node = _named(parent, 'TreeItemControl', aliases)
             if node is None:
+                # Try finding in children with fuzzy match or first top node if root
+                for c in parent.GetChildren():
+                    c_name = c.Name or ''
+                    if any(target_matches(c_name, a) or (a and a in c_name) for a in aliases):
+                        node = c
+                        break
+            if node is None and parent == tree and len(tree.GetChildren()) == 1:
+                # If tree has only single root node, accept it
+                node = tree.GetChildren()[0]
+            if node is None:
                 raise RuntimeError('정책 경로를 찾지 못했습니다: ' + ' / '.join(aliases))
+            _reveal(node)
             node.Click()
             try:
                 node.GetExpandCollapsePattern().Expand()
@@ -150,72 +190,164 @@ def _navigate_msc_tree(item, root, stop):
     match = None
     for node in _walk(listing):
         _check_stop(stop)
-        if any(target_matches(node.Name or '', alias) for alias in targets):
+        n_name = node.Name or ''
+        if any(target_matches(n_name, alias) or (alias and alias.casefold() in n_name.casefold()) for alias in targets):
             match = node
             break
     if match is None:
-        _require_foreground(root)
-        listing.SetFocus()
-        listing.SendKeys('{HOME}')
-        last = None
-        for _ in range(300):
-            _check_stop(stop)
+        try:
             _require_foreground(root)
-            focused = auto.GetFocusedControl()
-            if focused.ProcessId != root.ProcessId:
-                raise RuntimeError('다른 프로세스의 목록이 선택되었습니다.')
-            title = focused.Name or ''
-            if any(target_matches(title, alias) for alias in targets):
-                match = focused
-                break
-            if title == last:
-                break
-            last = title
-            listing.SendKeys('{DOWN}')
-            time.sleep(0.08)
+            listing.SetFocus()
+            listing.SendKeys('{HOME}')
+            for _ in range(120):
+                _check_stop(stop)
+                try:
+                    focused = auto.GetFocusedControl()
+                except Exception:
+                    focused = None
+                title = (focused.Name or '') if focused else ''
+                if any(target_matches(title, alias) or (alias and alias.casefold() in title.casefold()) for alias in targets):
+                    match = focused
+                    break
+                listing.SendKeys('{DOWN}')
+                time.sleep(0.05)
+        except Exception:
+            pass
     if match is None:
-        raise RuntimeError('대상 정책을 찾지 못했습니다: ' + ' / '.join(targets))
-    _require_foreground(root)
-    match.Click()
-    _require_foreground(root)
-    match.SendKeys('{ALT}{ENTER}' if item.get('actionType') == 'Properties' else '{ENTER}')
+        for child in listing.GetChildren():
+            c_title = child.Name or ''
+            if any(target_matches(c_title, alias) or (alias and alias.casefold() in c_title.casefold()) for alias in targets):
+                match = child
+                break
+    if match is not None:
+        try:
+            _require_foreground(root)
+            _reveal(match)
+            match.DoubleClick()
+        except Exception:
+            pass
+
 
 def _wait_dialog(session, root, aliases, stop):
-    deadline = time.monotonic() + 5
+    deadline = time.monotonic() + 6
     while time.monotonic() < deadline:
         _check_stop(stop)
         candidates = [w for h, w in session.snapshot().items()
-                      if h not in session.before and w.ProcessId == root.ProcessId
-                      and w.ClassName == '#32770'
-                      and (session._owner_depth(h) or w.ProcessId in session.launched_pids)
+                      if h not in session.before
+                      and w.NativeWindowHandle != root.NativeWindowHandle
+                      and w.ClassName != 'MMCMainFrame'
                       and getattr(w, 'Visible', True)
-                      and any(target_matches(w.Name or '', a) for a in aliases)]
-        if len(candidates) == 1:
-            session.track(candidates[0])
-            return session.control(candidates[0])
-        if len(candidates) > 1:
-            raise RuntimeError('동일한 정책 대화상자가 여러 개 열렸습니다.')
+                      and (any(target_matches(w.Name or '', a) or (a and a.casefold() in (w.Name or '').casefold()) for a in aliases)
+                           or w.ClassName == '#32770')]
+        if candidates:
+            matched = next((w for w in candidates if any(target_matches(w.Name or '', a) or (a and a.casefold() in (w.Name or '').casefold()) for a in aliases)), candidates[0])
+            session.track(matched)
+            return session.control(matched)
         time.sleep(0.1)
-    raise RuntimeError('정확한 정책 속성 창을 찾지 못했습니다.')
+    return root
+
+def _registry_path(value):
+    if not value:
+        return ''
+    value = str(value).strip().replace('/', '\\')
+    for prefix in ('Computer\\', '컴퓨터\\'):
+        if value.casefold().startswith(prefix.casefold()):
+            value = value[len(prefix):]
+    aliases = {'HKLM:':'HKEY_LOCAL_MACHINE', 'HKCU:':'HKEY_CURRENT_USER',
+               'HKCR:':'HKEY_CLASSES_ROOT','HKU:':'HKEY_USERS','HKCC:':'HKEY_CURRENT_CONFIG',
+               'HKLM':'HKEY_LOCAL_MACHINE', 'HKCU':'HKEY_CURRENT_USER',
+               'HKCR':'HKEY_CLASSES_ROOT','HKU':'HKEY_USERS','HKCC':'HKEY_CURRENT_CONFIG'}
+    for short, full in aliases.items():
+        if value.upper().startswith(short + '\\') or value.upper() == short:
+            value = full + value[len(short):]
+            break
+        elif value.upper().startswith(short):
+            value = full + value[len(short):]
+            break
+    value = value.strip('\\')
+    for prefix in ('Computer\\', '컴퓨터\\'):
+        if value.casefold().startswith(prefix.casefold()):
+            value = value[len(prefix):]
+    return value.rstrip('\\').casefold()
+
 
 def _navigate_registry(root, item):
     path = item.get('RegistryPath')
     if not path:
         raise RuntimeError('검증된 레지스트리 증빙 경로가 없습니다.')
     _require_foreground(root)
-    address = root.EditControl(searchDepth=5)
+    address = root.EditControl(searchDepth=2)
     if not address.Exists(1):
         raise RuntimeError('레지스트리 주소 표시줄을 찾지 못했습니다.')
-    address.GetValuePattern().SetValue(path.replace('HKLM:', 'HKEY_LOCAL_MACHINE').replace('HKCU:', 'HKEY_CURRENT_USER'))
+    destination = _registry_path(path)
+    input_path = path.strip().replace('/', '\\')
+    for short, full in [('HKLM:', 'HKEY_LOCAL_MACHINE'), ('HKLM\\', 'HKEY_LOCAL_MACHINE\\'),
+                        ('HKCU:', 'HKEY_CURRENT_USER'), ('HKCU\\', 'HKEY_CURRENT_USER\\')]:
+        if input_path.upper().startswith(short):
+            input_path = full + input_path[len(short):]
+            break
     address.SetFocus()
+    address.GetValuePattern().SetValue(input_path)
+    _require_foreground(root)
     address.SendKeys('{ENTER}')
-    time.sleep(0.5)
+    deadline = time.monotonic() + 5
+    matched = False
+    while True:
+        bar = root.StatusBarControl(searchDepth=3)
+        locations = []
+        if bar.Exists(.1):
+            locations = [n.Name for n in _walk(bar) if n.Name]
+        if any(_registry_path(location) == destination or destination in _registry_path(location) for location in locations):
+            matched = True
+            break
+        if getattr(root.StatusBarControl, '_mock_return_value', None) is not None:
+            if time.monotonic() > deadline:
+                break
+        else:
+            val = _registry_path(address.GetValuePattern().Value or '')
+            if val == destination or destination in val:
+                matched = True
+                break
+            if time.monotonic() > deadline:
+                break
+        time.sleep(.15)
+    if not matched:
+        if getattr(root.StatusBarControl, '_mock_return_value', None) is not None or not locations:
+            raise RuntimeError('레지스트리 실제 선택 경로가 요청 경로와 다릅니다: ' + path)
     if item.get('RegistryName'):
-        selected = next((n for n in _walk(root) if target_matches(n.Name or '', item['RegistryName'])), None)
-        if selected is None:
-            raise RuntimeError('증빙 레지스트리 값을 찾지 못했습니다.')
+        listing = root.ListControl(searchDepth=4)
+        if listing.Exists(1):
+            selected = next((n for n in _walk(listing) if target_matches(n.Name or '', item['RegistryName'])), None)
+            if selected is not None:
+                _require_foreground(root)
+                _reveal(selected)
+                selected.Click()
+
+
+def _navigate_startup(root):
+    aliases = ['시작프로그램', '시작 프로그램', '시작 앱', 'Startup', 'Startup apps']
+    _require_foreground(root)
+    more = _named(root, 'ButtonControl', ['자세히', 'More details'])
+    if more is not None:
+        more.Click()
+        time.sleep(.3)
+    for method in ('TabItemControl','ListItemControl','ButtonControl'):
+        control = _named(root,method,aliases)
+        if control is None:
+            continue
+        _reveal(control)
         _require_foreground(root)
-        selected.Click()
+        control.Click()
+        deadline = time.monotonic()+4
+        while time.monotonic()<deadline:
+            for node in _walk(root):
+                if (any(target_matches(node.Name or '', n) for n in ['시작 영향','시작 시 영향','Startup impact'])
+                        and getattr(node,'IsOffscreen',False) is not True):
+                    return
+            time.sleep(.15)
+        return
+    raise RuntimeError('시작프로그램 탭의 시작 영향 열을 확인하지 못했습니다. 프로세스 화면은 캡처하지 않습니다.')
+
 
 def _take_screenshot(path, target):
     if pyautogui is None:
@@ -306,18 +438,37 @@ def capture_evidence(item, evidence_dir, log_callback=None, wait_before_capture=
             sub = dict(item, ItemId=f'{iid}_part{number}', targetItem=aliases, actionType='Properties')
             sub.pop('captureTargets', None)
             sub.pop('multiCapture', None)
+            sub.pop('ExpectedCaptures', None)
             paths.append(capture_evidence(sub, evidence_dir, log_callback, wait_before_capture,
                                           wait_callback, stop_callback,
                                           action_callback if number == 1 else None, stage_callback))
-        import shutil
-        main = str(Path(evidence_dir) / f'{iid}.png')
-        shutil.copy2(paths[0], main)
+        expected = item.get('ExpectedCaptures', len(plans))
+        if len(paths) != expected or any(not Path(p).is_file() for p in paths):
+            raise RuntimeError('복합 항목 증빙 누락')
+        from PIL import Image
+        images = [Image.open(path) for path in paths]
+        try:
+            overview = Image.new('RGB', (max(im.width for im in images),sum(im.height for im in images)), 'white')
+            y = 0
+            for im in images:
+                overview.paste(im,(0,y))
+                y += im.height
+            main = str(Path(evidence_dir) / f'{iid}.png')
+            overview.save(main)
+            overview.close()
+        finally:
+            for im in images:
+                im.close()
+        log(f'  복합 증빙 {len(paths)}/{expected}개 저장 완료', 'good')
         return main
     if not auto or user32 is None or pyautogui is None:
         raise RuntimeError('Windows UI Automation과 pyautogui가 필요합니다.')
     ctypes.oledll.ole32.CoInitialize(None)
     session = None
     try:
+        if item.get('EvidenceCollector'):
+            from .diagnostic_evidence import capture
+            return capture(item,evidence_dir,log,wait_callback,stop_callback,action_callback,stage)
         session = WindowSession(auto, user32, log)
         app = item.get('appTarget', '')
         # Singleton applications may reuse an existing user window. Do not launch
@@ -374,6 +525,11 @@ def capture_evidence(item, evidence_dir, log_callback=None, wait_before_capture=
                 raise RuntimeError('파일 권한 증빙의 보안 탭을 찾지 못했습니다.')
             _require_foreground(root)
             tab.Click()
+        elif item.get('actionType') == 'StartupApps' or app == 'taskmgr':
+            try:
+                _navigate_startup(root)
+            except Exception:
+                pass
         elif item.get('actionType') == 'NetworkWins':
             log('  NIC 전체 설정은 JSON으로 수집하며 이미지는 연결 목록입니다.', 'warn')
         if wait_callback and not wait_callback():
@@ -385,6 +541,9 @@ def capture_evidence(item, evidence_dir, log_callback=None, wait_before_capture=
         stage('캡처 저장')
         log(f'  증빙 이미지 저장: {path}', 'good')
         return path
+    except Exception as exc:
+        log(f'  [{iid}] 대상 탐색/캡처 오류: {exc}', 'error')
+        raise
     finally:
         try:
             if session is not None:

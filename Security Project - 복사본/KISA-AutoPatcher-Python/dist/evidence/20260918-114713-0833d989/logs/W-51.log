@@ -1,0 +1,14 @@
+[11:55:55] 
+🔷 [W-51]  SAM 계정과 공유의 익명 열거 허용 안 함
+[11:55:55]   📷 증빙 화면 캡처 대기 중...
+[11:55:55]   [W-51] 단계: 창 열기
+[11:55:56]   대상 창 확인: 로컬 보안 정책 / HWND=3344154 / PID=2164
+[11:55:56]   [W-51] 단계: 오른쪽 정렬 확인
+[11:55:56]   [W-51] 단계: 조치 및 설정 재조회
+[11:55:56]   🔧 보안 조치 적용 및 검증 중...
+[11:55:57] [W-51] 설정 검증 완료 / 백업: C:\Users\new-s\Desktop\KISA-fix-evidence-verification\KISA-fix-evidence-verification\Security Project - 복사본\KISA-AutoPatcher-Python\dist\backups\W-51_303139f5933c4154a4c4e84168615336.json
+[11:55:57]   [W-51] 단계: 증빙 대상 탐색
+[11:56:07]   [W-51] 단계: 캡처 저장
+[11:56:07]   증빙 이미지 저장: C:\Users\new-s\Desktop\KISA-fix-evidence-verification\KISA-fix-evidence-verification\Security Project - 복사본\KISA-AutoPatcher-Python\dist\evidence\20260918-114713-0833d989\W-51.png
+[11:56:08]   증빙 창 닫기 완료 → 다음 항목 진행
+[11:56:08]   [W-51] 단계: 창 닫힘 확인

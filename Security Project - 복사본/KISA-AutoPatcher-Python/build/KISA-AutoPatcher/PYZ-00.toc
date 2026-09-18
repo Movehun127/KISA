@@ -661,6 +661,10 @@
    'C:\\Users\\new-s\\Desktop\\KISA-fix-evidence-verification\\KISA-fix-evidence-verification\\Security '
    'Project - 복사본\\KISA-AutoPatcher-Python\\core\\__init__.py',
    'PYMODULE'),
+  ('core.audit_policy',
+   'C:\\Users\\new-s\\Desktop\\KISA-fix-evidence-verification\\KISA-fix-evidence-verification\\Security '
+   'Project - 복사본\\KISA-AutoPatcher-Python\\core\\audit_policy.py',
+   'PYMODULE'),
   ('core.capturer',
    'C:\\Users\\new-s\\Desktop\\KISA-fix-evidence-verification\\KISA-fix-evidence-verification\\Security '
    'Project - 복사본\\KISA-AutoPatcher-Python\\core\\capturer.py',
@@ -668,6 +672,10 @@
   ('core.detector',
    'C:\\Users\\new-s\\Desktop\\KISA-fix-evidence-verification\\KISA-fix-evidence-verification\\Security '
    'Project - 복사본\\KISA-AutoPatcher-Python\\core\\detector.py',
+   'PYMODULE'),
+  ('core.diagnostic_evidence',
+   'C:\\Users\\new-s\\Desktop\\KISA-fix-evidence-verification\\KISA-fix-evidence-verification\\Security '
+   'Project - 복사본\\KISA-AutoPatcher-Python\\core\\diagnostic_evidence.py',
    'PYMODULE'),
   ('core.evidence',
    'C:\\Users\\new-s\\Desktop\\KISA-fix-evidence-verification\\KISA-fix-evidence-verification\\Security '

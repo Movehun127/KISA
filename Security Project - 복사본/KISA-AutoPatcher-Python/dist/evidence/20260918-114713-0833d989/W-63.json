@@ -1,0 +1,65 @@
+{
+  "ItemId": "W-63",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-18T03:00:44.471212+00:00",
+  "PolicySHA256": "01664d2051beb7f03cf5875c105b4e28faca0116bc783608e0ece9f2bc752c78",
+  "Policy": {
+    "Title": "도메인 컨트롤러-사용자의 시간 동기화",
+    "Category": "보안 관리",
+    "Level": "중",
+    "TechType": "Type_Skip",
+    "SecureValue": "True",
+    "ItemId": "W-63",
+    "appTarget": "kisa-evidence",
+    "Description": "도메인 Kerberos 시계 허용 오차 5분 이하 확인. W32Time 실행 여부와 다른 항목.",
+    "captureOnly": true,
+    "Impact": "도메인 Kerberos 시계 허용 오차 5분 이하 확인. W32Time 실행 여부와 다른 항목.",
+    "RequiresConfirmation": false,
+    "AutoRemediationSupported": false,
+    "EvidenceCollector": "ntp"
+  },
+  "BeforeStatus": "수동 조치(도메인 Kerberos 시계 허용 오차 5분 이하 확인. W32Time 실행 여부와 다른 항목.)",
+  "BeforeValue": "N/A",
+  "AfterStatus": "수동 조치(도메인 Kerberos 시계 허용 오차 5분 이하 확인. W32Time 실행 여부와 다른 항목.)",
+  "AfterValue": "N/A",
+  "FixStatus": "수동 조치(도메인 Kerberos 시계 허용 오차 5분 이하 확인. W32Time 실행 여부와 다른 항목.)",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": null,
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "캡처 저장",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "저장됨(내용 검토 필요)",
+  "Screenshot": "W-63.png",
+  "ScreenshotSHA256": "bc959075dc5f56d58050cf5e73342651a9047d49779da62ed8ae7806822b296e",
+  "ScreenshotFiles": [
+    {
+      "File": "W-63_part1.png",
+      "SHA256": "bc959075dc5f56d58050cf5e73342651a9047d49779da62ed8ae7806822b296e"
+    },
+    {
+      "File": "W-63_part2.png",
+      "SHA256": "76d3bd6035367874fde26b13fe2a94f12bf2295eda4e303e76f77692a95d0dcb"
+    },
+    {
+      "File": "W-63_part3.png",
+      "SHA256": "747348446af1d97cc0c29e4b0a36f189ee818765142edcd0c3c9e5eddc9bf829"
+    },
+    {
+      "File": "W-63_part4.png",
+      "SHA256": "9434e445ef62dc660ba5bf4fca2939ebbd26668763e46c578eb472e0e57f7416"
+    }
+  ],
+  "DiagnosticFile": "W-63_diagnostic.json",
+  "DiagnosticSHA256": "12609698baf7cf01f21649fe99ab435a39f6f13e28dd16a09d44e84272538fe3",
+  "ExpectedComponentCount": null,
+  "CollectedComponentCount": 4
+}

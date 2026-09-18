@@ -1,0 +1,41 @@
+{
+  "ItemId": "W-19",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T07:32:50.153899+00:00",
+  "PolicySHA256": "74532dce4ddd05b28beb06bdceefefdec0661b31c241731f98476542d833f127",
+  "Policy": {
+    "Title": "불필요한 IIS 서비스 구동 점검",
+    "Category": "서비스 관리",
+    "Level": "상",
+    "TechType": "Type_Skip",
+    "SecureValue": "True",
+    "ItemId": "W-19",
+    "appTarget": "services.msc",
+    "treePath": [],
+    "targetItem": [
+      "World Wide Web Publishing Service",
+      "W3SVC"
+    ],
+    "Description": "업무에 필요한 IIS는 가이드상 허용. 사용 목적 확인 후 불필요한 경우에만 중지.",
+    "captureOnly": true,
+    "Impact": "업무에 필요한 IIS는 가이드상 허용. 사용 목적 확인 후 불필요한 경우에만 중지.",
+    "RequiresConfirmation": false,
+    "AutoRemediationSupported": false
+  },
+  "BeforeStatus": "수동 조치(업무에 필요한 IIS는 가이드상 허용. 사용 목적 확인 후 불필요한 경우에만 중지.)",
+  "BeforeValue": "N/A",
+  "AfterStatus": "수동 조치(업무에 필요한 IIS는 가이드상 허용. 사용 목적 확인 후 불필요한 경우에만 중지.)",
+  "AfterValue": "N/A",
+  "FixStatus": "생략",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": "사용자가 서비스 항목 생략을 선택했습니다. 미설치/미사용을 검증한 판정이 아닙니다.",
+  "ExecutionStages": [],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "미수집",
+  "ScreenshotFiles": [],
+  "ExpectedComponentCount": null,
+  "CollectedComponentCount": 0
+}

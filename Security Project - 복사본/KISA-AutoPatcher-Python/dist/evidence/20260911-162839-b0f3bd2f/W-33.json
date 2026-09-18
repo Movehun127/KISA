@@ -1,0 +1,41 @@
+{
+  "ItemId": "W-33",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T07:33:23.995196+00:00",
+  "PolicySHA256": "4dc86410122efe8b00b4a7265f87563ec91b23a9a5481438150523b88964b575",
+  "Policy": {
+    "Title": "HTTP/FTP/SMTP 배너 차단",
+    "Category": "서비스 관리",
+    "Level": "하",
+    "TechType": "Type_Skip",
+    "SecureValue": "True",
+    "ItemId": "W-33",
+    "appTarget": "services.msc",
+    "treePath": [],
+    "targetItem": [
+      "World Wide Web Publishing Service",
+      "W3SVC"
+    ],
+    "Description": "HTTP/FTP/SMTP 실제 응답 배너 확인.",
+    "captureOnly": true,
+    "Impact": "HTTP/FTP/SMTP 실제 응답 배너 확인.",
+    "RequiresConfirmation": false,
+    "AutoRemediationSupported": false
+  },
+  "BeforeStatus": "수동 조치(HTTP/FTP/SMTP 실제 응답 배너 확인.)",
+  "BeforeValue": "N/A",
+  "AfterStatus": "수동 조치(HTTP/FTP/SMTP 실제 응답 배너 확인.)",
+  "AfterValue": "N/A",
+  "FixStatus": "생략",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": "사용자가 서비스 항목 생략을 선택했습니다. 미설치/미사용을 검증한 판정이 아닙니다.",
+  "ExecutionStages": [],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "미수집",
+  "ScreenshotFiles": [],
+  "ExpectedComponentCount": null,
+  "CollectedComponentCount": 0
+}

@@ -1,0 +1,41 @@
+{
+  "Host": "DESKTOP-BKBAM6H",
+  "CollectedAt": "2026-09-11T07:40:20.439105+00:00",
+  "EvidenceType": "실제 조회 결과 표시 (Windows 설정 대화상자가 아님)",
+  "Data": {
+    "Queries": {
+      "source": {
+        "Command": "w32tm.exe /query /source",
+        "At": "2026-09-11T07:40:20.293298+00:00",
+        "ExitCode": 0,
+        "Output": "Local CMOS Clock\n",
+        "Error": ""
+      },
+      "status": {
+        "Command": "w32tm.exe /query /status",
+        "At": "2026-09-11T07:40:20.341529+00:00",
+        "ExitCode": 0,
+        "Output": "윤초 조정: 0(경고 없음)\n계층: 1(기본 참조 - 라디오 클록으로 동기화됨)\n정밀도: -23(틱당 119.209ns)\n루트 지연: 0.0000000s\n루트 분산: 10.0000000s\n참조 ID: 0x4C4F434C(원본 이름:  \"LOCL\")\n마지막으로 동기화한 시간: 2026-09-11 오전 8:57:45\n원본: Local CMOS Clock\n폴링 간격: 10(1024s)\n\n",
+        "Error": ""
+      },
+      "peers": {
+        "Command": "w32tm.exe /query /peers",
+        "At": "2026-09-11T07:40:20.374888+00:00",
+        "ExitCode": 0,
+        "Output": "#피어: 1\n\n피어: ke,0x9\n상태: 대기 중\n남은 시간: 2501.0571549s\n모드: 0 (예약됨)\n계층: 0(지정되지 않음)\n피어폴링 간격: 0(지정되지 않음)\n호스트폴링 간격: 0(지정되지 않음)\n",
+        "Error": ""
+      },
+      "configuration": {
+        "Command": "w32tm.exe /query /configuration",
+        "At": "2026-09-11T07:40:20.406512+00:00",
+        "ExitCode": 0,
+        "Output": "[구성]\r\n\nEventLogFlags: 2 (로컬)\nAnnounceFlags: 5 (로컬)\nTimeJumpAuditOffset: 28800 (로컬)\nMinPollInterval: 10 (로컬)\nMaxPollInterval: 15 (로컬)\nMaxNegPhaseCorrection: 54000 (로컬)\nMaxPosPhaseCorrection: 54000 (로컬)\nMaxAllowedPhaseOffset: 1 (로컬)\n\nFrequencyCorrectRate: 4 (로컬)\nPollAdjustFactor: 5 (로컬)\nLargePhaseOffset: 50000000 (로컬)\nSpikeWatchPeriod: 900 (로컬)\nLocalClockDispersion: 10 (로컬)\nHoldPeriod: 5 (로컬)\nPhaseCorrectRate: 1 (로컬)\nUpdateInterval: 360000 (로컬)\n\nFileLogName:  (로컬)\nFileLogEntries:  (로컬)\nFileLogSize: 0 (로컬)\n\n[시간 공급자]\r\n\nNtpClient (로컬)\nDllName: C:\\WINDOWS\\system32\\w32time.dll (로컬)\nEnabled: 1 (로컬)\nInputProvider: 1 (로컬)\nAllowNonstandardModeCombinations: 1 (로컬)\nResolvePeerBackoffMinutes: 15 (로컬)\nResolvePeerBackoffMaxTimes: 7 (로컬)\nCompatibilityFlags: 2147483648 (로컬)\nEventLogFlags: 1 (로컬)\nLargeSampleSkew: 3 (로컬)\nSpecialPollInterval: 3600 (로컬)\nType: NTP (로컬)\nNtpServer: ke,0x9 (로컬)\n\nNtpServer (로컬)\nDllName: C:\\WINDOWS\\system32\\w32time.dll (로컬)\nEnabled: 0 (로컬)\nInputProvider: 0 (로컬)\n\n\n",
+        "Error": ""
+      }
+    },
+    "SyncCompliance": "미판정: 최근 성공 시각과 동기화 상태를 원문으로 확인",
+    "KerberosTolerance": "별도 기준: NTP 응답만으로 Kerberos 허용 오차 적합 판정 불가",
+    "NtpResponseObserved": false,
+    "ProbeNote": "네트워크 NTP 원본 미확인: 로컬 시계·가상화 공급자·조회 실패 여부 확인"
+  }
+}

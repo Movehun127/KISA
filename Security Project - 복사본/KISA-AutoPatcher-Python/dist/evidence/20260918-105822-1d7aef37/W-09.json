@@ -1,0 +1,150 @@
+{
+  "ItemId": "W-09",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-18T02:03:16.298540+00:00",
+  "PolicySHA256": "44268eb08de3e03fbf2696a10a9005253ce830ff5a703b5afe0ec8546eb02c82",
+  "Policy": {
+    "Title": "비밀번호 관리정책 설정",
+    "Category": "계정 관리",
+    "Level": "상",
+    "TechType": "Type_Secedit",
+    "SecureValue": "PasswordComplexity=1; MinimumPasswordLength=8; MaximumPasswordAge=90; MinimumPasswordAge=1; PasswordHistorySize=4",
+    "ItemId": "W-09",
+    "appTarget": "secpol.msc",
+    "treePath": [
+      [
+        "보안 설정",
+        "Security Settings"
+      ],
+      [
+        "계정 정책",
+        "Account Policies"
+      ],
+      [
+        "암호 정책",
+        "Password Policy"
+      ]
+    ],
+    "targetItem": [
+      "암호는 복잡성 요구 사항을 만족해야 함",
+      "Password must meet complexity requirements"
+    ],
+    "SeceditValues": {
+      "PasswordComplexity": 1,
+      "MinimumPasswordLength": 8,
+      "MaximumPasswordAge": 90,
+      "MinimumPasswordAge": 1,
+      "PasswordHistorySize": 4
+    },
+    "Comparisons": {
+      "MinimumPasswordLength": "ge",
+      "MaximumPasswordAge": "positive_le",
+      "MinimumPasswordAge": "ge",
+      "PasswordHistorySize": "ge"
+    },
+    "Impact": "암호 만료 및 변경 정책이 서비스 계정에 영향",
+    "RequiresConfirmation": true,
+    "AutoRemediationSupported": true,
+    "captureTargets": [
+      [
+        "암호는 복잡성 요구 사항을 만족해야 함",
+        "Password must meet complexity requirements"
+      ],
+      [
+        "최근 암호 기억",
+        "Enforce password history"
+      ],
+      [
+        "최대 암호 사용 기간",
+        "Maximum password age"
+      ],
+      [
+        "최소 암호 길이",
+        "Minimum password length"
+      ],
+      [
+        "최소 암호 사용 기간",
+        "Minimum password age"
+      ]
+    ]
+  },
+  "BeforeStatus": "취약",
+  "BeforeValue": {
+    "PasswordComplexity": "0",
+    "MinimumPasswordLength": "0",
+    "MaximumPasswordAge": "42",
+    "MinimumPasswordAge": "0",
+    "PasswordHistorySize": "0"
+  },
+  "AfterStatus": "양호",
+  "AfterValue": {
+    "PasswordComplexity": "1",
+    "MinimumPasswordLength": "8",
+    "MaximumPasswordAge": "42",
+    "MinimumPasswordAge": "1",
+    "PasswordHistorySize": "4"
+  },
+  "FixStatus": "완료",
+  "BackupFile": "C:\\Users\\new-s\\Desktop\\KISA-fix-evidence-verification\\KISA-fix-evidence-verification\\Security Project - 복사본\\KISA-AutoPatcher-Python\\dist\\backups\\W-09_85b28ac0151948b49d02fae19db48c09.json",
+  "RollbackStatus": null,
+  "Note": "변경값 재조회 검증 완료. 업무 기능 검증은 별도 필요. ",
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "저장됨(내용 검토 필요)",
+  "Screenshot": "W-09.png",
+  "ScreenshotSHA256": "3335326a155f2204de3c88a2968e4e965cc3f732b83f02cb003a7ae009ffadf5",
+  "ScreenshotFiles": [
+    {
+      "File": "W-09_part1.png",
+      "SHA256": "76e6f88eb67d186b5a628960fd642e05e98c9886257793786e37ecb9843c1896"
+    },
+    {
+      "File": "W-09_part2.png",
+      "SHA256": "555019e73a107405df6113cc6705f5bd78eb95497bdb522cd8a86cbb4423a180"
+    },
+    {
+      "File": "W-09_part3.png",
+      "SHA256": "c53c0f378ed66ea74a5087c0287b541e3653d6dca527c00991907a2d01172b51"
+    },
+    {
+      "File": "W-09_part4.png",
+      "SHA256": "063508402b9d9d59906ab6fddb265169052bd23e792f8dcffaec03f3e8e4c384"
+    },
+    {
+      "File": "W-09_part5.png",
+      "SHA256": "3b18fdf02716314a1bf6d7f3639c35b322fde609e258b38665253b972d65435a"
+    }
+  ],
+  "ExpectedComponentCount": 5,
+  "CollectedComponentCount": 5
+}

@@ -1,0 +1,100 @@
+{
+  "ItemId": "W-08",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T07:30:29.535419+00:00",
+  "PolicySHA256": "973368f7ba6cec8eb905c7fc62b3f1c19b0b9d3a12cf90265bc2e8968d51b596",
+  "Policy": {
+    "Title": "계정 잠금 기간 설정",
+    "Category": "계정 관리",
+    "Level": "중",
+    "TechType": "Type_Secedit",
+    "SecureValue": "LockoutDuration=60; ResetLockoutCount=60",
+    "ItemId": "W-08",
+    "appTarget": "secpol.msc",
+    "treePath": [
+      [
+        "보안 설정",
+        "Security Settings"
+      ],
+      [
+        "계정 정책",
+        "Account Policies"
+      ],
+      [
+        "계정 잠금 정책",
+        "Account Lockout Policy"
+      ]
+    ],
+    "targetItem": [
+      "계정 잠금 기간",
+      "Account lockout duration"
+    ],
+    "SeceditValues": {
+      "LockoutDuration": 60,
+      "ResetLockoutCount": 60
+    },
+    "Comparisons": {
+      "LockoutDuration": "ge",
+      "ResetLockoutCount": "ge"
+    },
+    "Impact": "계정 잠금 지속 시간 증가로 업무 복구 지연 가능",
+    "RequiresConfirmation": true,
+    "AutoRemediationSupported": true,
+    "captureTargets": [
+      [
+        "계정 잠금 기간",
+        "Account lockout duration"
+      ],
+      [
+        "다음 시간 후 계정 잠금 수를 원래대로 설정",
+        "Reset account lockout counter after"
+      ]
+    ]
+  },
+  "BeforeStatus": "취약",
+  "BeforeValue": {
+    "LockoutDuration": "10",
+    "ResetLockoutCount": "10"
+  },
+  "AfterStatus": "양호",
+  "AfterValue": {
+    "LockoutDuration": "60",
+    "ResetLockoutCount": "60"
+  },
+  "FixStatus": "완료",
+  "BackupFile": "C:\\Users\\new-s\\Desktop\\KISA-fix-evidence-verification\\KISA-fix-evidence-verification\\Security Project - 복사본\\KISA-AutoPatcher-Python\\dist\\backups\\W-08_24edd58293774350a41de2414a003eb0.json",
+  "RollbackStatus": null,
+  "Note": "변경값 재조회 검증 완료. 업무 기능 검증은 별도 필요. ",
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "저장됨(내용 검토 필요)",
+  "Screenshot": "W-08.png",
+  "ScreenshotSHA256": "529f3fd7049868aa5cf5c8b4b496e52eb9deb72f045f0939ce611eac051e4f6d",
+  "ScreenshotFiles": [
+    {
+      "File": "W-08_part1.png",
+      "SHA256": "929ba769e87f01219866728a0b48d3997b672eff6512d6e476d08062da155a97"
+    },
+    {
+      "File": "W-08_part2.png",
+      "SHA256": "a1f1854176493a4b7562a32563023a9a59c5abb494d4411861d3b301d6b113cb"
+    }
+  ],
+  "ExpectedComponentCount": 2,
+  "CollectedComponentCount": 2
+}

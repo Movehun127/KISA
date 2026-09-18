@@ -7,6 +7,7 @@ Markdown + Excel(openpyxl) 리포트를 생성합니다.
 import os
 import sys
 import shutil
+from pathlib import Path
 from datetime import datetime
 import openpyxl
 
@@ -63,6 +64,14 @@ def invoke_reporting(
                  init.get('FixStatus', '미실행'), init.get('EvidenceStatus', '미수집')]
         lines.append('| ' + ' | '.join(str(c).replace('|', '\\|').replace('\r', '').replace('\n', '<br>') for c in cells) + ' |')
 
+    lines.extend(['', '### 항목별 증빙 파일'])
+    for init in initial_results:
+        iid = init['ItemId']
+        components = sorted(Path(evidence_dir).glob(iid + '_part*.png'))
+        raw = Path(evidence_dir)/(iid+'_diagnostic.json')
+        files = components + ([raw] if raw.is_file() else [])
+        if files:
+            lines.append('- ' + iid + ': ' + ', '.join('['+p.name+'](../'+p.name+')' for p in files))
     lines.append("")
     with open(md_path, "w", encoding="utf-8") as f:
         f.write("\n".join(lines))

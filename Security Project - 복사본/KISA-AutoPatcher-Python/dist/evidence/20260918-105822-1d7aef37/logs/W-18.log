@@ -1,0 +1,39 @@
+[11:06:03] 
+🔷 [W-18]  불필요한 서비스 제거
+[11:06:03]   📷 증빙 화면 캡처 대기 중...
+[11:06:03]   📢 [W-18] 수동 조치 가이드 팝업을 표시합니다.
+[11:06:06]   [W-18_part1] 단계: 창 열기
+[11:06:07]   대상 창 확인: 서비스 / HWND=3541284 / PID=12740
+[11:06:07]   [W-18_part1] 단계: 오른쪽 정렬 확인
+[11:06:07]   [W-18_part1] 단계: 조치 및 설정 재조회
+[11:06:07]   → 자동 변경 없음 (수동 조치(불필요하거나 보안위협이 있는 기본 백그라운드 서비스 동작 수동 검증))
+[11:06:08]   [W-18_part1] 단계: 증빙 대상 탐색
+[11:12:11]   [W-18_part1] 단계: 캡처 저장
+[11:12:11]   증빙 이미지 저장: C:\Users\new-s\Desktop\KISA-fix-evidence-verification\KISA-fix-evidence-verification\Security Project - 복사본\KISA-AutoPatcher-Python\dist\evidence\20260918-105822-1d7aef37\W-18_part1.png
+[11:12:13]   증빙 창 닫기 완료 → 다음 항목 진행
+[11:12:13]   [W-18_part1] 단계: 창 닫힘 확인
+[11:12:13]   [W-18_part2] 단계: 창 열기
+[11:12:14]   대상 창 확인: 서비스 / HWND=8520726 / PID=12032
+[11:12:15]   [W-18_part2] 단계: 오른쪽 정렬 확인
+[11:12:15]   [W-18_part2] 단계: 증빙 대상 탐색
+[11:12:23]   [W-18_part2] 단계: 캡처 저장
+[11:12:23]   증빙 이미지 저장: C:\Users\new-s\Desktop\KISA-fix-evidence-verification\KISA-fix-evidence-verification\Security Project - 복사본\KISA-AutoPatcher-Python\dist\evidence\20260918-105822-1d7aef37\W-18_part2.png
+[11:12:24]   증빙 창 닫기 완료 → 다음 항목 진행
+[11:12:24]   [W-18_part2] 단계: 창 닫힘 확인
+[11:12:25]   [W-18_part3] 단계: 창 열기
+[11:12:26]   대상 창 확인: 서비스 / HWND=3540846 / PID=13612
+[11:12:26]   [W-18_part3] 단계: 오른쪽 정렬 확인
+[11:12:26]   [W-18_part3] 단계: 증빙 대상 탐색
+[11:12:35]   [W-18_part3] 단계: 캡처 저장
+[11:12:35]   증빙 이미지 저장: C:\Users\new-s\Desktop\KISA-fix-evidence-verification\KISA-fix-evidence-verification\Security Project - 복사본\KISA-AutoPatcher-Python\dist\evidence\20260918-105822-1d7aef37\W-18_part3.png
+[11:12:36]   증빙 창 닫기 완료 → 다음 항목 진행
+[11:12:36]   [W-18_part3] 단계: 창 닫힘 확인
+[11:12:37]   [W-18_part4] 단계: 창 열기
+[11:12:38]   대상 창 확인: 서비스 / HWND=2492874 / PID=8516
+[11:12:38]   [W-18_part4] 단계: 오른쪽 정렬 확인
+[11:12:38]   [W-18_part4] 단계: 증빙 대상 탐색
+[11:12:47]   [W-18_part4] 단계: 캡처 저장
+[11:12:47]   증빙 이미지 저장: C:\Users\new-s\Desktop\KISA-fix-evidence-verification\KISA-fix-evidence-verification\Security Project - 복사본\KISA-AutoPatcher-Python\dist\evidence\20260918-105822-1d7aef37\W-18_part4.png
+[11:12:49]   증빙 창 닫기 완료 → 다음 항목 진행
+[11:12:49]   [W-18_part4] 단계: 창 닫힘 확인
+[11:12:49]   복합 증빙 4/4개 저장 완료

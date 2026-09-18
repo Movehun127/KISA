@@ -1,0 +1,14 @@
+[10:59:25] 
+🔷 [W-04]  계정 잠금 임계값 설정
+[10:59:25]   📷 증빙 화면 캡처 대기 중...
+[10:59:26]   [W-04] 단계: 창 열기
+[10:59:27]   대상 창 확인: 로컬 보안 정책 / HWND=723396 / PID=12872
+[10:59:27]   [W-04] 단계: 오른쪽 정렬 확인
+[10:59:27]   [W-04] 단계: 조치 및 설정 재조회
+[10:59:27]   🔧 보안 조치 적용 및 검증 중...
+[10:59:28] [W-04] 설정 검증 완료 / 백업: C:\Users\new-s\Desktop\KISA-fix-evidence-verification\KISA-fix-evidence-verification\Security Project - 복사본\KISA-AutoPatcher-Python\dist\backups\W-04_3520b8322d1146d7970ca85ee2b07acf.json
+[10:59:29]   [W-04] 단계: 증빙 대상 탐색
+[10:59:38]   [W-04] 단계: 캡처 저장
+[10:59:38]   증빙 이미지 저장: C:\Users\new-s\Desktop\KISA-fix-evidence-verification\KISA-fix-evidence-verification\Security Project - 복사본\KISA-AutoPatcher-Python\dist\evidence\20260918-105822-1d7aef37\W-04.png
+[10:59:39]   증빙 창 닫기 완료 → 다음 항목 진행
+[10:59:39]   [W-04] 단계: 창 닫힘 확인

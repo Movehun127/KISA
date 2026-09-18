@@ -1,0 +1,52 @@
+{
+  "ItemId": "W-49",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T08:41:32.417478+00:00",
+  "PolicySHA256": "1d5bad74ca876cf110e073f1896e604c9675ab911c1327349d3c716288783d54",
+  "Policy": {
+    "Title": "원격 시스템에서 강제로 시스템 종료",
+    "Category": "보안 관리",
+    "Level": "상",
+    "TechType": "Type_Skip",
+    "Description": "로컬 보안 정책의 '원격 시스템에서 강제로 시스템 종료' 사용자 권한 할당 검증",
+    "captureOnly": true,
+    "ItemId": "W-49",
+    "appTarget": "kisa-evidence",
+    "Impact": "로컬 보안 정책의 '원격 시스템에서 강제로 시스템 종료' 사용자 권한 할당 검증",
+    "RequiresConfirmation": false,
+    "AutoRemediationSupported": false,
+    "EvidenceCollector": "remote_shutdown"
+  },
+  "BeforeStatus": "수동 조치(로컬 보안 정책의 '원격 시스템에서 강제로 시스템 종료' 사용자 권한 할당 검증)",
+  "BeforeValue": "N/A",
+  "AfterStatus": "수동 조치(로컬 보안 정책의 '원격 시스템에서 강제로 시스템 종료' 사용자 권한 할당 검증)",
+  "AfterValue": "N/A",
+  "FixStatus": "수동 조치(로컬 보안 정책의 '원격 시스템에서 강제로 시스템 종료' 사용자 권한 할당 검증)",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": null,
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "캡처 저장",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "저장됨(내용 검토 필요)",
+  "Screenshot": "W-49.png",
+  "ScreenshotSHA256": "0d34d7374ca6c5e34553dec7d9baf2904f8adf83000a07ed827c39defc61561c",
+  "ScreenshotFiles": [
+    {
+      "File": "W-49_part1.png",
+      "SHA256": "0d34d7374ca6c5e34553dec7d9baf2904f8adf83000a07ed827c39defc61561c"
+    }
+  ],
+  "DiagnosticFile": "W-49_diagnostic.json",
+  "DiagnosticSHA256": "0ab1797165f1677cf661a1c1a9f5536e51718780f82ad95c2bbe78882efe406a",
+  "ExpectedComponentCount": null,
+  "CollectedComponentCount": 1
+}

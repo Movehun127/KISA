@@ -15,10 +15,26 @@ class CaptureFlowTests(unittest.TestCase):
         session.snapshot.return_value = {3:sheet}
         session._owner_depth.return_value = 0
         session.control.side_effect = lambda w:w
-        found = cap._wait_dialog(session,SimpleNamespace(ProcessId=20),
+        found = cap._wait_dialog(session,SimpleNamespace(ProcessId=20, NativeWindowHandle=2),
                                  ['계정: Administrator 계정 이름 바꾸기'],None)
         self.assertIs(found,sheet)
         session.track.assert_called_once_with(sheet)
+
+    def test_policy_editor_custom_class_matches_exact_title(self):
+        sheet = SimpleNamespace(Name='Set client connection encryption level',
+                                ClassName='PolicyEditor', ProcessId=20, NativeWindowHandle=3)
+        session = Mock(before={}, launched_pids={20})
+        session.snapshot.return_value = {3:sheet}
+        session.control.side_effect = lambda w:w
+        root = SimpleNamespace(ProcessId=20, NativeWindowHandle=2)
+        self.assertIs(cap._wait_dialog(session, root, [sheet.Name], None), sheet)
+
+    def test_reveal_scrolls_before_click_and_rejects_still_hidden_item(self):
+        control = Mock(IsOffscreen=True)
+        with self.assertRaisesRegex(RuntimeError, '스크롤'):
+            cap._reveal(control)
+        control.GetScrollItemPattern.return_value.ScrollIntoView.assert_called_once()
+        control.Click.assert_not_called()
 
     def run_flow(self, folder, events, action, **kwargs):
         ctrl = Mock(Name='정책', NativeWindowHandle=10, ProcessId=20)
@@ -27,7 +43,8 @@ class CaptureFlowTests(unittest.TestCase):
         session.close.side_effect = lambda: events.append('close')
         def screenshot(path, target):
             events.append('capture')
-            Path(path).write_bytes(b'png-test')
+            from PIL import Image
+            Image.new('RGB',(12,10),'white').save(path)
         with ExitStack() as stack:
             for name, value in [('auto',Mock()), ('user32',Mock()), ('pyautogui',Mock())]:
                 stack.enter_context(patch.object(cap,name,value))
@@ -71,6 +88,9 @@ class CaptureFlowTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             self.run_flow(folder,events,action,captureTargets=[['duration'],['reset']])
             self.assertTrue((Path(folder)/'W-08.png').exists())
+            from PIL import Image
+            with Image.open(Path(folder)/'W-08.png') as overview:
+                self.assertEqual(overview.size,(12,20))
         action.assert_called_once()
         self.assertEqual(events.count('capture'),2)
         first_close = events.index('close')

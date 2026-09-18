@@ -1,0 +1,17 @@
+[17:47:35] 
+🔷 [W-64]  윈도우 방화벽 설정
+[17:47:35]   📷 증빙 화면 캡처 대기 중...
+[17:47:36]   [W-64] 단계: 창 열기
+[17:47:37]   대상 창 확인: Windows Defender 방화벽 / HWND=2558902 / PID=7608
+[17:47:38]   [W-64] 단계: 오른쪽 정렬 확인
+[17:47:38]   [W-64] 단계: 조치 및 설정 재조회
+[17:47:38]   → 자동 변경 없음 (양호)
+[17:47:38]   [W-64] 단계: 증빙 대상 탐색
+[17:47:39]   [W-64] 단계: 캡처 저장
+[17:47:39]   증빙 이미지 저장: C:\Users\new-s\Desktop\KISA-fix-evidence-verification\KISA-fix-evidence-verification\Security Project - 복사본\KISA-AutoPatcher-Python\dist\evidence\20260911-173205-850b85c7\W-64.png
+[17:47:40]   증빙 창 닫기 완료 → 다음 항목 진행
+[17:47:40]   [W-64] 단계: 창 닫힘 확인
+[17:47:41]   📄 실행 결과 보고서 생성 중...
+[17:47:44] ✅ 마크다운 보고서 생성: C:\Users\new-s\Desktop\KISA-fix-evidence-verification\KISA-fix-evidence-verification\Security Project - 복사본\KISA-AutoPatcher-Python\dist\evidence\20260911-173205-850b85c7\reports\Security_Patch_Report.md
+[17:47:44] ✅ 엑셀 보고서 생성: C:\Users\new-s\Desktop\KISA-fix-evidence-verification\KISA-fix-evidence-verification\Security Project - 복사본\KISA-AutoPatcher-Python\dist\evidence\20260911-173205-850b85c7\reports\Security_Patch_Report.xlsx
+[17:47:44]   📁 보고서: C:\Users\new-s\Desktop\KISA-fix-evidence-verification\KISA-fix-evidence-verification\Security Project - 복사본\KISA-AutoPatcher-Python\dist\evidence\20260911-173205-850b85c7\reports

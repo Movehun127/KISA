@@ -1,0 +1,64 @@
+{
+  "ItemId": "W-23",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T07:33:09.294231+00:00",
+  "PolicySHA256": "80e56b060489adbb9d90db8ec089a99c2c6e284b109ff812e39184a8a13cf51b",
+  "Policy": {
+    "Title": "공유 서비스에 대한 익명 접근 제한 설정",
+    "Category": "서비스 관리",
+    "Level": "상",
+    "TechType": "Type_Skip",
+    "SecureValue": "True",
+    "ItemId": "W-23",
+    "appTarget": "secpol.msc",
+    "treePath": [
+      [
+        "보안 설정",
+        "Security Settings"
+      ],
+      [
+        "로컬 정책",
+        "Local Policies"
+      ],
+      [
+        "보안 옵션",
+        "Security Options"
+      ]
+    ],
+    "targetItem": [
+      "네트워크 액세스: 익명으로 액세스할 수 있는 공유",
+      "Network access: Shares that can be accessed anonymously"
+    ],
+    "Description": "익명 공유와 애플리케이션 의존성을 함께 확인.",
+    "captureOnly": true,
+    "Impact": "익명 공유와 애플리케이션 의존성을 함께 확인.",
+    "RequiresConfirmation": false,
+    "AutoRemediationSupported": false
+  },
+  "BeforeStatus": "수동 조치(익명 공유와 애플리케이션 의존성을 함께 확인.)",
+  "BeforeValue": "N/A",
+  "AfterStatus": "수동 조치(익명 공유와 애플리케이션 의존성을 함께 확인.)",
+  "AfterValue": "N/A",
+  "FixStatus": "수동 조치(익명 공유와 애플리케이션 의존성을 함께 확인.)",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": null,
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "저장됨(내용 검토 필요)",
+  "Screenshot": "W-23.png",
+  "ScreenshotSHA256": "50d5a816156d4b6d1ba3d297e7db8e742006a23909e6d04f1520d67c008598af",
+  "ScreenshotFiles": [],
+  "ExpectedComponentCount": null,
+  "CollectedComponentCount": 0
+}

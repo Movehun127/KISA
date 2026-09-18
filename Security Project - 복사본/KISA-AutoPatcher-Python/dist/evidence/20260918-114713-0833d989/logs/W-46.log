@@ -1,0 +1,13 @@
+[11:55:13] 
+🔷 [W-46]  SAM 파일 접근 통제 설정
+[11:55:13]   📷 증빙 화면 캡처 대기 중...
+[11:55:13]   [W-46] 단계: 창 열기
+[11:55:14]   대상 창 확인: SAM 속성 / HWND=5965220 / PID=6124
+[11:55:14]   [W-46] 단계: 오른쪽 정렬 확인
+[11:55:14]   [W-46] 단계: 조치 및 설정 재조회
+[11:55:14]   → 자동 변경 없음 (수동 조치(SAM 파일 ACL의 Administrators/SYSTEM 권한 확인. NoLMHash와 다른 항목.))
+[11:55:14]   [W-46] 단계: 증빙 대상 탐색
+[11:55:16]   [W-46] 단계: 캡처 저장
+[11:55:16]   증빙 이미지 저장: C:\Users\new-s\Desktop\KISA-fix-evidence-verification\KISA-fix-evidence-verification\Security Project - 복사본\KISA-AutoPatcher-Python\dist\evidence\20260918-114713-0833d989\W-46.png
+[11:55:17]   증빙 창 닫기 완료 → 다음 항목 진행
+[11:55:17]   [W-46] 단계: 창 닫힘 확인

@@ -1,0 +1,65 @@
+{
+  "ItemId": "W-51",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T07:35:38.300272+00:00",
+  "PolicySHA256": "41e00b6d44ee996a57978724c45b86ce58f363881ad2885a5f346ce04d41836c",
+  "Policy": {
+    "Title": "SAM 계정과 공유의 익명 열거 허용 안 함",
+    "Category": "보안 관리",
+    "Level": "상",
+    "TechType": "Type_Registry",
+    "SecureValue": 1,
+    "ItemId": "W-51",
+    "appTarget": "secpol.msc",
+    "treePath": [
+      [
+        "보안 설정",
+        "Security Settings"
+      ],
+      [
+        "로컬 정책",
+        "Local Policies"
+      ],
+      [
+        "보안 옵션",
+        "Security Options"
+      ]
+    ],
+    "targetItem": [
+      "네트워크 액세스: SAM 계정과 공유의 익명 열거 허용 안 함",
+      "Network access: Do not allow anonymous enumeration of SAM accounts and shares"
+    ],
+    "RegistryPath": "HKLM:\\System\\CurrentControlSet\\Control\\Lsa",
+    "RegistryName": "RestrictAnonymous",
+    "RegistryType": "DWord",
+    "Impact": "AD·클러스터 및 익명 열거 의존 프로그램 영향",
+    "RequiresConfirmation": true,
+    "AutoRemediationSupported": true
+  },
+  "BeforeStatus": "취약",
+  "BeforeValue": 0,
+  "AfterStatus": "양호",
+  "AfterValue": 1,
+  "FixStatus": "완료",
+  "BackupFile": "C:\\Users\\new-s\\Desktop\\KISA-fix-evidence-verification\\KISA-fix-evidence-verification\\Security Project - 복사본\\KISA-AutoPatcher-Python\\dist\\backups\\W-51_91ba322f5f654a49ab03414a63e62481.json",
+  "RollbackStatus": null,
+  "Note": "변경값 재조회 검증 완료. 업무 기능 검증은 별도 필요. ",
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "저장됨(내용 검토 필요)",
+  "Screenshot": "W-51.png",
+  "ScreenshotSHA256": "d7e6c5965a585307bddcbeba559c8b842fe9fac7bf3fdaa78f7d722e90488e94",
+  "ScreenshotFiles": [],
+  "ExpectedComponentCount": null,
+  "CollectedComponentCount": 0
+}

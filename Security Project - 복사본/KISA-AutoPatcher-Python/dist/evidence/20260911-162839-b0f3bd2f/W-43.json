@@ -1,0 +1,49 @@
+{
+  "ItemId": "W-43",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T07:34:20.708603+00:00",
+  "PolicySHA256": "40cfd8f51648be65c03b656e590434984a5072ed735cead8d8ee9981bdc81948",
+  "Policy": {
+    "Title": "이벤트 로그 파일 접근 통제 설정",
+    "Category": "로그 관리",
+    "Level": "중",
+    "TechType": "Type_Skip",
+    "Description": "이벤트 로그 저장 경로 파일(System32\\winevt\\Logs) 권한 상속 제어 점검",
+    "captureOnly": true,
+    "ItemId": "W-43",
+    "appTarget": "explorer.exe",
+    "actionType": "FileProperties",
+    "targetItem": [
+      "C:\\Windows\\System32\\winevt\\Logs"
+    ],
+    "Impact": "이벤트 로그 저장 경로 파일(System32\\winevt\\Logs) 권한 상속 제어 점검",
+    "RequiresConfirmation": false,
+    "AutoRemediationSupported": false
+  },
+  "BeforeStatus": "수동 조치(이벤트 로그 저장 경로 파일(System32\\winevt\\Logs) 권한 상속 제어 점검)",
+  "BeforeValue": "N/A",
+  "AfterStatus": "수동 조치(이벤트 로그 저장 경로 파일(System32\\winevt\\Logs) 권한 상속 제어 점검)",
+  "AfterValue": "N/A",
+  "FixStatus": "수동 조치(이벤트 로그 저장 경로 파일(System32\\winevt\\Logs) 권한 상속 제어 점검)",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": null,
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "저장됨(내용 검토 필요)",
+  "Screenshot": "W-43.png",
+  "ScreenshotSHA256": "a0bc991ba725366168569d58e03e7ad7f8b230335c46aebae4919fa4c5c2740a",
+  "ScreenshotFiles": [],
+  "ExpectedComponentCount": null,
+  "CollectedComponentCount": 0
+}

@@ -1,0 +1,41 @@
+{
+  "ItemId": "W-26",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T07:33:09.613173+00:00",
+  "PolicySHA256": "38883488ff3b3a9a4c57cdc1be76320d61bf283450fd76cb325c35469c9fcaf8",
+  "Policy": {
+    "Title": "RDS(Remote Data Services)제거",
+    "Category": "서비스 관리",
+    "Level": "상",
+    "TechType": "Type_Skip",
+    "SecureValue": "True",
+    "ItemId": "W-26",
+    "appTarget": "services.msc",
+    "treePath": [],
+    "targetItem": [
+      "World Wide Web",
+      "W3SVC"
+    ],
+    "Description": "IIS RDS 구성 및 사용 여부 확인.",
+    "captureOnly": true,
+    "Impact": "IIS RDS 구성 및 사용 여부 확인.",
+    "RequiresConfirmation": false,
+    "AutoRemediationSupported": false
+  },
+  "BeforeStatus": "수동 조치(IIS RDS 구성 및 사용 여부 확인.)",
+  "BeforeValue": "N/A",
+  "AfterStatus": "수동 조치(IIS RDS 구성 및 사용 여부 확인.)",
+  "AfterValue": "N/A",
+  "FixStatus": "생략",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": "사용자가 서비스 항목 생략을 선택했습니다. 미설치/미사용을 검증한 판정이 아닙니다.",
+  "ExecutionStages": [],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "미수집",
+  "ScreenshotFiles": [],
+  "ExpectedComponentCount": null,
+  "CollectedComponentCount": 0
+}

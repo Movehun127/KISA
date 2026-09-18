@@ -1,0 +1,14 @@
+[11:56:08] 
+🔷 [W-52]  Autologon 기능 제어
+[11:56:08]   📷 증빙 화면 캡처 대기 중...
+[11:56:09]   [W-52] 단계: 창 열기
+[11:56:10]   대상 창 확인: 레지스트리 편집기 / HWND=3081604 / PID=14216
+[11:56:10]   [W-52] 단계: 오른쪽 정렬 확인
+[11:56:10]   [W-52] 단계: 조치 및 설정 재조회
+[11:56:10]   🔧 보안 조치 적용 및 검증 중...
+[11:56:11] [W-52] 설정 검증 완료 / 백업: C:\Users\new-s\Desktop\KISA-fix-evidence-verification\KISA-fix-evidence-verification\Security Project - 복사본\KISA-AutoPatcher-Python\dist\backups\W-52_f655e95cd20a40a7a897200c7dbda85b.json
+[11:56:11]   [W-52] 단계: 증빙 대상 탐색
+[11:56:15]   [W-52] 단계: 캡처 저장
+[11:56:15]   증빙 이미지 저장: C:\Users\new-s\Desktop\KISA-fix-evidence-verification\KISA-fix-evidence-verification\Security Project - 복사본\KISA-AutoPatcher-Python\dist\evidence\20260918-114713-0833d989\W-52.png
+[11:56:16]   증빙 창 닫기 완료 → 다음 항목 진행
+[11:56:16]   [W-52] 단계: 창 닫힘 확인

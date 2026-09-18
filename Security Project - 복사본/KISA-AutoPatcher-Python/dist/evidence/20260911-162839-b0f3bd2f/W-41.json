@@ -1,0 +1,51 @@
+{
+  "ItemId": "W-41",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T07:34:04.231811+00:00",
+  "PolicySHA256": "db7775a59454d1e55b1dbffeb4941ea88f34c3d11fc779f182768a8fea862f23",
+  "Policy": {
+    "Title": "NTP 및 시각 동기화 설정",
+    "Category": "로그 관리",
+    "Level": "중",
+    "TechType": "Type_Skip",
+    "SecureValue": "True",
+    "ItemId": "W-41",
+    "appTarget": "timedate.cpl",
+    "treePath": [],
+    "targetItem": [
+      "Windows Time",
+      "W32Time"
+    ],
+    "Description": "서비스 실행뿐 아니라 실제 시간 원본 및 동기화 성공 여부 확인.",
+    "captureOnly": true,
+    "Impact": "서비스 실행뿐 아니라 실제 시간 원본 및 동기화 성공 여부 확인.",
+    "RequiresConfirmation": false,
+    "AutoRemediationSupported": false
+  },
+  "BeforeStatus": "수동 조치(서비스 실행뿐 아니라 실제 시간 원본 및 동기화 성공 여부 확인.)",
+  "BeforeValue": "N/A",
+  "AfterStatus": "수동 조치(서비스 실행뿐 아니라 실제 시간 원본 및 동기화 성공 여부 확인.)",
+  "AfterValue": "N/A",
+  "FixStatus": "수동 조치(서비스 실행뿐 아니라 실제 시간 원본 및 동기화 성공 여부 확인.)",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": null,
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "저장됨(내용 검토 필요)",
+  "Screenshot": "W-41.png",
+  "ScreenshotSHA256": "db6ada715ee36e4c6e4aee1b00b04662202cc8e87729528dd86a4c56be82a90e",
+  "ScreenshotFiles": [],
+  "ExpectedComponentCount": null,
+  "CollectedComponentCount": 0
+}

@@ -1,0 +1,65 @@
+{
+  "ItemId": "W-13",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T07:31:50.536351+00:00",
+  "PolicySHA256": "36217c842b0249692e806c034bfe3c47cc2da304b19e453b2fcbaf673175a9be",
+  "Policy": {
+    "Title": "콘솔 로그온 시 로컬 계정에서 빈 암호 사용 제한",
+    "Category": "계정 관리",
+    "Level": "중",
+    "TechType": "Type_Registry",
+    "SecureValue": 1,
+    "ItemId": "W-13",
+    "appTarget": "secpol.msc",
+    "treePath": [
+      [
+        "보안 설정",
+        "Security Settings"
+      ],
+      [
+        "로컬 정책",
+        "Local Policies"
+      ],
+      [
+        "보안 옵션",
+        "Security Options"
+      ]
+    ],
+    "targetItem": [
+      "계정: 콘솔 로그온 시 로컬 계정에서 빈 암호 사용 제한",
+      "Accounts: Limit local account use of blank passwords to console logon only"
+    ],
+    "RegistryPath": "HKLM:\\System\\CurrentControlSet\\Control\\Lsa",
+    "RegistryName": "LimitBlankPasswordUse",
+    "RegistryType": "DWord",
+    "Impact": "빈 암호 계정의 네트워크·원격 로그온 제한",
+    "RequiresConfirmation": true,
+    "AutoRemediationSupported": true
+  },
+  "BeforeStatus": "양호",
+  "BeforeValue": 1,
+  "AfterStatus": "양호",
+  "AfterValue": 1,
+  "FixStatus": "양호",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": null,
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "저장됨(내용 검토 필요)",
+  "Screenshot": "W-13.png",
+  "ScreenshotSHA256": "b52c01c5c7d29edff0dd0f3824c7da652184b209164d2efc6d46bafd2c6b3ba3",
+  "ScreenshotFiles": [],
+  "ExpectedComponentCount": null,
+  "CollectedComponentCount": 0
+}

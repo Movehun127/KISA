@@ -1,0 +1,52 @@
+{
+  "ItemId": "W-64",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T07:40:30.428966+00:00",
+  "PolicySHA256": "151a55801559d6d2b9ec4e9292800a75abbd89c9a469a652136f8d411c29fade",
+  "Policy": {
+    "Title": "윈도우 방화벽 설정",
+    "Category": "보안 관리",
+    "Level": "중",
+    "TechType": "Type_Firewall",
+    "SecureValue": "Domain/Private/Public Enabled=True",
+    "ItemId": "W-64",
+    "appTarget": "firewall.cpl",
+    "Impact": "기존 방화벽 허용 규칙을 유지하고 세 프로필을 활성화합니다. 허용 규칙이 없는 원격 접속·관제·방송 서비스가 차단될 수 있으므로 필요한 인바운드 규칙과 콘솔 복구 경로가 있는 장비에서만 적용하세요.",
+    "RequiresConfirmation": true,
+    "AutoRemediationSupported": true
+  },
+  "BeforeStatus": "양호",
+  "BeforeValue": {
+    "Domain": "True",
+    "Private": "True",
+    "Public": "True"
+  },
+  "AfterStatus": "양호",
+  "AfterValue": {
+    "Domain": "True",
+    "Private": "True",
+    "Public": "True"
+  },
+  "FixStatus": "양호",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": null,
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "저장됨(내용 검토 필요)",
+  "Screenshot": "W-64.png",
+  "ScreenshotSHA256": "17bd25f9f11fe7561824bd356a12c9f69d5e88c5b768a5d3cd10aad943475110",
+  "ScreenshotFiles": [],
+  "ExpectedComponentCount": null,
+  "CollectedComponentCount": 0
+}

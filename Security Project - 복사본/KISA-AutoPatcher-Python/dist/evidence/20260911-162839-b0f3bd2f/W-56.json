@@ -1,0 +1,91 @@
+{
+  "ItemId": "W-56",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T07:38:28.214924+00:00",
+  "PolicySHA256": "2212995b3fff92908ce61e5652218e5458caccfce9220463ea5d7ed4b98b2b63",
+  "Policy": {
+    "Title": "SMB 세션 중단 관리 설정",
+    "Category": "보안 관리",
+    "Level": "중",
+    "TechType": "Type_SmbSession",
+    "SecureValue": "EnableForcedLogoff=True; 유휴 시간 15분 이하",
+    "ItemId": "W-56",
+    "appTarget": "secpol.msc",
+    "treePath": [
+      [
+        "보안 설정",
+        "Security Settings"
+      ],
+      [
+        "로컬 정책",
+        "Local Policies"
+      ],
+      [
+        "보안 옵션",
+        "Security Options"
+      ]
+    ],
+    "targetItem": [
+      "Microsoft 네트워크 서버: 로그온 시간이 만료되면 클라이언트 연결 끊기",
+      "Microsoft 네트워크 서버: 세션 연결을 중단하기 전에 필요한 유휴 시간"
+    ],
+    "Description": "유휴 시간 15분 이하와 로그온 시간 만료 시 연결 끊기 두 정책 모두 확인.",
+    "captureOnly": false,
+    "Impact": "SMB 로그온 시간이 만료된 연결과 유휴 연결을 정리합니다. 파일 공유·백업·관제 프로그램의 연결 유지 요구사항을 확인하세요. 지원하지 않는 Windows 버전에서는 변경하지 않습니다.",
+    "RequiresConfirmation": true,
+    "AutoRemediationSupported": true,
+    "captureTargets": [
+      [
+        "Microsoft 네트워크 서버: 로그온 시간이 만료되면 클라이언트 연결 끊기",
+        "Microsoft network server: Disconnect clients when logon hours expire"
+      ],
+      [
+        "Microsoft 네트워크 서버: 세션 연결을 중단하기 전에 필요한 유휴 시간",
+        "Microsoft network server: Amount of idle time required before suspending session"
+      ]
+    ],
+    "ExpectedCaptures": 2
+  },
+  "BeforeStatus": "양호",
+  "BeforeValue": {
+    "EnableForcedLogoff": true,
+    "AutoDisconnectTimeoutInMinutesV1": 15,
+    "AutoDisconnectTimeoutInSecondsV2": 900
+  },
+  "AfterStatus": "양호",
+  "AfterValue": {
+    "EnableForcedLogoff": true,
+    "AutoDisconnectTimeoutInMinutesV1": 15,
+    "AutoDisconnectTimeoutInSecondsV2": 900
+  },
+  "FixStatus": "양호",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": null,
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "증빙 대상 탐색",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "실패(복합 증빙 누락)",
+  "CaptureError": "다른 창으로 포커스가 이동했습니다.; 복합 증빙 수량 불일치",
+  "ScreenshotFiles": [
+    {
+      "File": "W-56_part1.png",
+      "SHA256": "9c0ef626accafa8e97460e8b1a822da050ebaea371ef79b4561043f1c719d3c4"
+    }
+  ],
+  "ExpectedComponentCount": 2,
+  "CollectedComponentCount": 1
+}

@@ -1,0 +1,50 @@
+{
+  "ItemId": "W-46",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T07:34:43.021106+00:00",
+  "PolicySHA256": "fee28fb29db5f3d6af10254c445f03ca78568ff4e28cfa7a2058582cef5882ab",
+  "Policy": {
+    "Title": "SAM 파일 접근 통제 설정",
+    "Category": "보안 관리",
+    "Level": "상",
+    "TechType": "Type_Skip",
+    "SecureValue": "1",
+    "ItemId": "W-46",
+    "appTarget": "explorer.exe",
+    "actionType": "FileProperties",
+    "targetItem": [
+      "C:\\Windows\\System32\\config\\SAM"
+    ],
+    "Description": "SAM 파일 ACL의 Administrators/SYSTEM 권한 확인. NoLMHash와 다른 항목.",
+    "captureOnly": true,
+    "Impact": "SAM 파일 ACL의 Administrators/SYSTEM 권한 확인. NoLMHash와 다른 항목.",
+    "RequiresConfirmation": false,
+    "AutoRemediationSupported": false
+  },
+  "BeforeStatus": "수동 조치(SAM 파일 ACL의 Administrators/SYSTEM 권한 확인. NoLMHash와 다른 항목.)",
+  "BeforeValue": "N/A",
+  "AfterStatus": "수동 조치(SAM 파일 ACL의 Administrators/SYSTEM 권한 확인. NoLMHash와 다른 항목.)",
+  "AfterValue": "N/A",
+  "FixStatus": "수동 조치(SAM 파일 ACL의 Administrators/SYSTEM 권한 확인. NoLMHash와 다른 항목.)",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": null,
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "저장됨(내용 검토 필요)",
+  "Screenshot": "W-46.png",
+  "ScreenshotSHA256": "fe39694211dca4028f0b64a902079c3bebf74bf53842d28ad80a61805b37bf38",
+  "ScreenshotFiles": [],
+  "ExpectedComponentCount": null,
+  "CollectedComponentCount": 0
+}

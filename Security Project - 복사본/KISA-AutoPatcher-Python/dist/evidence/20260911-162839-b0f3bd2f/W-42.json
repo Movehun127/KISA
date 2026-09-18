@@ -1,0 +1,57 @@
+{
+  "ItemId": "W-42",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T07:34:16.181217+00:00",
+  "PolicySHA256": "c1992deae782c9a6a26a77942610161aad6fe602084e814165c97f8f536f419d",
+  "Policy": {
+    "Title": "이벤트 로그 관리 설정",
+    "Category": "로그 관리",
+    "Level": "하",
+    "TechType": "Type_Skip",
+    "Description": "이벤트 로그 크기 및 덮어쓰기 정책 수동 점검",
+    "captureOnly": true,
+    "SecureValue": "True",
+    "ItemId": "W-42",
+    "appTarget": "eventvwr.msc",
+    "treePath": [
+      [
+        "Windows 로그",
+        "Windows Logs"
+      ],
+      [
+        "보안",
+        "Security"
+      ]
+    ],
+    "Impact": "이벤트 로그 크기 및 덮어쓰기 정책 수동 점검",
+    "RequiresConfirmation": false,
+    "AutoRemediationSupported": false,
+    "CheckCommand": "@(Get-WinEvent -ListLog Application,System,Security | Select-Object LogName,MaximumSizeInBytes,LogMode,IsEnabled,RecordCount) | ConvertTo-Json -Compress"
+  },
+  "BeforeStatus": "수동 조치(이벤트 로그 크기 및 덮어쓰기 정책 수동 점검)",
+  "BeforeValue": "[{\"LogName\":\"Application\",\"MaximumSizeInBytes\":20971520,\"LogMode\":0,\"IsEnabled\":true,\"RecordCount\":23413},{\"LogName\":\"System\",\"MaximumSizeInBytes\":20971520,\"LogMode\":1,\"IsEnabled\":true,\"RecordCount\":18425},{\"LogName\":\"Security\",\"MaximumSizeInBytes\":20971520,\"LogMode\":1,\"IsEnabled\":true,\"RecordCount\":4312}]",
+  "AfterStatus": "수동 조치(이벤트 로그 크기 및 덮어쓰기 정책 수동 점검)",
+  "AfterValue": "[{\"LogName\":\"Application\",\"MaximumSizeInBytes\":20971520,\"LogMode\":0,\"IsEnabled\":true,\"RecordCount\":23413},{\"LogName\":\"System\",\"MaximumSizeInBytes\":20971520,\"LogMode\":1,\"IsEnabled\":true,\"RecordCount\":18425},{\"LogName\":\"Security\",\"MaximumSizeInBytes\":20971520,\"LogMode\":1,\"IsEnabled\":true,\"RecordCount\":4314}]",
+  "FixStatus": "수동 조치(이벤트 로그 크기 및 덮어쓰기 정책 수동 점검)",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": null,
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "저장됨(내용 검토 필요)",
+  "Screenshot": "W-42.png",
+  "ScreenshotSHA256": "2eab2bf8f4bc18b06383830328e772ceb2b4b9c161b4438e54de259de15c7f65",
+  "ScreenshotFiles": [],
+  "ExpectedComponentCount": null,
+  "CollectedComponentCount": 0
+}

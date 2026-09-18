@@ -1,0 +1,56 @@
+{
+  "ItemId": "W-58",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-11T07:39:05.065637+00:00",
+  "PolicySHA256": "90b6221f2a1cbd8e0a0472cdbb8da73a3c6ec985b3a3bfdf3f5e1f376de8a8dd",
+  "Policy": {
+    "Title": "사용자별 홈 디렉터리 권한 설정",
+    "Category": "보안 관리",
+    "Level": "중",
+    "TechType": "Type_Skip",
+    "Description": "사용자 홈 디렉터리의 쓰기/수정 권한 제한 상태 수동 진단",
+    "captureOnly": true,
+    "ItemId": "W-58",
+    "appTarget": "lusrmgr.msc",
+    "treePath": [
+      [
+        "로컬 사용자 및 그룹(로컬)",
+        "Local Users and Groups (Local)"
+      ],
+      [
+        "사용자",
+        "Users"
+      ]
+    ],
+    "targetItem": [],
+    "Impact": "사용자 홈 디렉터리의 쓰기/수정 권한 제한 상태 수동 진단",
+    "RequiresConfirmation": false,
+    "AutoRemediationSupported": false
+  },
+  "BeforeStatus": "수동 조치(사용자 홈 디렉터리의 쓰기/수정 권한 제한 상태 수동 진단)",
+  "BeforeValue": "N/A",
+  "AfterStatus": "수동 조치(사용자 홈 디렉터리의 쓰기/수정 권한 제한 상태 수동 진단)",
+  "AfterValue": "N/A",
+  "FixStatus": "수동 조치(사용자 홈 디렉터리의 쓰기/수정 권한 제한 상태 수동 진단)",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": null,
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "저장됨(내용 검토 필요)",
+  "Screenshot": "W-58.png",
+  "ScreenshotSHA256": "5082755dd3c9c991ffcf2ea337e6e8f96f9b78962db2ed206f9bd245784365ab",
+  "ScreenshotFiles": [],
+  "ExpectedComponentCount": null,
+  "CollectedComponentCount": 0
+}

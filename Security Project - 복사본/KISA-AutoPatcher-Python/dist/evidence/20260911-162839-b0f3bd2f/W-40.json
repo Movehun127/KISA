@@ -1,0 +1,374 @@
+{
+  "ItemId": "W-40",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "유효 고급 감사 설정 기준. 조직별 로그 용량·보존 정책 검토 필요.",
+  "CollectedAt": "2026-09-11T07:34:00.431630+00:00",
+  "PolicySHA256": "9ea9d6d987568c3c280da72dbda4bb2fa61c71fb6e13460585d6c5b0fb974288",
+  "Policy": {
+    "Title": "정책에 따른 시스템 로깅 설정",
+    "Category": "로그 관리",
+    "Level": "중",
+    "TechType": "Type_Audit",
+    "Description": "Model.pdf p.236 감사 6개 범주의 유효 하위 범주 설정. 기존 성공/실패 설정 보존.",
+    "captureOnly": false,
+    "ItemId": "W-40",
+    "appTarget": "kisa-evidence",
+    "Impact": "감사 이벤트 양 증가. 고급 감사 설정을 기본 감사 정책보다 우선하도록 적용합니다.",
+    "RequiresConfirmation": true,
+    "AutoRemediationSupported": true,
+    "EvidenceCollector": "audit",
+    "SecureValue": "6개 감사 범주 기준 충족 및 고급 감사 우선",
+    "ScopeNote": "유효 고급 감사 설정 기준. 조직별 로그 용량·보존 정책 검토 필요."
+  },
+  "BeforeStatus": "취약",
+  "BeforeValue": {
+    "policies": {
+      "0cce9215-69ae-11d9-bed3-505054503030": {
+        "category": "69979849-797a-11d9-bed3-505054503030",
+        "flags": 0
+      },
+      "0cce9216-69ae-11d9-bed3-505054503030": {
+        "category": "69979849-797a-11d9-bed3-505054503030",
+        "flags": 0
+      },
+      "0cce9217-69ae-11d9-bed3-505054503030": {
+        "category": "69979849-797a-11d9-bed3-505054503030",
+        "flags": 0
+      },
+      "0cce9218-69ae-11d9-bed3-505054503030": {
+        "category": "69979849-797a-11d9-bed3-505054503030",
+        "flags": 0
+      },
+      "0cce9219-69ae-11d9-bed3-505054503030": {
+        "category": "69979849-797a-11d9-bed3-505054503030",
+        "flags": 0
+      },
+      "0cce921a-69ae-11d9-bed3-505054503030": {
+        "category": "69979849-797a-11d9-bed3-505054503030",
+        "flags": 0
+      },
+      "0cce921b-69ae-11d9-bed3-505054503030": {
+        "category": "69979849-797a-11d9-bed3-505054503030",
+        "flags": 0
+      },
+      "0cce921c-69ae-11d9-bed3-505054503030": {
+        "category": "69979849-797a-11d9-bed3-505054503030",
+        "flags": 0
+      },
+      "0cce9243-69ae-11d9-bed3-505054503030": {
+        "category": "69979849-797a-11d9-bed3-505054503030",
+        "flags": 0
+      },
+      "0cce9247-69ae-11d9-bed3-505054503030": {
+        "category": "69979849-797a-11d9-bed3-505054503030",
+        "flags": 0
+      },
+      "0cce9249-69ae-11d9-bed3-505054503030": {
+        "category": "69979849-797a-11d9-bed3-505054503030",
+        "flags": 0
+      },
+      "0cce924b-69ae-11d9-bed3-505054503030": {
+        "category": "69979849-797a-11d9-bed3-505054503030",
+        "flags": 0
+      },
+      "0cce9228-69ae-11d9-bed3-505054503030": {
+        "category": "6997984b-797a-11d9-bed3-505054503030",
+        "flags": 0
+      },
+      "0cce9229-69ae-11d9-bed3-505054503030": {
+        "category": "6997984b-797a-11d9-bed3-505054503030",
+        "flags": 0
+      },
+      "0cce922a-69ae-11d9-bed3-505054503030": {
+        "category": "6997984b-797a-11d9-bed3-505054503030",
+        "flags": 0
+      },
+      "0cce922f-69ae-11d9-bed3-505054503030": {
+        "category": "6997984d-797a-11d9-bed3-505054503030",
+        "flags": 0
+      },
+      "0cce9230-69ae-11d9-bed3-505054503030": {
+        "category": "6997984d-797a-11d9-bed3-505054503030",
+        "flags": 0
+      },
+      "0cce9231-69ae-11d9-bed3-505054503030": {
+        "category": "6997984d-797a-11d9-bed3-505054503030",
+        "flags": 0
+      },
+      "0cce9232-69ae-11d9-bed3-505054503030": {
+        "category": "6997984d-797a-11d9-bed3-505054503030",
+        "flags": 0
+      },
+      "0cce9233-69ae-11d9-bed3-505054503030": {
+        "category": "6997984d-797a-11d9-bed3-505054503030",
+        "flags": 0
+      },
+      "0cce9234-69ae-11d9-bed3-505054503030": {
+        "category": "6997984d-797a-11d9-bed3-505054503030",
+        "flags": 0
+      },
+      "0cce9235-69ae-11d9-bed3-505054503030": {
+        "category": "6997984e-797a-11d9-bed3-505054503030",
+        "flags": 0
+      },
+      "0cce9236-69ae-11d9-bed3-505054503030": {
+        "category": "6997984e-797a-11d9-bed3-505054503030",
+        "flags": 0
+      },
+      "0cce9237-69ae-11d9-bed3-505054503030": {
+        "category": "6997984e-797a-11d9-bed3-505054503030",
+        "flags": 0
+      },
+      "0cce9238-69ae-11d9-bed3-505054503030": {
+        "category": "6997984e-797a-11d9-bed3-505054503030",
+        "flags": 0
+      },
+      "0cce9239-69ae-11d9-bed3-505054503030": {
+        "category": "6997984e-797a-11d9-bed3-505054503030",
+        "flags": 0
+      },
+      "0cce923a-69ae-11d9-bed3-505054503030": {
+        "category": "6997984e-797a-11d9-bed3-505054503030",
+        "flags": 0
+      },
+      "0cce923b-69ae-11d9-bed3-505054503030": {
+        "category": "6997984f-797a-11d9-bed3-505054503030",
+        "flags": 0
+      },
+      "0cce923c-69ae-11d9-bed3-505054503030": {
+        "category": "6997984f-797a-11d9-bed3-505054503030",
+        "flags": 0
+      },
+      "0cce923d-69ae-11d9-bed3-505054503030": {
+        "category": "6997984f-797a-11d9-bed3-505054503030",
+        "flags": 0
+      },
+      "0cce923e-69ae-11d9-bed3-505054503030": {
+        "category": "6997984f-797a-11d9-bed3-505054503030",
+        "flags": 0
+      },
+      "0cce923f-69ae-11d9-bed3-505054503030": {
+        "category": "69979850-797a-11d9-bed3-505054503030",
+        "flags": 0
+      },
+      "0cce9240-69ae-11d9-bed3-505054503030": {
+        "category": "69979850-797a-11d9-bed3-505054503030",
+        "flags": 0
+      },
+      "0cce9241-69ae-11d9-bed3-505054503030": {
+        "category": "69979850-797a-11d9-bed3-505054503030",
+        "flags": 0
+      },
+      "0cce9242-69ae-11d9-bed3-505054503030": {
+        "category": "69979850-797a-11d9-bed3-505054503030",
+        "flags": 0
+      }
+    },
+    "override": null
+  },
+  "AfterStatus": "양호",
+  "AfterValue": {
+    "policies": {
+      "0cce9215-69ae-11d9-bed3-505054503030": {
+        "category": "69979849-797a-11d9-bed3-505054503030",
+        "flags": 3
+      },
+      "0cce9216-69ae-11d9-bed3-505054503030": {
+        "category": "69979849-797a-11d9-bed3-505054503030",
+        "flags": 3
+      },
+      "0cce9217-69ae-11d9-bed3-505054503030": {
+        "category": "69979849-797a-11d9-bed3-505054503030",
+        "flags": 3
+      },
+      "0cce9218-69ae-11d9-bed3-505054503030": {
+        "category": "69979849-797a-11d9-bed3-505054503030",
+        "flags": 3
+      },
+      "0cce9219-69ae-11d9-bed3-505054503030": {
+        "category": "69979849-797a-11d9-bed3-505054503030",
+        "flags": 3
+      },
+      "0cce921a-69ae-11d9-bed3-505054503030": {
+        "category": "69979849-797a-11d9-bed3-505054503030",
+        "flags": 3
+      },
+      "0cce921b-69ae-11d9-bed3-505054503030": {
+        "category": "69979849-797a-11d9-bed3-505054503030",
+        "flags": 3
+      },
+      "0cce921c-69ae-11d9-bed3-505054503030": {
+        "category": "69979849-797a-11d9-bed3-505054503030",
+        "flags": 3
+      },
+      "0cce9243-69ae-11d9-bed3-505054503030": {
+        "category": "69979849-797a-11d9-bed3-505054503030",
+        "flags": 3
+      },
+      "0cce9247-69ae-11d9-bed3-505054503030": {
+        "category": "69979849-797a-11d9-bed3-505054503030",
+        "flags": 3
+      },
+      "0cce9249-69ae-11d9-bed3-505054503030": {
+        "category": "69979849-797a-11d9-bed3-505054503030",
+        "flags": 3
+      },
+      "0cce924b-69ae-11d9-bed3-505054503030": {
+        "category": "69979849-797a-11d9-bed3-505054503030",
+        "flags": 3
+      },
+      "0cce9228-69ae-11d9-bed3-505054503030": {
+        "category": "6997984b-797a-11d9-bed3-505054503030",
+        "flags": 3
+      },
+      "0cce9229-69ae-11d9-bed3-505054503030": {
+        "category": "6997984b-797a-11d9-bed3-505054503030",
+        "flags": 3
+      },
+      "0cce922a-69ae-11d9-bed3-505054503030": {
+        "category": "6997984b-797a-11d9-bed3-505054503030",
+        "flags": 3
+      },
+      "0cce922f-69ae-11d9-bed3-505054503030": {
+        "category": "6997984d-797a-11d9-bed3-505054503030",
+        "flags": 3
+      },
+      "0cce9230-69ae-11d9-bed3-505054503030": {
+        "category": "6997984d-797a-11d9-bed3-505054503030",
+        "flags": 3
+      },
+      "0cce9231-69ae-11d9-bed3-505054503030": {
+        "category": "6997984d-797a-11d9-bed3-505054503030",
+        "flags": 3
+      },
+      "0cce9232-69ae-11d9-bed3-505054503030": {
+        "category": "6997984d-797a-11d9-bed3-505054503030",
+        "flags": 3
+      },
+      "0cce9233-69ae-11d9-bed3-505054503030": {
+        "category": "6997984d-797a-11d9-bed3-505054503030",
+        "flags": 3
+      },
+      "0cce9234-69ae-11d9-bed3-505054503030": {
+        "category": "6997984d-797a-11d9-bed3-505054503030",
+        "flags": 3
+      },
+      "0cce9235-69ae-11d9-bed3-505054503030": {
+        "category": "6997984e-797a-11d9-bed3-505054503030",
+        "flags": 2
+      },
+      "0cce9236-69ae-11d9-bed3-505054503030": {
+        "category": "6997984e-797a-11d9-bed3-505054503030",
+        "flags": 2
+      },
+      "0cce9237-69ae-11d9-bed3-505054503030": {
+        "category": "6997984e-797a-11d9-bed3-505054503030",
+        "flags": 2
+      },
+      "0cce9238-69ae-11d9-bed3-505054503030": {
+        "category": "6997984e-797a-11d9-bed3-505054503030",
+        "flags": 2
+      },
+      "0cce9239-69ae-11d9-bed3-505054503030": {
+        "category": "6997984e-797a-11d9-bed3-505054503030",
+        "flags": 2
+      },
+      "0cce923a-69ae-11d9-bed3-505054503030": {
+        "category": "6997984e-797a-11d9-bed3-505054503030",
+        "flags": 2
+      },
+      "0cce923b-69ae-11d9-bed3-505054503030": {
+        "category": "6997984f-797a-11d9-bed3-505054503030",
+        "flags": 2
+      },
+      "0cce923c-69ae-11d9-bed3-505054503030": {
+        "category": "6997984f-797a-11d9-bed3-505054503030",
+        "flags": 2
+      },
+      "0cce923d-69ae-11d9-bed3-505054503030": {
+        "category": "6997984f-797a-11d9-bed3-505054503030",
+        "flags": 2
+      },
+      "0cce923e-69ae-11d9-bed3-505054503030": {
+        "category": "6997984f-797a-11d9-bed3-505054503030",
+        "flags": 2
+      },
+      "0cce923f-69ae-11d9-bed3-505054503030": {
+        "category": "69979850-797a-11d9-bed3-505054503030",
+        "flags": 3
+      },
+      "0cce9240-69ae-11d9-bed3-505054503030": {
+        "category": "69979850-797a-11d9-bed3-505054503030",
+        "flags": 3
+      },
+      "0cce9241-69ae-11d9-bed3-505054503030": {
+        "category": "69979850-797a-11d9-bed3-505054503030",
+        "flags": 3
+      },
+      "0cce9242-69ae-11d9-bed3-505054503030": {
+        "category": "69979850-797a-11d9-bed3-505054503030",
+        "flags": 3
+      }
+    },
+    "override": 1
+  },
+  "FixStatus": "완료",
+  "BackupFile": "C:\\Users\\new-s\\Desktop\\KISA-fix-evidence-verification\\KISA-fix-evidence-verification\\Security Project - 복사본\\KISA-AutoPatcher-Python\\dist\\backups\\W-40_86abe9341e044a27931ce6e9c6b8ec14.json",
+  "RollbackStatus": null,
+  "Note": "변경값 재조회 검증 완료. 업무 기능 검증은 별도 필요. 유효 고급 감사 설정 기준. 조직별 로그 용량·보존 정책 검토 필요.",
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "캡처 저장",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "저장됨(내용 검토 필요)",
+  "Screenshot": "W-40.png",
+  "ScreenshotSHA256": "e776b1cb91114e66e50fc2621df2ac96b51bfd52f640e2232571bfa1c08f48f0",
+  "ScreenshotFiles": [
+    {
+      "File": "W-40_part1.png",
+      "SHA256": "e776b1cb91114e66e50fc2621df2ac96b51bfd52f640e2232571bfa1c08f48f0"
+    },
+    {
+      "File": "W-40_part2.png",
+      "SHA256": "5aa973ff6b312f2cf674d1cfdbee6d92bc0fcecf6b4867b083993564c15c2cc8"
+    },
+    {
+      "File": "W-40_part3.png",
+      "SHA256": "877613fe832306a534338373d99f9e807adb037bb9aae3c835baa4a36f134e58"
+    },
+    {
+      "File": "W-40_part4.png",
+      "SHA256": "39abd7d02d6d3c604312da3f162d8ee8a1d9781e367e69414e78107670f25e85"
+    },
+    {
+      "File": "W-40_part5.png",
+      "SHA256": "ea3e168fb6d3e33318ee43bccaeea46ffaef8a2210a6e8590a6887f4723153d3"
+    },
+    {
+      "File": "W-40_part6.png",
+      "SHA256": "58f3833227eb921686a0e4dd387ad43da8d8d5f5f1307a1c6cbcbfd2be8f64ed"
+    },
+    {
+      "File": "W-40_part7.png",
+      "SHA256": "3028663b9acafb84214778a69e391bf09ac2915fe5043a8b9bb714c60002bbf1"
+    },
+    {
+      "File": "W-40_part8.png",
+      "SHA256": "f9b399cddb8f9dfb2c04b59207634d04d361e7b32a154278625bf17d9720c03e"
+    },
+    {
+      "File": "W-40_part9.png",
+      "SHA256": "c121782c04bca5cc705f4f82e26aef74dad445ebeab45bd70c268bd7978ee20f"
+    }
+  ],
+  "DiagnosticFile": "W-40_diagnostic.json",
+  "DiagnosticSHA256": "8e80e20705a851319d921699f32d20ea0760a7ef0cdb3de9daa6d70738a6d67f",
+  "ExpectedComponentCount": null,
+  "CollectedComponentCount": 9
+}

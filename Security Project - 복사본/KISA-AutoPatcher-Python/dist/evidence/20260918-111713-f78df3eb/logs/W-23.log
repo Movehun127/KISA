@@ -1,0 +1,19 @@
+[11:17:13] 
+🔷 [W-23]  공유 서비스에 대한 익명 접근 제한 설정
+[11:17:13]   📷 증빙 화면 캡처 대기 중...
+[11:17:13]   📢 [W-23] 수동 조치 가이드 팝업을 표시합니다.
+[11:17:14]   [W-23] 단계: 창 열기
+[11:17:15]   대상 창 확인: 로컬 보안 정책 / HWND=3606078 / PID=4960
+[11:17:15]   [W-23] 단계: 오른쪽 정렬 확인
+[11:17:15]   [W-23] 단계: 조치 및 설정 재조회
+[11:17:15]   → 자동 변경 없음 (수동 조치(익명 공유와 애플리케이션 의존성을 함께 확인.))
+[11:17:16]   [W-23] 단계: 증빙 대상 탐색
+[11:17:20] ⏹ 중지 요청됨...
+[11:17:22]   [W-23] 대상 탐색/캡처 오류: User Cancelled Execution
+[11:17:23]   증빙 창 닫기 완료 → 다음 항목 진행
+[11:17:23]   [W-23] 단계: 창 닫힘 확인
+[11:17:23]   ⚠️ 항목 처리 중단 또는 오류: User Cancelled Execution
+[11:17:23]   📄 실행 결과 보고서 생성 중...
+[11:17:26] ✅ 마크다운 보고서 생성: C:\Users\new-s\Desktop\KISA-fix-evidence-verification\KISA-fix-evidence-verification\Security Project - 복사본\KISA-AutoPatcher-Python\dist\evidence\20260918-111713-f78df3eb\reports\Security_Patch_Report.md
+[11:17:26] ✅ 엑셀 보고서 생성: C:\Users\new-s\Desktop\KISA-fix-evidence-verification\KISA-fix-evidence-verification\Security Project - 복사본\KISA-AutoPatcher-Python\dist\evidence\20260918-111713-f78df3eb\reports\Security_Patch_Report.xlsx
+[11:17:26]   📁 보고서: C:\Users\new-s\Desktop\KISA-fix-evidence-verification\KISA-fix-evidence-verification\Security Project - 복사본\KISA-AutoPatcher-Python\dist\evidence\20260918-111713-f78df3eb\reports

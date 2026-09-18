@@ -38,5 +38,6 @@
       "Microsoft 네트워크 서버: 세션 연결을 중단하기 전에 필요한 유휴 시간",
       "Microsoft network server: Amount of idle time required before suspending session"
     ]
-  ]
+  ],
+  "ExpectedCaptures": 2
 }

@@ -135,15 +135,28 @@ def get_vulnerability_status(config_path: str) -> list[dict]:
                 status = ('취약' if formats & {'FAT', 'FAT32', 'EXFAT'} else
                           '양호' if formats == {'NTFS'} else '수동 조치(기타 파일 시스템 적용 범위 확인)')
 
+            elif tech_type == "Type_Audit":
+                from . import audit_policy
+                values = audit_policy.read()
+                override = reg_read(audit_policy.OVERRIDE_PATH, audit_policy.OVERRIDE_NAME)
+                current_value = {'policies': values, 'override': override}
+                status = '양호' if audit_policy.compliant(values) and override == 1 else '취약'
+
             elif tech_type == "Type_SmbSession":
                 from .native_actions import read_smb, smb_compliant
                 current_value = read_smb()
                 status = '양호' if smb_compliant(current_value) else '취약'
 
-            elif tech_type == "Type_Firewall":
-                from .native_actions import read_firewall
-                current_value = read_firewall('ActiveStore')
-                status = '양호' if all(v == 'True' for v in current_value.values()) else '취약'
+            elif tech_type == 'Type_Firewall':
+                raw = _run_ps('Get-NetFirewallProfile -PolicyStore ActiveStore | Select-Object Name,<{n="Enabled";e={$_.Enabled.ToString()}} | ConvertTo-Json -Compress')
+                if not raw or not raw.strip():
+                    raise ValueError('방화벽 프로핼 상태 조회 실패')
+                rows = json.loads(raw)
+                if isinstance(rows, dict):
+                    rows = [rows]
+                val_dict = {r['Name']: str(r.get('Enabled', 'False')) for r in rows}
+                current_value = val_dict
+                status = '양호' if all(val_dict.get(p) == 'True' for p in ('Domain', 'Private', 'Public')) else '췩약'
 
             elif tech_type == "Type_RegistryGroup":
                 from .execution import registry_settings, matches

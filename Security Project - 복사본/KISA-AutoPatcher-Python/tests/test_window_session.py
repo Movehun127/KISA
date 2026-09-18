@@ -40,6 +40,19 @@ class WindowSessionTests(unittest.TestCase):
         self.assertEqual([c.args[0] for c in api.PostMessageW.call_args_list],[3,2])
         self.assertEqual(alive,{4})
 
+    def test_custom_policy_editor_closes_before_console(self):
+        frame, sheet = window(2,20), window(3,20,'PolicyEditor')
+        auto, api = Mock(), Mock()
+        snapshots(auto, [], [frame,sheet])
+        alive = {2,3}
+        api.IsWindow.side_effect = lambda h: h in alive
+        api.GetWindow.return_value = 0
+        api.PostMessageW.side_effect = lambda h,*a: (alive.remove(h),True)[1]
+        session = WindowSession(auto,api)
+        session.register_process(SimpleNamespace(pid=20),'gpedit.msc')
+        session.close()
+        self.assertEqual([c.args[0] for c in api.PostMessageW.call_args_list],[3,2])
+
     def test_new_dialog_is_discovered_before_frame_close(self):
         frame, sheet, notice = window(2,20), window(3,20,'#32770'), window(4,20,'#32770')
         auto, api = Mock(), Mock()
@@ -165,7 +178,7 @@ class WindowSessionTests(unittest.TestCase):
         api.GetWindowRect.side_effect = get_rect
         api.SetWindowPos.side_effect = set_pos
         api.GetForegroundWindow.return_value = 10
-        self.assertEqual(prepare_window(ctrl, api, (1920, 1080)), (960, 0, 960, 600))
+        self.assertEqual(prepare_window(ctrl, api, (1920, 1080)), (960, 0, 960, 1032))
 
     def test_fixed_size_dialog_aligns_actual_width_to_work_area(self):
         api, ctrl = Mock(), Mock()

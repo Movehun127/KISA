@@ -2,13 +2,11 @@
   "Title": "윈도우 방화벽 설정",
   "Category": "보안 관리",
   "Level": "중",
-  "TechType": "Type_Powershell",
-  "CheckCommand": "$p = @(Get-NetFirewallProfile -Profile Domain,Private,Public); if ($p.Count -ne 3) { throw 'Incomplete firewall profiles' }; (@($p | Where-Object { $_.Enabled -ne $true }).Count -eq 0).ToString()",
-  "RemediationCommand": "Set-NetFirewallProfile -Profile Domain,Private,Public -Enabled True",
-  "SecureValue": "True",
+  "TechType": "Type_Firewall",
+  "SecureValue": "Domain/Private/Public Enabled=True",
   "ItemId": "W-64",
   "appTarget": "firewall.cpl",
-  "Impact": "방화벽 활성화 시 RDP·관제·방송·DB 포트 차단 가능. 필요한 인바운드 규칙과 콘솔 접속을 확인 후 수동 적용.",
-  "RequiresConfirmation": false,
-  "AutoRemediationSupported": false
+  "Impact": "기존 방화벽 허용 규칙을 유지하고 세 프로필을 활성화합니다. 허용 규칙이 없는 원격 접속·관제·방송 서비스가 차단될 수 있으므로 필요한 인바운드 규칙과 콘솔 복구 경로가 있는 장비에서만 적용하세요.",
+  "RequiresConfirmation": true,
+  "AutoRemediationSupported": true
 }

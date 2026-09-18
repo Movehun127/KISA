@@ -1,0 +1,57 @@
+{
+  "ItemId": "W-61",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "드라이브 문자가 있는 고정 디스크 범위",
+  "CollectedAt": "2026-09-11T07:40:03.604150+00:00",
+  "PolicySHA256": "ff52132cb4872101ea4e5593306b72b549f1ce19bd1642a431135405a7d276b1",
+  "Policy": {
+    "Title": "파일 및 디렉토리 보호",
+    "Category": "보안 관리",
+    "Level": "중",
+    "TechType": "Type_NtfsVolumes",
+    "Description": "드라이브 문자가 있는 고정 디스크의 NTFS 사용 여부를 점검합니다. FAT 변환은 데이터 백업 및 별도 작업 계획이 필요합니다.",
+    "captureOnly": true,
+    "ItemId": "W-61",
+    "appTarget": "diskmgmt.msc",
+    "Impact": "파일 시스템 변환은 수행하지 않습니다. EFI/복구 파티션 등 드라이브 문자가 없는 볼륨은 이 점검 범위에 포함되지 않습니다.",
+    "RequiresConfirmation": false,
+    "AutoRemediationSupported": false,
+    "ScopeNote": "드라이브 문자가 있는 고정 디스크 범위",
+    "SecureValue": "NTFS"
+  },
+  "BeforeStatus": "양호",
+  "BeforeValue": [
+    {
+      "DeviceID": "C:",
+      "FileSystem": "NTFS"
+    }
+  ],
+  "AfterStatus": "양호",
+  "AfterValue": [
+    {
+      "DeviceID": "C:",
+      "FileSystem": "NTFS"
+    }
+  ],
+  "FixStatus": "양호",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": null,
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "저장됨(내용 검토 필요)",
+  "Screenshot": "W-61.png",
+  "ScreenshotSHA256": "8ae1b9a60bbaabd59b2f1ae7f36d30d8a801920f070839a11fbdf4db77bda758",
+  "ScreenshotFiles": [],
+  "ExpectedComponentCount": null,
+  "CollectedComponentCount": 0
+}

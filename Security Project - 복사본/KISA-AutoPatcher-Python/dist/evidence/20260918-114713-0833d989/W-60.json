@@ -1,0 +1,103 @@
+{
+  "ItemId": "W-60",
+  "Host": "DESKTOP-BKBAM6H",
+  "ExecutionUser": "new-s",
+  "Scope": "항목 정책에 정의된 범위",
+  "CollectedAt": "2026-09-18T02:59:59.941310+00:00",
+  "PolicySHA256": "15b0261d058a515eaf6ef9eec339be6e1b25c5585326e9b640fc45fdbbee5445",
+  "Policy": {
+    "Title": "보안 채널 데이터 디지털 암호화 또는 서명",
+    "Category": "보안 관리",
+    "Level": "중",
+    "TechType": "Type_Skip",
+    "SecureValue": "1",
+    "ItemId": "W-60",
+    "appTarget": "secpol.msc",
+    "treePath": [
+      [
+        "보안 설정",
+        "Security Settings"
+      ],
+      [
+        "로컬 정책",
+        "Local Policies"
+      ],
+      [
+        "보안 옵션",
+        "Security Options"
+      ]
+    ],
+    "targetItem": [
+      "도메인 구성원: 보안 채널 데이터를 디지털 암호화 또는 서명(항상)",
+      "도메인 구성원: 보안 채널 데이터 디지털 서명(가능한 경우)",
+      "도메인 구성원: 보안 채널 데이터를 디지털 암호화(가능한 경우)",
+      "Domain member: Digitally encrypt or sign secure channel data (always)"
+    ],
+    "Description": "도메인 구성원 여부 및 보안 채널 암호화·서명 3개 정책 모두 확인.",
+    "captureOnly": true,
+    "Impact": "도메인 구성원 여부 및 보안 채널 암호화·서명 3개 정책 모두 확인.",
+    "RequiresConfirmation": false,
+    "AutoRemediationSupported": false,
+    "captureTargets": [
+      [
+        "도메인 구성원: 보안 채널 데이터를 디지털 암호화 또는 서명(항상)",
+        "Domain member: Digitally encrypt or sign secure channel data (always)"
+      ],
+      [
+        "도메인 구성원: 보안 채널 데이터를 디지털 암호화(가능한 경우)",
+        "Domain member: Digitally encrypt secure channel data (when possible)"
+      ],
+      [
+        "도메인 구성원: 보안 채널 데이터 디지털 서명(가능한 경우)",
+        "Domain member: Digitally sign secure channel data (when possible)"
+      ]
+    ]
+  },
+  "BeforeStatus": "수동 조치(도메인 구성원 여부 및 보안 채널 암호화·서명 3개 정책 모두 확인.)",
+  "BeforeValue": "N/A",
+  "AfterStatus": "수동 조치(도메인 구성원 여부 및 보안 채널 암호화·서명 3개 정책 모두 확인.)",
+  "AfterValue": "N/A",
+  "FixStatus": "수동 조치(도메인 구성원 여부 및 보안 채널 암호화·서명 3개 정책 모두 확인.)",
+  "BackupFile": null,
+  "RollbackStatus": null,
+  "Note": null,
+  "ExecutionStages": [
+    "스캔 완료",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "조치 및 설정 재조회",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인",
+    "창 열기",
+    "오른쪽 정렬 확인",
+    "증빙 대상 탐색",
+    "캡처 저장",
+    "창 닫힘 확인"
+  ],
+  "ScreenshotIsComplianceProof": false,
+  "ScreenshotStatus": "저장됨(내용 검토 필요)",
+  "Screenshot": "W-60.png",
+  "ScreenshotSHA256": "9ef5cb8b9e21fdd27268b8c24193f924ea9f7ccf751e4fa80c7bdc6c564bef0d",
+  "ScreenshotFiles": [
+    {
+      "File": "W-60_part1.png",
+      "SHA256": "b1b0839fe6863c2b9a7d7589d0bfb0ee0a2e63ade140eaec04050c4facd04522"
+    },
+    {
+      "File": "W-60_part2.png",
+      "SHA256": "f1a26dcda050430b4fbb243b229d81106e3ddda848dc5560802139e903cf2abc"
+    },
+    {
+      "File": "W-60_part3.png",
+      "SHA256": "97444b2e9b533166b21edcdd2020780bd352a1986e12035107fda4af48adb411"
+    }
+  ],
+  "ExpectedComponentCount": 3,
+  "CollectedComponentCount": 3
+}
